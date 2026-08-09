@@ -29,6 +29,8 @@
             --font-sub: 'Solitreo', cursive;
             --font-mono: 'Space Mono', monospace;
             --font-fredericka: 'Fredericka the Great', serif;
+            --footer-h: clamp(70px, 10vh, 110px);
+            --section-pad-vertical: clamp(80px, 12vh, 120px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
@@ -65,7 +67,7 @@
         /* --- 导航栏 --- */
         .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 75px; display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; z-index: 1000; background: rgba(255, 253, 248, 0.85); backdrop-filter: blur(12px); border-bottom: 2px solid rgba(26,26,26,0.1); }
         .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
-        .nav-logo-static { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--charcoal); background: var(--bg); object-fit: cover; }
+        .nav-logo-static { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--charcoal); background: var(--bg); object-fit: contain; object-position: center; display: block; overflow: hidden; }
         .logo-text { font-family: var(--font-logo); font-size: 1.8rem; color: var(--charcoal); padding-top: 5px; }
         .nav-links { display: flex; align-items: center; gap: 2vw; list-style: none; font-family: var(--font-title); font-size: 1.2rem; letter-spacing: 1px; }
         .nav-link { text-decoration: none; color: var(--charcoal); transition: color 0.3s ease; position: relative; cursor: pointer; }
@@ -103,7 +105,16 @@
 
         /* --- 页面垂直排列结构 --- */
         .deck-container { width: 100%; display: flex; flex-direction: column; position: relative; z-index: 10; }
-        .section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: clamp(100px, 14vh, 140px) 6vw clamp(40px, 8vh, 80px); position: relative; }
+        .section, .student-profile-section, .team-coverflow-section, .portfolio-details-section, .portfolio-gallery-section, .contact-footer-section {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--section-pad-vertical) 6vw var(--section-pad-vertical);
+            position: relative;
+        }
         .sec-header { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5rem); font-weight: 400; text-align: center; margin-bottom: clamp(15px, 3vh, 35px); letter-spacing: 2px; color: var(--charcoal); }
         .stories-showcase-section .sec-header { color: #fff; }
 
@@ -118,7 +129,7 @@
         .slider-arrow:hover { background: var(--charcoal); color: #fff; scale: 1.1; } .arrow-left { left: 4vw; } .arrow-right { right: 4vw; }
 
         .countdown-logo-wrap { width: clamp(180px, 25vw, 280px); margin-bottom: clamp(15px, 2vh, 25px); }
-        .hero-logo-animated { width: 100%; height: auto; border-radius: 50%; mix-blend-mode: multiply; animation: floatBlob 8s infinite alternate ease-in-out; transition: transform 0.4s ease; }
+        .hero-logo-animated { width: auto; max-width: 100%; max-height: 280px; height: auto; border-radius: 0; mix-blend-mode: multiply; animation: floatBlob 8s infinite alternate ease-in-out; transition: transform 0.4s ease; object-fit: contain; object-position: center; display: block; }
         .hero-logo-animated:hover { transform: scale(1.05) rotate(4deg); }
         .countdown-title { font-family: var(--font-fredericka); font-size: clamp(3rem, 5vw, 4.5rem); color: var(--charcoal); line-height: 1.1; text-align: center; }
         .countdown-subtitle { font-family: var(--font-fredericka); font-size: clamp(1.2rem, 2vw, 2rem); color: var(--charcoal); text-align: center; margin-bottom: clamp(30px, 6vh, 50px); }
@@ -150,18 +161,19 @@
         .video-placeholder:hover { transform: translate(-5px, -5px) scale(1); box-shadow: 17px 17px 0 var(--charcoal); }
         .video-placeholder img { width: 100%; height: 100%; object-fit: cover; }
 
-        .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
-        .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .coverflow-track { position: relative; width: 100%; height: clamp(300px, 45vh, 450px); display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; margin-bottom: 20px; cursor: grab; }
+        .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: visible; padding: clamp(90px, 14vh, 135px) 6vw clamp(100px, 14vh, 140px); }
+        .team-coverflow-section .sec-header { margin-bottom: clamp(40px, 6vh, 60px); }
+        .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; gap: clamp(35px, 5vh, 60px); margin-top: clamp(50px, 6vh, 70px); }
+        .coverflow-track { position: relative; width: 100%; height: clamp(300px, 45vh, 450px); display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; margin-top: clamp(30px, 4vh, 45px); margin-bottom: clamp(30px, 5vh, 55px); cursor: grab; overflow: visible; }
         .coverflow-track:active { cursor: grabbing; }
-        .coverflow-card { position: absolute; width: clamp(260px, 30vw, 380px); height: clamp(320px, 40vh, 480px); background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); user-select: none; background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); }
-        .coverflow-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .card-active { transform: translateX(0) translateZ(80px) scale(1); z-index: 10; opacity: 1; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: var(--active-color, var(--charcoal)); cursor: default; }
-        .card-prev { transform: translateX(-70%) translateZ(-100px) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
-        .card-next { transform: translateX(70%) translateZ(-100px) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
-        .card-hidden-left { transform: translateX(-120%) translateZ(-300px) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
-        .card-hidden-right { transform: translateX(120%) translateZ(-300px) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
-        .team-info-box { text-align: center; width: 100%; max-width: 800px; min-height: 180px; padding: 20px; transition: opacity 0.3s ease; }
+        .coverflow-card { position: absolute; top: 50%; width: clamp(240px, 28vw, 350px); aspect-ratio: 3 / 4; background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); user-select: none; display: inline-block; box-sizing: border-box; line-height: 0; padding: 0; margin: 0; background-image: none; transform: translateY(-50%); }
+        .coverflow-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; pointer-events: none; }
+        .card-active { transform: translateX(0) translateZ(80px) translateY(-50%) scale(1); z-index: 10; opacity: 1; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: var(--active-color, var(--charcoal)); cursor: default; }
+        .card-prev { transform: translateX(-70%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
+        .card-next { transform: translateX(70%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
+        .card-hidden-left { transform: translateX(-120%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
+        .card-hidden-right { transform: translateX(120%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
+        .team-info-box { text-align: center; width: 100%; max-width: 800px; min-height: 180px; padding: 20px; margin-top: clamp(20px, 3vh, 35px); transition: opacity 0.3s ease; }
         .info-team-name { font-family: var(--font-title); font-size: clamp(1.8rem, 2.5vw, 2.5rem); margin-bottom: 12px; letter-spacing: 1px; text-shadow: 1px 1px 0 rgba(26,26,26,0.2); transition: color 0.3s ease; }
         .info-team-text { font-family: var(--font-mono); font-size: clamp(0.85rem, 1vw, 1rem); line-height: 1.6; color: var(--charcoal); margin-bottom: 8px; }
         .info-team-text strong { color: var(--charcoal); font-weight: 700; }
@@ -177,7 +189,7 @@
         .story-poster-card { flex: 0 0 calc(25% - 18.75px); scroll-snap-align: start; background: #fff; border: 3px solid var(--charcoal); border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; position: relative; }
         .story-poster-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 0px; background: transparent; z-index: 1; }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
-        .poster-img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-bottom: 3px solid var(--charcoal); background: #e0e0e0; }
+        .poster-img { width: 100%; aspect-ratio: 4 / 5; object-fit: contain; border-bottom: 3px solid var(--charcoal); background: #e0e0e0; }
         .poster-title { font-family: var(--font-title); font-size: clamp(1.2rem, 1.5vw, 1.4rem); color: var(--charcoal); padding: 18px 10px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 1px; background: #fff; }
         .track-arrow-horiz { position: absolute; z-index: 10; top: 40%; transform: translateY(-50%); background: rgba(255,255,255,0.95); color: #1a1a1a; border: 2px solid rgba(255,255,255,0.3); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-title); font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
         .track-arrow-horiz:hover { background: #fff; transform: translateY(-50%) translate(-2px, -2px); box-shadow: 0 8px 16px rgba(0,0,0,0.5); }
@@ -185,10 +197,11 @@
         .track-arrow-left { left: -20px; } .track-arrow-right { right: -20px; }
 
         /* --- 个人专页第1部分 (Portrait) --- */
-        .student-profile-section { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: clamp(80px, 12vh, 120px) 4vw; position: relative; }
-        .profile-card { width: 100%; max-width: 1200px; background: linear-gradient(135deg, var(--blue), #2a75d3); border-radius: 24px; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); display: flex; align-items: stretch; overflow: hidden; padding: 0 40px; position: relative; }
+        .student-profile-section { width: 100%; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: var(--section-pad-vertical) 4vw; position: relative; }
+        .profile-card { width: 100%; max-width: 1200px; background: linear-gradient(135deg, var(--blue), #2a75d3); border-radius: 24px; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); display: flex; align-items: stretch; overflow: hidden; padding: 0 40px; position: relative; max-height: calc(100vh - (var(--section-pad-vertical) + var(--section-pad-vertical) + var(--footer-h))); }
+        .profile-card { overflow: auto; }
         .profile-img-col { flex: 1; display: flex; justify-content: center; align-items: flex-end; position: relative; }
-        .profile-img-col img { width: 100%; max-width: 450px; height: auto; object-fit: contain; transform: translateY(20px) scale(1.05); filter: drop-shadow(5px 5px 0px rgba(26,26,26,0.3)); transition: all 0.4s ease; }
+        .profile-img-col img { width: 100%; max-width: 450px; max-height: 60vh; height: auto; object-fit: contain; transform: translateY(20px) scale(1); filter: drop-shadow(5px 5px 0px rgba(26,26,26,0.3)); transition: all 0.4s ease; }
         .profile-text-col { flex: 1.5; display: flex; flex-direction: column; justify-content: center; padding: 60px 0 60px 40px; color: #fff; }
         .profile-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 4rem); margin-bottom: 20px; line-height: 1.1; letter-spacing: 2px; text-shadow: 3px 3px 0 var(--charcoal); }
         .profile-comment { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1.5; text-shadow: 1px 1px 0 rgba(26,26,26,0.6); }
@@ -199,7 +212,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 4vw clamp(60px, 8vh, 100px) 4vw;
+            padding: var(--section-pad-vertical) 6vw var(--section-pad-vertical);
             position: relative;
         }
 
@@ -429,8 +442,8 @@
 
 
         /* --- 第7部分 Contact Footer --- */
-        .contact-footer-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(60px, 8vh, 100px) 20px clamp(40px, 6vh, 60px) 20px; margin-top: 20px; border-top: 2px dashed rgba(26,26,26,0.1); }
-        .contact-title { font-family: var(--font-title); font-size: clamp(2rem, 3.5vw, 3rem); color: var(--charcoal); margin-bottom: clamp(20px, 4vh, 30px); letter-spacing: 1px; text-align: center; }
+        .contact-footer-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(80px, 12vh, 120px) 6vw clamp(80px, 12vh, 120px); margin-top: 40px; border-top: 2px dashed rgba(26,26,26,0.1); min-height: 100vh; }
+        .contact-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5rem); color: var(--charcoal); margin-bottom: clamp(24px, 4vh, 36px); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
         .social-circles-container { display: flex; justify-content: center; gap: clamp(15px, 2vw, 25px); }
         .social-circle-btn { display: flex; justify-content: center; align-items: center; width: clamp(50px, 6vw, 65px); height: clamp(50px, 6vw, 65px); border-radius: 50%; border: 3px solid var(--charcoal); background: transparent; color: var(--charcoal); text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 4px 4px 0 rgba(26,26,26,0.1); }
         .social-circle-btn svg { width: 50%; height: 50%; }
@@ -441,17 +454,24 @@
         .social-circle-btn:nth-child(3):hover { background: #FF0000; border-color: #FF0000; }
         .social-circle-btn:nth-child(4):hover { background: #000; border-color: #000; }
         .social-circle-btn:nth-child(5):hover { background: #FF2442; border-color: #FF2442; }
-        .footer-canvas { width: 100%; height: clamp(45px, 6vh, 60px); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: clamp(0.75rem, 0.85vw, 0.85rem); font-weight: 700; letter-spacing: 1px; clip-path: polygon(0 15%, 30% 0, 70% 20%, 100% 5%, 100% 100%, 0 100%); margin-top: auto; }
+        .footer-spacer { width: 100%; height: var(--footer-h); }
+        .footer-canvas { position: fixed; bottom: 0; left: 0; z-index: 100; width: 100vw; margin-left: calc(50% - 50vw); height: var(--footer-h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: clamp(0.9rem, 1vw, 1rem); font-weight: 700; letter-spacing: 1px; /* keep artistic top shape but ensure ends touch edges */ clip-path: polygon(0 0, 12% 0, 30% 6%, 70% 6%, 88% 0, 100% 0, 100% 100%, 0 100%); margin-top: 0; opacity: 0; transform: translateY(100%); transition: opacity 0.35s ease, transform 0.35s ease; pointer-events: none; }
+        .footer-canvas.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
         /* --- 艺术涂鸦分割线 --- */
-        .palette-divider { 
+        .palette-divider {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
-            width: 100%;
-            padding: 40px 5vw;
-            background: var(--bg);
+            /* make the divider full-bleed across the viewport so its dashed lines reach the same edges everywhere */
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            padding: 28px 0;
+            background: var(--bg); /* ensure the divider area matches page background and appears identical */
+            position: relative;
+            z-index: 2000; /* sit above neighboring sections so it won't be visually covered */
+            margin: clamp(8px, 2vh, 24px) 0; /* give breathing room above/below to avoid overlaps */
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 0.8s ease 0.3s forwards;
@@ -462,6 +482,9 @@
             height: 2px;
             border-top: 2px dashed rgba(26,26,26,0.3);
             position: relative;
+            margin: 0 18px; /* ensure consistent spacing to the colored dot group */
+            /* make the dashed line render consistently across browsers */
+            background-clip: padding-box;
         }
         /* 中间彩色圆点组 */
         .divider-dots {
@@ -495,7 +518,7 @@
             align-items: center; 
             justify-content: center; 
             width: 100%; 
-            padding: 60px 5vw;
+            padding: var(--section-pad-vertical) 6vw var(--section-pad-vertical);
             background: var(--bg);
             gap: 40px;
         }
@@ -992,6 +1015,7 @@
                 <a href="https://www.tiktok.com/@the.story.palette?_r=1&_t=ZS-97hBtSIP381" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
                 <a href="https://www.xiaohongshu.com/user/profile/648321bd000000001100390d?xsec_token=YBWxG3zbMzEfOm9bmNtF2SgagNQDNunlgrCT1cPExOFhE=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=ODo6MzU2Rk02NzUyOTgwNjc0OTc3PjZN&apptime=1782998672&share_id=27ca9365c4f04ec1951e6a1931745394" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
             </div>
+            <div class="footer-spacer" aria-hidden="true"></div>
             <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
         </section>
 
@@ -1029,7 +1053,21 @@
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
             }, observerOptions);
+            const footerCanvas = document.querySelector('.footer-canvas');
             document.querySelectorAll('.animate-on-scroll, .cyan-band, .portfolio-header-bar').forEach(el => { observer.observe(el); });
+            if (footerCanvas) {
+                const contactObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            footerCanvas.classList.add('visible');
+                        } else {
+                            footerCanvas.classList.remove('visible');
+                        }
+                    });
+                }, { root: null, rootMargin: '0px 0px -30% 0px', threshold: 0 });
+                const contactSection = document.getElementById('sec-5');
+                if (contactSection) contactObserver.observe(contactSection);
+            }
         });
 
         const teamCards = Array.from(document.querySelectorAll('.coverflow-card'));
