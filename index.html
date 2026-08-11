@@ -30,7 +30,6 @@
             --font-mono: 'Space Mono', monospace;
             --font-fredericka: 'Fredericka the Great', serif;
             --footer-h: clamp(70px, 10vh, 110px);
-            --section-pad-vertical: clamp(80px, 12vh, 120px);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
@@ -42,9 +41,8 @@
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
         .delay-1 { transition-delay: 0.15s; }
         .delay-2 { transition-delay: 0.3s; }
-        .delay-3 { transition-delay: 0.45s; }
 
-        /* --- 底层画笔背景 (永不断开) --- */
+        /* --- 底层画笔背景 --- */
         .canvas-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden; }
         .paint-blob { position: absolute; opacity: 0.18; filter: blur(40px); border-radius: 50%; animation: floatBlob 15s infinite alternate ease-in-out; }
         .blob-1 { width: 45vw; height: 45vw; background: var(--yellow); top: -10%; left: -10%; animation-duration: 18s; }
@@ -62,7 +60,8 @@
         /* --- 导航栏 --- */
         .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 75px; display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; z-index: 1000; background: rgba(255, 253, 248, 0.85); backdrop-filter: blur(12px); border-bottom: 2px solid rgba(26,26,26,0.1); }
         .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
-        .nav-logo-static { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--charcoal); background: var(--bg); object-fit: contain; object-position: center; display: block; overflow: hidden; }
+        /* 1. 小Logo修复：无黑框，无裁切，完美显现 */
+        .nav-logo-static { width: auto; max-width: 180px; height: 45px; object-fit: contain; object-position: left center; display: block; border: none; border-radius: 0; background: transparent; }
         .logo-text { font-family: var(--font-logo); font-size: 1.8rem; color: var(--charcoal); padding-top: 5px; }
         .nav-links { display: flex; align-items: center; gap: 2vw; list-style: none; font-family: var(--font-title); font-size: 1.2rem; letter-spacing: 1px; }
         .nav-link { text-decoration: none; color: var(--charcoal); transition: color 0.3s ease; position: relative; cursor: pointer; }
@@ -76,226 +75,229 @@
         .btn-add-nav { padding: 8px 20px; background: #fff; color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; position: relative; z-index: 1; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; letter-spacing: 1px; }
         .btn-add-nav:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
 
-        /* --- 弹窗样式 --- */
-        .poster-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.75); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        /* --- 10. 活动弹窗海报 (Join Us Now 读取 poster.jpg) --- */
+        .poster-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        .modal-content { position: relative; background: var(--bg); padding: 20px; border-radius: 12px; border: 4px solid var(--charcoal); box-shadow: 10px 10px 0 var(--red); max-width: 90%; max-height: 90vh; text-align: center; }
-        .modal-content img { max-width: 100%; max-height: 70vh; border-radius: 8px; object-fit: contain; }
-        .close-modal { position: absolute; top: -20px; right: -20px; background: var(--yellow); color: var(--charcoal); border: 2px solid var(--charcoal); width: 40px; height: 40px; border-radius: 50%; font-family: var(--font-title); font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 2px 2px 0 var(--charcoal); }
-        .close-modal:hover { background: var(--red); color: #fff; }
+        .modal-content { position: relative; max-width: 90%; max-height: 90vh; text-align: center; }
+        .modal-content img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
+        .close-modal { position: absolute; top: -20px; right: -40px; color: #fff; font-size: 3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.3s ease; }
+        .close-modal:hover { color: var(--red); }
 
-        /* --- 保证单页统一尺寸的独立分页容器 --- */
+        /* --- 7. 高清大图查看器 (Lightbox) --- */
+        .lightbox-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; animation: fadeIn 0.3s ease; }
+        .lightbox-modal img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.5); border: 2px solid #333; }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 50px; color: #fff; cursor: pointer; transition: color 0.3s ease; }
+        .lightbox-close:hover { color: var(--red); }
+
+        /* --- 独立分页容器 --- */
         .spa-page { display: none; width: 100vw; min-height: 100vh; flex-direction: column; align-items: center; opacity: 0; animation: fadeInPage 0.5s ease forwards; position: relative; z-index: 10; }
         .spa-page.active { display: flex; }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 页面排列结构 --- */
+        /* --- 页面通用垂直排列 --- */
         .deck-container { width: 100%; display: flex; flex-direction: column; position: relative; z-index: 10; }
-        .section, .student-profile-section, .team-coverflow-section, .portfolio-details-section, .portfolio-gallery-section, .contact-footer-section {
-            width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: var(--section-pad-vertical) 6vw var(--section-pad-vertical); position: relative;
-        }
+        .section, .student-profile-section, .portfolio-details-section, .portfolio-gallery-section, .contact-footer-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; }
         .sec-header { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5rem); font-weight: 400; text-align: center; margin-bottom: clamp(15px, 3vh, 35px); letter-spacing: 2px; color: var(--charcoal); }
-        .stories-showcase-section .sec-header { color: #fff; }
 
         /* --- 1. 首屏轮播 --- */
         .hero-slider-container { width: 100vw; height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; z-index: 10; background: transparent; overflow: hidden; }
         .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.8s ease-in-out; text-align: center; }
         .hero-slide.active { opacity: 1; visibility: visible; z-index: 2; }
-        .hero-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.7; }
+        /* 核心修复：object-position: center 15% 防止顶部裁切太多导致没有头 */
+        .hero-bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; z-index: 1; opacity: 0.75; }
         .hero-content { position: relative; z-index: 2; padding: 0 8vw; }
         .slide-title { font-family: var(--font-title); font-size: clamp(3rem, 6vw, 6.5rem); color: var(--charcoal); line-height: 1.1; letter-spacing: 2px; text-transform: capitalize; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
-        /* 修复：移除了 transform: rotate(-2deg); 保证文字水平 */
         .slide-sub { font-family: var(--font-sub); font-size: clamp(1.8rem, 2.8vw, 3.2rem); color: var(--charcoal); margin-top: 15px; text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
         .c-red { color: var(--red); } .c-yellow { color: var(--yellow); } .c-blue { color: var(--blue); } .c-purple { color: var(--purple); } .c-green { color: var(--green); }
         .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: 2px solid var(--charcoal); color: var(--charcoal); border-radius: 50%; width: 55px; height: 55px; font-size: 1.8rem; font-family: var(--font-title); cursor: pointer; z-index: 100; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .slider-arrow:hover { background: var(--yellow); scale: 1.1; } .arrow-left { left: 4vw; } .arrow-right { right: 4vw; }
+        .slider-arrow:hover { background: var(--charcoal); color: #fff; scale: 1.1; } .arrow-left { left: 4vw; } .arrow-right { right: 4vw; }
 
-        /* --- 2. 倒计时 --- */
-        .countdown-logo-wrap { width: clamp(150px, 20vw, 220px); margin-bottom: clamp(15px, 2vh, 25px); }
-        .hero-logo-animated { width: 100%; height: auto; border-radius: 50%; mix-blend-mode: multiply; animation: floatBlob 8s infinite alternate ease-in-out; transition: transform 0.4s ease; }
-        .hero-logo-animated:hover { transform: scale(1.05) rotate(4deg); }
+        /* 新增：底部 5 个小短条指示器 */
+        .hero-indicators { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 100; }
+        .indicator { width: 35px; height: 6px; background: rgba(255,255,255,0.6); border-radius: 4px; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        /* Active 状态宽度拉长，并根据行内样式赋予变色效果 */
+        .indicator.active { width: 70px; background: var(--active-color, var(--charcoal)); }
+
+        /* --- 2. 倒计时 & 大 Logo 微动画 --- */
+        .countdown-logo-wrap { width: clamp(180px, 25vw, 280px); margin-bottom: clamp(15px, 2vh, 25px); }
+        /* 独立微动画：全程平缓呼吸浮动，不依赖 hover */
+        .hero-logo-animated { width: 100%; height: auto; object-fit: contain; display: block; mix-blend-mode: multiply; border-radius: 0; animation: autoBreathe 4s infinite alternate ease-in-out; }
+        @keyframes autoBreathe { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-8px) scale(1.03); } }
+        
         .countdown-title { font-family: var(--font-fredericka); font-size: clamp(3rem, 5vw, 4.5rem); color: var(--charcoal); line-height: 1.1; text-align: center; }
         .countdown-subtitle { font-family: var(--font-fredericka); font-size: clamp(1.2rem, 2vw, 2rem); color: var(--charcoal); text-align: center; margin-bottom: clamp(30px, 6vh, 50px); }
         .countdown-wrapper { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .countdown-heading { font-family: var(--font-title); font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 2px; margin-bottom: -5px; color: var(--charcoal); }
         .countdown-tag { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 1.8rem); color: rgba(26,26,26,0.8); margin-bottom: clamp(25px, 4vh, 40px); }
         .timer-cards-wrapper { display: flex; gap: clamp(15px, 2vw, 30px); justify-content: center; flex-wrap: wrap; margin-bottom: clamp(30px, 5vh, 45px); }
-        .timer-card { background: #fff; border-radius: 20px; box-shadow: 0 10px 25px rgba(26,26,26,0.06); border: 2px solid rgba(26,26,26,0.05); padding: clamp(15px, 2vh, 25px); width: clamp(110px, 14vw, 150px); display: flex; flex-direction: column; align-items: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .timer-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(26,26,26,0.12); }
+        .timer-card { background: #fff; border-radius: 20px; box-shadow: 0 10px 25px rgba(26,26,26,0.06); border: 2px solid rgba(26,26,26,0.05); padding: clamp(15px, 2vh, 25px); width: clamp(110px, 14vw, 150px); display: flex; flex-direction: column; align-items: center; }
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
         .time-divider { display: flex; align-items: center; justify-content: center; padding-bottom: 25px; font-family: var(--font-title); font-size: 2.5rem; color: var(--charcoal); }
         .tba-info { display: flex; flex-direction: column; gap: 12px; align-items: center; }
         .tba-info p { font-family: var(--font-title); font-size: clamp(1.2rem, 1.8vw, 1.5rem); color: var(--charcoal); letter-spacing: 1.5px; }
 
-        /* --- 3. ABOUT US (在 Home 页) --- */
-        .about-us-section { justify-content: center; }
-        .about-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 4.5rem); text-transform: uppercase; color: var(--charcoal); margin-bottom: 2rem; position: relative; z-index: 2; letter-spacing: 2px; width: 100%; max-width: 1100px; text-align: left; }
-        .cyan-band { position: absolute; left: 0; top: 35%; height: 50%; background-color: var(--cyan); z-index: 0; transform: scaleX(0); transform-origin: left; transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1); }
-        .cyan-band.is-visible { transform: scaleX(1); }
-        .about-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; width: 100%; max-width: 1100px; position: relative; z-index: 2; align-items: center; }
-        .about-text-col { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; position: relative; z-index: 2; }
-        .about-text { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 1.8rem); line-height: 1.6; color: var(--charcoal); text-shadow: 1px 1px 0 rgba(255,255,255,0.8), -1px -1px 0 rgba(255,255,255,0.8), 1px -1px 0 rgba(255,255,255,0.8), -1px 1px 0 rgba(255,255,255,0.8); opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-        .about-text.is-visible { opacity: 1; transform: translateY(0); }
-        .btn-discover { margin-top: 10px; padding: 10px 24px; background: var(--yellow); color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; text-decoration: none; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; letter-spacing: 1px; display: inline-block; }
+        /* --- 3. 首页 About Us (压缩篇幅，一屏显示) --- */
+        #page-home .about-us-section { min-height: auto; padding: 60px 6vw; margin: 20px 0; }
+        .about-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); text-transform: uppercase; color: var(--charcoal); margin-bottom: 1.5rem; position: relative; z-index: 2; letter-spacing: 2px; text-align: left; }
+        .about-content-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4vw; width: 100%; max-width: 1200px; position: relative; z-index: 2; align-items: center; }
+        .about-text-col { display: flex; flex-direction: column; gap: 15px; }
+        /* 字号与行高微缩，文本框排扁 */
+        .about-text { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.5vw, 1.4rem); line-height: 1.4; color: var(--charcoal); text-shadow: 1px 1px 0 rgba(255,255,255,0.8), -1px -1px 0 rgba(255,255,255,0.8); }
+        .btn-discover { margin-top: 5px; padding: 10px 24px; background: var(--yellow); color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; display: inline-block; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; align-self: flex-start;}
         .btn-discover:hover { background: var(--red); color: #fff; transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
-        .about-media-col { width: 100%; }
-        .video-placeholder { width: 100%; aspect-ratio: 16 / 9; background-color: transparent; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; position: relative; transition: transform 0.4s ease, box-shadow 0.4s ease; opacity: 0; transform: translateY(30px) scale(0.95); animation: floatUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 0.4s; }
-        @keyframes floatUp { to { opacity: 1; transform: translateY(0) scale(1); } }
-        .video-placeholder:hover { transform: translate(-5px, -5px) scale(1); box-shadow: 17px 17px 0 var(--charcoal); }
+        .video-placeholder { width: 100%; aspect-ratio: 16 / 9; max-height: 38vh; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; }
         .video-placeholder img { width: 100%; height: 100%; object-fit: contain; }
 
-        /* --- 4. The Stories (在 Home 页底部的画廊) --- */
-        .stories-showcase-section { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding: var(--section-pad-vertical) 6vw var(--section-pad-vertical); }
-        .category-block { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 15px; margin-bottom: clamp(30px, 5vh, 50px); }
-        .category-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 15px; }
-        .category-title { font-family: var(--font-title); font-size: clamp(2rem, 3vw, 2.8rem); color: var(--charcoal); letter-spacing: 2px; border-bottom: 4px solid var(--red); padding-bottom: 5px; text-transform: uppercase; }
-        .view-all-link { font-family: var(--font-title); font-size: clamp(1rem, 1.2vw, 1.2rem); color: var(--charcoal); text-decoration: underline; text-underline-offset: 4px; transition: color 0.3s ease; margin-bottom: 5px; letter-spacing: 1px; cursor: pointer; }
-        .view-all-link:hover { color: var(--red); }
+        /* --- 8. 首页瀑布流画廊 (支持 View All 网格切换) --- */
+        .stories-showcase-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; min-height: auto; }
+        .category-block { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .category-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 15px; border-bottom: 4px solid var(--red); padding-bottom: 5px;}
+        .category-title { font-family: var(--font-title); font-size: clamp(2rem, 3vw, 2.8rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; }
+        .view-all-link { font-family: var(--font-title); font-size: clamp(1rem, 1.2vw, 1.2rem); color: var(--charcoal); text-decoration: underline; cursor: pointer; transition: color 0.3s ease; margin-bottom: 5px; }
+        .view-all-link:hover { color: var(--blue); }
+        
         .carousel-wrapper-horiz { position: relative; width: 100%; display: flex; align-items: center; }
-        .carousel-track-horiz { display: flex; gap: clamp(15px, 2vw, 25px); overflow-x: auto; scroll-behavior: smooth; scroll-snap-type: x mandatory; padding: 15px 10px 30px 10px; width: 100%; -ms-overflow-style: none; scrollbar-width: none; background: transparent; }
+        .carousel-track-horiz { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 10px 30px 10px; width: 100%; scrollbar-width: none; background: transparent; transition: all 0.3s ease; }
         .carousel-track-horiz::-webkit-scrollbar { display: none; }
-        .story-poster-card { flex: 0 0 calc(25% - 18.75px); scroll-snap-align: start; background: #fff; border: 3px solid var(--charcoal); border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; text-decoration: none; display: flex; flex-direction: column; position: relative; }
+        
+        /* View All 展开状态 */
+        .carousel-track-horiz.grid-view { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); overflow-x: visible; }
+        .carousel-track-horiz.grid-view .story-poster-card { flex: none; width: 100%; }
+
+        /* 5. 海报 A4 比例及 Hover 浮现文字 */
+        .story-poster-card { 
+            flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; 
+            background: #fff; border: 3px solid var(--charcoal); border-radius: 12px; overflow: hidden; 
+            box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            cursor: pointer; position: relative; display: block;
+        }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
-        .poster-img { width: 100%; aspect-ratio: 4 / 5; object-fit: contain; border-bottom: 3px solid var(--charcoal); background: #e0e0e0; }
-        .poster-title { font-family: var(--font-title); font-size: clamp(1.2rem, 1.5vw, 1.4rem); color: var(--charcoal); padding: 18px 10px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 1px; background: #fff; }
-        .track-arrow-horiz { position: absolute; z-index: 10; top: 40%; transform: translateY(-50%); background: rgba(255,255,255,0.95); color: #1a1a1a; border: 2px solid rgba(255,255,255,0.3); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-title); font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.4); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
-        .track-arrow-horiz:hover { background: #fff; transform: translateY(-50%) translate(-2px, -2px); box-shadow: 0 8px 16px rgba(0,0,0,0.5); }
-        .track-arrow-horiz:active { transform: translateY(-50%) translate(2px, 2px); box-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+        .poster-img { width: 100%; height: 100%; object-fit: cover; background: #e0e0e0; transition: transform 0.4s ease; }
+        
+        /* 隐藏的信息层 */
+        .poster-info-overlay { 
+            position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); 
+            padding: 15px; border-top: 3px solid var(--charcoal); transform: translateY(101%); 
+            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+        }
+        .story-poster-card:hover .poster-info-overlay { transform: translateY(0); }
+        .overlay-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--charcoal); margin-bottom: 5px; line-height: 1.2;}
+        .overlay-creator { font-family: var(--font-sub); font-size: 1rem; color: rgba(26,26,26,0.8); }
+
+        .track-arrow-horiz { position: absolute; z-index: 10; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: 2px solid var(--charcoal); width: 45px; height: 45px; border-radius: 50%; font-family: var(--font-title); font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
+        .track-arrow-horiz:hover { background: var(--yellow); }
         .track-arrow-left { left: -20px; } .track-arrow-right { right: -20px; }
 
-        /* --- MEET THE TEAM (Page 2 团队展示) --- */
-        .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: visible; padding: clamp(90px, 14vh, 135px) 6vw clamp(100px, 14vh, 140px); }
-        .team-coverflow-section .sec-header { margin-bottom: clamp(40px, 6vh, 60px); }
-        .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; gap: clamp(35px, 5vh, 60px); margin-top: clamp(50px, 6vh, 70px); }
-        .coverflow-track { position: relative; width: 100%; height: clamp(300px, 45vh, 450px); display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; margin-top: clamp(30px, 4vh, 45px); margin-bottom: clamp(30px, 5vh, 55px); cursor: grab; overflow: visible; }
-        .coverflow-track:active { cursor: grabbing; }
-        .coverflow-card { position: absolute; top: 50%; width: clamp(240px, 28vw, 350px); aspect-ratio: 3 / 4; background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); user-select: none; display: inline-block; box-sizing: border-box; transform: translateY(-50%); }
-        .coverflow-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; pointer-events: none; }
+        /* --- 4. MEET THE TEAM (丝滑 Hover 交互) --- */
+        .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: visible; padding: 100px 6vw; min-height: 100vh; }
+        .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; gap: 40px; margin-top: 20px; }
+        .coverflow-track { position: relative; width: 100%; height: 400px; display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; }
+        /* 移除 cursor: grab，因为现在全靠 hover 触发，且无需点击 */
+        .coverflow-card { position: absolute; top: 50%; width: 280px; aspect-ratio: 3 / 4; background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); display: block; transform: translateY(-50%); cursor: pointer; }
+        .coverflow-card img { width: 100%; height: 100%; object-fit: cover; }
         .card-active { transform: translateX(0) translateZ(80px) translateY(-50%) scale(1); z-index: 10; opacity: 1; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border-color: var(--active-color, var(--charcoal)); cursor: default; }
-        .card-prev { transform: translateX(-70%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
-        .card-next { transform: translateX(70%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.6; box-shadow: 0 10px 20px rgba(0,0,0,0.1); cursor: pointer; }
-        .card-hidden-left { transform: translateX(-120%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
-        .card-hidden-right { transform: translateX(120%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
-        .team-info-box { text-align: center; width: 100%; max-width: 800px; min-height: 180px; padding: 20px; margin-top: clamp(20px, 3vh, 35px); transition: opacity 0.3s ease; }
-        .info-team-name { font-family: var(--font-title); font-size: clamp(1.8rem, 2.5vw, 2.5rem); margin-bottom: 12px; letter-spacing: 1px; text-shadow: 1px 1px 0 rgba(26,26,26,0.2); transition: color 0.3s ease; }
-        .info-team-text { font-family: var(--font-mono); font-size: clamp(0.85rem, 1vw, 1rem); line-height: 1.6; color: var(--charcoal); margin-bottom: 8px; }
-        .info-team-text strong { color: var(--charcoal); font-weight: 700; }
+        .card-prev { transform: translateX(-65%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(15deg); z-index: 5; opacity: 0.6; }
+        .card-next { transform: translateX(65%) translateZ(-100px) translateY(-50%) scale(0.85) rotateY(-15deg); z-index: 5; opacity: 0.6; }
+        .card-hidden-left { transform: translateX(-110%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
+        .card-hidden-right { transform: translateX(110%) translateZ(-300px) translateY(-50%) scale(0.7); z-index: 1; opacity: 0; pointer-events: none; }
+        
+        .team-info-box { text-align: center; width: 100%; max-width: 800px; min-height: 150px; padding: 15px; transition: opacity 0.3s ease; }
+        .info-team-name { font-family: var(--font-title); font-size: 2.2rem; margin-bottom: 10px; text-shadow: 1px 1px 0 rgba(26,26,26,0.2); transition: color 0.3s ease; }
+        .info-team-text { font-family: var(--font-sub); font-size: 1.2rem; line-height: 1.5; color: var(--charcoal); margin-bottom: 5px; font-weight: bold;}
 
-        /* --- 个人专页区 (Profile Page 3) --- */
-        .student-profile-section { width: 100%; display: flex; justify-content: center; align-items: center; padding: var(--section-pad-vertical) 4vw 0; position: relative; }
-        .profile-card { width: 100%; max-width: 1200px; background: linear-gradient(135deg, var(--blue), #2a75d3); border-radius: 24px; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); display: flex; align-items: stretch; overflow: hidden; padding: 0 40px; position: relative; max-height: 70vh; }
+        /* --- 7. THE STORIES (个人专页区) --- */
+        .student-profile-section { width: 100%; display: flex; justify-content: center; align-items: center; padding: 120px 4vw 40px; position: relative; }
+        .profile-card { width: 100%; max-width: 1200px; background: linear-gradient(135deg, var(--blue), #2a75d3); border-radius: 24px; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); display: flex; align-items: stretch; overflow: hidden; padding: 0 40px; max-height: 65vh; }
         .profile-img-col { flex: 1; display: flex; justify-content: center; align-items: flex-end; position: relative; }
-        .profile-img-col img { width: 100%; max-width: 450px; max-height: 60vh; height: auto; object-fit: contain; transform: translateY(20px) scale(1); filter: drop-shadow(5px 5px 0px rgba(26,26,26,0.3)); transition: all 0.4s ease; }
-        .profile-text-col { flex: 1.5; display: flex; flex-direction: column; justify-content: center; padding: 60px 0 60px 40px; color: #fff; }
-        .profile-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 4rem); margin-bottom: 20px; line-height: 1.1; letter-spacing: 2px; text-shadow: 3px 3px 0 var(--charcoal); }
-        .profile-comment { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 2rem); line-height: 1.5; text-shadow: 1px 1px 0 rgba(26,26,26,0.6); }
+        .profile-img-col img { width: 100%; max-width: 450px; max-height: 55vh; object-fit: contain; filter: drop-shadow(5px 5px 0px rgba(26,26,26,0.3)); }
+        .profile-text-col { flex: 1.5; display: flex; flex-direction: column; justify-content: center; padding: 40px 0 40px 40px; color: #fff; }
+        .profile-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 4rem); margin-bottom: 20px; text-shadow: 3px 3px 0 var(--charcoal); line-height: 1.1;}
+        .profile-comment { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.8rem); line-height: 1.5; text-shadow: 1px 1px 0 rgba(26,26,26,0.6); }
 
-        .portfolio-details-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: clamp(40px, 6vh, 80px) 6vw var(--section-pad-vertical); position: relative; }
-        .portfolio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: clamp(30px, 4vw, 60px); width: 100%; max-width: 1200px; align-items: flex-start; }
+        .portfolio-details-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 40px 6vw 80px; position: relative; }
+        .portfolio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; width: 100%; max-width: 1200px; align-items: flex-start; }
         
-        .portfolio-info-col { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; padding: 40px 0;  min-height: 500px; }
-        .info-blob-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(350px, 50vw, 600px); height: clamp(350px, 50vw, 600px); background: var(--red); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morphBlobInfo 8s ease-in-out infinite; z-index: 0; transition: background 0.5s ease; box-shadow: inset 10px 10px 20px rgba(0,0,0,0.05); }
-        @keyframes morphBlobInfo { 0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } 50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; } 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; } }
+        .portfolio-info-col { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; padding: 40px 0; min-height: 400px; }
+        .info-blob-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(350px, 45vw, 550px); height: clamp(350px, 45vw, 550px); background: var(--red); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morphBlobInfo 8s ease-in-out infinite; z-index: 0; transition: background 0.5s ease; box-shadow: inset 10px 10px 20px rgba(0,0,0,0.05); }
         
-        .info-text-box { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; gap: 20px; }
-        .info-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-        .info-list li { font-size: clamp(0.95rem, 1.1vw, 1.1rem); line-height: 1.5; color: var(--charcoal); display: flex; flex-direction: column; gap: 2px; text-shadow: 1.5px 1.5px 0 #fff, -1.5px -1.5px 0 #fff, 1.5px -1.5px 0 #fff, -1.5px 1.5px 0 #fff, 1px 1px 0 #fff; }
-        .info-list strong { font-family: var(--font-title); font-size: 1.2em; letter-spacing: 0.5px; }
-        .info-list span { font-family: var(--font-sub); font-size: 1.4em; font-weight: 600; }
-        .category-tag-badge { font-family: var(--font-title); font-size: clamp(1rem, 1.2vw, 1.2rem); color: var(--charcoal); background: #fff; padding: 8px 20px; display: inline-block; margin-top: 15px; border: 3px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); letter-spacing: 1px; transform: rotate(-3deg); align-self: flex-start; transition: all 0.3s ease; }
+        /* 个人资料严格锁定白字，且不超宽 */
+        .info-glass-card { position: relative; z-index: 2; width: 80%; display: flex; flex-direction: column; align-items: flex-start; }
+        
+        /* 7. 专业贴纸标签复刻（红底黑字不改） */
+        .category-tag-badge { 
+            font-family: var(--font-title); font-size: 1.2rem; color: #1a1a1a !important; background: var(--red); 
+            padding: 8px 24px; display: inline-block; margin-bottom: 25px; 
+            border: 2px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); 
+            letter-spacing: 1px; transform: rotate(-3deg); transition: background 0.5s ease; 
+        }
+        
+        /* 7. 资料列表强制白字无阴影 */
+        .info-list { list-style: none; display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .info-list li { font-size: 1.05rem; line-height: 1.4; color: #fff !important; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 6px; display: flex; flex-direction: column; gap: 4px; text-shadow: none; }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list strong { font-family: var(--font-title); font-size: 1.15em; color: #fff !important; text-shadow: none; }
+        .info-list span { font-family: var(--font-sub); font-size: 1.3em; color: #fff !important; text-shadow: none; }
 
         .portfolio-media-col { display: flex; flex-direction: column; gap: 15px; width: 100%; }
-        .media-heading-tag { font-family: var(--font-title); font-size: clamp(1.2rem, 1.5vw, 1.5rem); color: #fff; background: var(--cyan); border: 2px solid var(--charcoal); box-shadow: 4px 4px 0 var(--charcoal); padding: 8px 20px; display: none; align-self: flex-start; letter-spacing: 1px; }
-        .main-video-player { width: 100%; aspect-ratio: 16 / 9; background: #000; border: 4px solid var(--charcoal); box-shadow: 10px 10px 0 rgba(26,26,26,0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; overflow: hidden; transition: transform 0.3s ease; }
-        .main-video-player:hover { transform: translateY(-5px); }
-        .youtube-btn-mock { width: 80px; height: 55px; background: #FF0000; border-radius: 12px; display: flex; justify-content: center; align-items: center; transition: transform 0.2s ease; }
+        .main-video-player { width: 100%; aspect-ratio: 16 / 9; background: #000; border: 4px solid var(--charcoal); box-shadow: 10px 10px 0 rgba(26,26,26,0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: transform 0.3s ease; }
+        .youtube-btn-mock { width: 80px; height: 55px; background: #FF0000; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
         .youtube-btn-mock::before { content: ''; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
-        .thumbnail-row { display: flex; gap: clamp(10px, 1.5vw, 15px); width: 100%; overflow-x: auto; padding-bottom: 10px; }
-        .thumb-box { flex: 1; min-width: 80px; aspect-ratio: 1; background: #e0e0e0; border: 2px solid var(--charcoal); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold; color: rgba(26,26,26,0.5); }
-        .thumb-box.active { border: 3px solid var(--blue); box-shadow: 4px 4px 0 var(--blue); transform: translateY(-3px); }
-        .thumb-box:hover:not(.active) { transform: translateY(-3px); box-shadow: 3px 3px 0 var(--charcoal); }
         
-        .description-box { margin-top: 15px; display: flex; flex-direction: column; gap: 15px; }
-        .desc-label, .production-label { font-family: var(--font-sub); font-size: clamp(1.8rem, 2vw, 2.2rem); color: var(--charcoal); font-weight: 700; }
+        /* 7. 缩略图点击调用 Lightbox */
+        .thumbnail-row { display: flex; gap: 15px; width: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .thumb-box { flex: 1; min-width: 80px; aspect-ratio: 1; background: #e0e0e0; border: 2px solid var(--charcoal); border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold; color: rgba(26,26,26,0.5); transition: transform 0.2s; overflow: hidden;}
+        .thumb-box img { width: 100%; height: 100%; object-fit: cover;}
+        .thumb-box:hover { transform: translateY(-3px); box-shadow: 3px 3px 0 var(--charcoal); border-color: var(--blue); }
+        
+        .description-box { margin-top: 10px; background: #fff; padding: 20px; border: 2px solid var(--charcoal); border-radius: 12px; }
+        .desc-label, .production-label { font-family: var(--font-sub); font-size: 2rem; color: var(--charcoal); font-weight: 700; }
         .production-label { margin-top: 20px; margin-bottom: 5px; }
-        .desc-body, .production-list { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.4vw, 1.5rem); line-height: 1.5; color: var(--charcoal); }
+        .desc-body, .production-list { font-family: var(--font-sub); font-size: 1.3rem; line-height: 1.5; color: var(--charcoal); }
         .production-list { list-style: none; }
 
-        /* --- Exhibition (Page 4) --- */
+        /* --- 5. Other Works (Student Artworks) --- */
+        .portfolio-gallery-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; background: var(--bg); }
+        .portfolio-gallery-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; text-align: center; position: relative; padding-bottom: 15px; margin-bottom: 40px; }
+        .portfolio-gallery-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 150px; height: 4px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
+        .portfolio-works-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; }
+        
+        /* --- Exhibition --- */
         .ways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2vw; width: 100%; max-width: 1080px; margin-bottom: 60px; }
-        .way-card { padding: clamp(20px, 3vh, 30px) 20px; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: clamp(220px, 32vh, 290px); position: relative; cursor: pointer; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .way-card { padding: 30px 20px; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 250px; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .way-card:nth-child(1) { background: var(--red); border-radius: 65% 35% 50% 50% / 45% 60% 40% 55%; }
         .way-card:nth-child(2) { background: var(--blue); border-radius: 40% 60% 65% 35% / 60% 45% 55% 40%; }
         .way-card:nth-child(3) { background: var(--yellow); color: #fff !important; border-radius: 55% 45% 35% 65% / 50% 50% 50% 50%; } 
-        .way-card:hover { transform: translateY(-8px) scale(1.04) rotate(2deg); box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
-        .way-card h3 { font-family: var(--font-title); font-size: clamp(1.4rem, 1.8vw, 1.6rem); margin-bottom: 12px; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .way-card:nth-child(3) h3 { text-shadow: none; color: #fff !important; }
-        .way-card p { font-size: clamp(0.8rem, 0.9vw, 0.9rem); line-height: 1.4; font-weight: 500; max-width: 220px; font-family: var(--font-mono); color: #fff !important; }
+        .way-card h3 { font-family: var(--font-title); font-size: 1.6rem; margin-bottom: 12px; letter-spacing: 1px; }
+        .way-card p { font-size: 0.9rem; line-height: 1.4; font-family: var(--font-mono); color: #fff !important; }
 
-        .flow-container { display: flex; align-items: center; justify-content: center; gap: 1.5vw; width: 100%; max-width: 1000px; }
-        .flow-item { flex: 1; background: #fff; padding: clamp(20px, 3vh, 30px) 18px; border: 3px solid var(--charcoal); text-align: center; position: relative; transition: transform 0.3s ease; }
-        .flow-item:nth-child(1) { box-shadow: -6px 6px 0 var(--red); clip-path: polygon(0 0, 100% 2%, 98% 100%, 2% 98%); }
-        .flow-item:nth-child(3) { box-shadow: -6px 6px 0 var(--yellow); clip-path: polygon(2% 2%, 100% 0, 98% 98%, 0 100%); }
-        .flow-item:nth-child(5) { box-shadow: -6px 6px 0 var(--purple); clip-path: polygon(0 2%, 98% 0, 100% 100%, 2% 98%); }
-        .flow-item h4 { font-family: var(--font-title); font-size: clamp(1.4rem, 1.8vw, 1.6rem); letter-spacing: 1px; margin-bottom: 8px; }
-        .flow-item:nth-child(1) h4 { color: var(--red); } .flow-item:nth-child(3) h4 { color: var(--yellow); text-shadow: 0 1px 0 var(--charcoal); } .flow-item:nth-child(5) h4 { color: var(--purple); }
-        .flow-item p { font-size: clamp(0.8rem, 0.9vw, 0.88rem); line-height: 1.4; color: rgba(26,26,26,0.75); }
-        .flow-arrow { font-family: var(--font-title); font-size: 1.6rem; color: var(--charcoal); }
-
-        /* --- 第5页 Contact Footer --- */
-        .contact-footer-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(80px, 12vh, 120px) 6vw clamp(80px, 12vh, 120px); border-top: none; min-height: 100vh; }
-        .contact-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5rem); color: var(--charcoal); margin-bottom: clamp(24px, 4vh, 36px); letter-spacing: 2px; text-transform: uppercase; text-align: center; }
-        .social-circles-container { display: flex; justify-content: center; gap: clamp(15px, 2vw, 25px); }
-        .social-circle-btn { display: flex; justify-content: center; align-items: center; width: clamp(50px, 6vw, 65px); height: clamp(50px, 6vw, 65px); border-radius: 50%; border: 3px solid var(--charcoal); background: transparent; color: var(--charcoal); text-decoration: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 4px 4px 0 rgba(26,26,26,0.1); }
+        /* --- Contact Footer --- */
+        .contact-footer-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 6vw; min-height: 100vh; }
+        .contact-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 4rem); color: var(--charcoal); margin-bottom: 30px; text-transform: uppercase; }
+        .social-circles-container { display: flex; justify-content: center; gap: 20px; }
+        .social-circle-btn { display: flex; justify-content: center; align-items: center; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--charcoal); color: var(--charcoal); text-decoration: none; transition: all 0.3s; }
         .social-circle-btn svg { width: 50%; height: 50%; }
-        .social-circle-btn span { font-family: var(--font-title); font-size: clamp(0.7rem, 1vw, 0.85rem); font-weight: 800; }
-        .social-circle-btn:hover { transform: translateY(-5px) scale(1.1); color: #fff; box-shadow: 6px 6px 0 rgba(26,26,26,0.2); }
-        .social-circle-btn:nth-child(1):hover { background: #E1306C; border-color: #E1306C; }
-        .social-circle-btn:nth-child(2):hover { background: var(--blue); border-color: var(--blue); }
-        .social-circle-btn:nth-child(3):hover { background: #FF0000; border-color: #FF0000; }
-        .social-circle-btn:nth-child(4):hover { background: #000; border-color: #000; }
-        .social-circle-btn:nth-child(5):hover { background: #FF2442; border-color: #FF2442; }
+        .social-circle-btn span { font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; }
+        .social-circle-btn:hover { transform: translateY(-5px); color: #fff; background: var(--charcoal); box-shadow: 6px 6px 0 rgba(26,26,26,0.2); }
         .footer-spacer { width: 100%; height: var(--footer-h); }
-        .footer-canvas { position: fixed; bottom: 0; left: 0; z-index: 100; width: 100vw; margin-left: calc(50% - 50vw); height: var(--footer-h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: clamp(0.9rem, 1vw, 1rem); font-weight: 700; letter-spacing: 1px; clip-path: polygon(0 0, 12% 0, 30% 6%, 70% 6%, 88% 0, 100% 0, 100% 100%, 0 100%); margin-top: 0; opacity: 0; transform: translateY(100%); transition: opacity 0.35s ease, transform 0.35s ease; pointer-events: none; }
+        .footer-canvas { position: fixed; bottom: 0; left: 0; z-index: 100; width: 100vw; height: var(--footer-h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: 700; clip-path: polygon(0 0, 12% 0, 30% 6%, 70% 6%, 88% 0, 100% 0, 100% 100%, 0 100%); opacity: 0; transform: translateY(100%); transition: all 0.35s ease; pointer-events: none; }
         .footer-canvas.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        /* --- 移动端兼容 --- */
+        /* 移动端兼容 */
         @media (max-width: 900px) {
-            .navbar { padding: 0 5vw; }
-            .nav-links { display: none; }
-            .countdown-logo-wrap { width: 140px; }
-            .timer-box { padding: 15px; border-radius: 30px; gap: 10px; }
-            .timer-card { width: 45%; padding: 15px; } 
-            .timer-circle { width: 60px; height: 60px; font-size: 1.5rem; border-width: 4px; }
-            .time-divider { display: none; } 
-            .about-title { text-align: center; }
-            .cyan-band { height: 65%; top: 20%; width: 100vw; }
-            .about-content-grid { grid-template-columns: 1fr; gap: 30px; padding: 0 15px; }
-            .coverflow-track { height: 350px; }
-            .coverflow-card { border-width: 3px; }
-            .stories-showcase-section { padding-top: 60px; gap: 40px; background: var(--bg); }
-            .story-poster-card { flex: 0 0 calc(65% - 10px); } 
-            .track-arrow-horiz { display: none; } 
-            
-            .profile-card { flex-direction: column; padding: 0 20px; text-align: center; max-height: none; }
-            .profile-img-col { min-height: auto; align-items: center; padding-top: 30px; }
-            .profile-img-col img { max-width: 250px; transform: translateY(0); filter: drop-shadow(2px 2px 0px rgba(26,26,26,0.3));}
-            .profile-text-col { padding: 30px 0 40px 0; align-items: center; }
-            
-            .portfolio-grid { grid-template-columns: 1fr; gap: 40px; }
-            .portfolio-info-col { padding: 0; min-height: auto; padding-bottom: 40px;}
-            .media-heading-tag { align-self: center; }
-            
-            .social-sidebar { display: none; }
-            .social-circles-container { flex-wrap: wrap; }
-            .ways-grid { grid-template-columns: 1fr; gap: 12px; } .flow-container { flex-direction: column; gap: 8px; }
+            .navbar { padding: 0 5vw; } .nav-links { display: none; }
+            .countdown-logo-wrap { width: 140px; } .timer-box { padding: 15px; border-radius: 30px; gap: 10px; } .timer-card { width: 45%; padding: 15px; } .timer-circle { width: 60px; height: 60px; font-size: 1.5rem; } .time-divider { display: none; } 
+            .about-content-grid { grid-template-columns: 1fr; gap: 30px; }
+            .coverflow-track { height: 300px; } .coverflow-card { border-width: 3px; }
+            .story-poster-card { flex: 0 0 calc(65% - 10px); } .track-arrow-horiz { display: none; } 
+            .profile-card { flex-direction: column; padding: 0 20px; text-align: center; max-height: none; } .profile-img-col img { max-width: 250px; } .profile-text-col { padding: 30px 0 40px 0; align-items: center; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 40px; } .portfolio-info-col { min-height: auto; padding-bottom: 40px;}
+            .ways-grid { grid-template-columns: 1fr; gap: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 动态水彩背景，贯穿全站不中断 -->
     <div class="canvas-bg">
         <div class="paint-blob blob-1"></div>
         <div class="paint-blob blob-2"></div>
@@ -304,49 +306,50 @@
         <div class="paint-blob blob-5"></div>
     </div>
 
-    <!-- 顶部导航栏 (采用 SPA 页面切换) -->
+    <!-- 导航栏 -->
     <nav class="navbar">
         <a class="nav-logo" onclick="switchPage('page-home')">
-            <img src="logo.jpg" alt="The Story Palette Logo" class="nav-logo-static" onerror="this.src='https://via.placeholder.com/36x36.png'">
-            <span class="logo-text">The Story Palette</span>
+            <!-- 1. 小Logo修复：无边框无裁切完美显现 -->
+            <img src="logo.png" alt="The Story Palette Logo" class="nav-logo-static" onerror="this.src='https://via.placeholder.com/150x45/transparent/1A1A1A?text=LOGO'">
         </a>
         <ul class="nav-links">
             <li><a class="nav-link" onclick="switchPage('page-home')">Home</a></li>
             <li class="dropdown">
-                <!-- 点击 About Us 主链接直接跳转至 Meet the Team (第2页) -->
                 <a class="nav-link" onclick="switchPage('page-team')">About Us</a>
                 <ul class="dropdown-menu">
-                    <!-- 点击下拉菜单的 The Exhibition 跳转至首页的项目简介区 -->
                     <li><a onclick="switchPage('page-home', 'sec-about')">The Exhibition</a></li>
                     <li><a onclick="switchPage('page-team')">Meet the Team</a></li>
                 </ul>
             </li>
-            <!-- 点击 The Stories 直接跳转到首页下方的瀑布流画廊区 -->
-            <li><a class="nav-link" onclick="switchPage('page-home', 'sec-stories-gallery')">The Stories</a></li>
+            <li><a class="nav-link" onclick="switchPage('page-stories')">The Stories</a></li>
             <li><a class="nav-link" onclick="switchPage('page-exhibition')">Exhibition</a></li>
             <li><a class="nav-link" onclick="switchPage('page-contact')">Contact</a></li>
         </ul>
         <button class="btn-add-nav" onclick="openPosterModal()">Join Us Now</button>
     </nav>
 
-    <!-- 活动海报弹窗 -->
-    <div id="posterModal" class="poster-modal">
-        <div class="modal-content">
+    <!-- 10. 活动海报弹窗 (Join Us Now 绑定 poster.jpg/png) -->
+    <div id="posterModal" class="poster-modal" onclick="closePosterModal()">
+        <div class="modal-content" onclick="event.stopPropagation();">
             <div class="close-modal" onclick="closePosterModal()">&times;</div>
-            <h2 style="font-family: var(--font-title); margin-bottom: 15px; letter-spacing: 1px;">EXHIBITION POSTER</h2>
-            <img src="https://via.placeholder.com/600x800.png?text=Event+Poster+Here" alt="Event Poster">
+            <!-- 指定加载 poster.png，如果没找到则用假图占位 -->
+            <img src="poster.png" alt="Event Poster" onerror="this.src='https://via.placeholder.com/800x1200.png?text=poster.png'">
         </div>
     </div>
 
-    <!-- 主容器 -->
+    <!-- 7. 高清查看器 (Lightbox) -->
+    <div id="lightboxModal" class="lightbox-modal" onclick="this.style.display='none'">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="">
+    </div>
+
     <div class="deck-container">
         
         <!-- ========================================== -->
-        <!-- 页面 1: HOME PAGE (四大核心引子) -->
+        <!-- 页面 1: HOME PAGE -->
         <!-- ========================================== -->
         <div id="page-home" class="spa-page active">
             
-            <!-- 1. 首页轮播 (16:9 无损铺满) -->
             <section class="hero-slider-container" id="sec-0">
                 <button class="slider-arrow arrow-left" onclick="prevSlide()">&lt;</button>
                 <button class="slider-arrow arrow-right" onclick="nextSlide()">&gt;</button>
@@ -371,19 +374,28 @@
                     <img src="slide5.jpg" class="hero-bg-img" alt="Slide 5" onerror="this.src='https://via.placeholder.com/1920x1080/4CC9A6/fff?text=Slide+5'">
                     <div class="hero-content"><h1 class="slide-title c-green">Your Story Could Be<br>The Next Colour</h1></div>
                 </div>
+
+                <!-- 新增：带动态色彩联动的小白条指示器 -->
+                <div class="hero-indicators">
+                    <div class="indicator active" onclick="goToSlide(0)" style="--active-color: var(--charcoal);"></div>
+                    <div class="indicator" onclick="goToSlide(1)"></div>
+                    <div class="indicator" onclick="goToSlide(2)"></div>
+                    <div class="indicator" onclick="goToSlide(3)"></div>
+                    <div class="indicator" onclick="goToSlide(4)"></div>
+                </div>
             </section>
 
-            <!-- 2. 倒计时 -->
+            <!-- 2. 大Logo自动微动画 -->
             <section class="section" id="sec-1">
                 <div class="countdown-logo-wrap animate-on-scroll">
-                    <img src="logo.jpg" alt="The Story Palette Logo" class="hero-logo-animated" onerror="this.src='https://via.placeholder.com/300x300.png?text=Animated+Logo'">
+                    <!-- 确保读取本地 logo，支持 png 或 jpg -->
+                    <img src="logo.png" alt="The Story Palette Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
                 </div>
                 <h2 class="countdown-title animate-on-scroll delay-1">The Story Palette</h2>
                 <h3 class="countdown-subtitle animate-on-scroll delay-1">UCSI Mass Comm Final Year Project Exhibition</h3>
                 <div class="countdown-wrapper animate-on-scroll delay-2">
                     <h3 class="countdown-heading">COUNTDOWN</h3>
-                    <p class="countdown-tag">Our Event Starts In</p>
-                    <div class="timer-cards-wrapper">
+                    <div class="timer-cards-wrapper" style="margin-top:20px;">
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--blue);"><span id="t-days">00</span></div><div class="timer-label">DAYS</div></div>
                         <div class="time-divider">:</div>
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--red);"><span id="t-hours">00</span></div><div class="timer-label">HOURS</div></div>
@@ -393,83 +405,103 @@
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
                 </div>
-                <div class="tba-info animate-on-scroll delay-3"><p>Venue: <span style="font-family: var(--font-mono);">TBA</span></p><p>Date: <span style="font-family: var(--font-mono);">TBA</span></p><p>Time: <span style="font-family: var(--font-mono);">TBA</span></p></div>
             </section>
 
-            <!-- 3. ABOUT US (项目简介) -->
-            <section class="section about-us-section" id="sec-about">
-                <h2 class="about-title animate-on-scroll">ABOUT US</h2>
-                <div class="cyan-band animate-on-scroll"></div>
-                <div class="about-content-grid">
+            <!-- 3. 压缩后的 About Us -->
+            <section class="section about-us-section" id="sec-about" style="min-height: auto; padding: 60px 6vw;">
+                <h2 class="about-title animate-on-scroll" style="font-size: 3rem;">ABOUT US</h2>
+                <div class="about-content-grid" style="gap: 2vw;">
                     <div class="about-text-col">
-                        <p class="about-text animate-on-scroll delay-1">The exhibition themed "The Story Palette" is a dynamic graduation showcase organized by the Mass Communication Students from UCSI University that brings together diverse creative voices.</p>
-                        <p class="about-text animate-on-scroll delay-2">Our mission is to bring different stories created by students from different pathways into one shared palette. From visual storytelling to brand influence, every piece of work on display represents a unique perspective, blending together to form one vibrant collective canvas.</p>
+                        <p class="about-text animate-on-scroll delay-1" style="font-size: 1.3rem;">The exhibition themed "The Story Palette" is a dynamic graduation showcase organized by the Mass Communication Students from UCSI University that brings together diverse creative voices.</p>
+                        <p class="about-text animate-on-scroll delay-2" style="font-size: 1.3rem;">Our mission is to bring different stories created by students from different pathways into one shared palette. From visual storytelling to brand influence, every piece of work on display represents a unique perspective, blending together to form one vibrant collective canvas.</p>
                         <a onclick="switchPage('page-team')" class="btn-discover animate-on-scroll delay-3">Meet The Team &rarr;</a>
                     </div>
                     <div class="about-media-col animate-on-scroll delay-3">
-                        <div class="video-placeholder">
+                        <div class="video-placeholder" style="max-height: 40vh;">
                             <img src="promo.jpg" alt="Promo Image" onerror="this.src='https://via.placeholder.com/1920x1080/FFD93D/1A1A1A?text=promo.jpg'">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 4. The Stories (瀑布流总画廊区，归属 Homepage) -->
-            <section class="section stories-showcase-section" id="sec-stories-gallery">
-                <h2 class="sec-header animate-on-scroll" style="color: var(--charcoal); margin-bottom: 20px;">THE STORIES</h2>
+            <!-- 8. Homepage 瀑布流 (带 View All 网格切换与 A4 Hover 悬浮显示) -->
+            <section class="section stories-showcase-section" id="sec-stories-gallery" style="min-height: auto; padding-top: 40px;">
                 
                 <!-- Documentary -->
                 <div class="category-block animate-on-scroll">
-                    <div class="category-header"><h3 class="category-title" style="border-color: var(--red);">Documentary</h3></div>
+                    <div class="category-header">
+                        <h3 class="category-title" style="border-color: var(--red);">Documentary</h3>
+                        <a onclick="toggleGridView('track-doc-home', this)" class="view-all-link">View All</a>
+                    </div>
                     <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-doc', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-doc">
-                            <!-- 点击调用 viewProfile 函数，触发个人页跳转 -->
-                            <div class="story-poster-card" onclick="viewProfile('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/400x500/FF6B6B/fff?text=Student+A', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students. Through intimate interviews and vivid cinematography, we aim to showcase the unseen struggles and triumphs that paint their daily lives.', '<li>Director: Alice Wong</li><li>Assistant Director: Bob Lee</li><li>D.O.P: Charlie Tan</li><li>Editor: David Kim</li>')">
-                                <img src="https://via.placeholder.com/400x500/FF6B6B/fff?text=Doc+1" class="poster-img"><div class="poster-title">The Unseen Colours</div>
+                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-doc-home', -1)">&lt;</button>
+                        <div class="carousel-track-horiz" id="track-doc-home">
+                            <div class="story-poster-card" onclick="viewProfile('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+A', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
+                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+1" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
                             </div>
-                            <div class="story-poster-card" onclick="viewProfile('Voices of Campus', 'An auditory exploration of what it means to be a student.', 'https://via.placeholder.com/400x500/FF6B6B/fff?text=Student+B', 'Bob Lee', '23', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'bob@mail.com', 'Documentary', 'var(--red)', 'Listening to the ambient sounds and distinct voices that make up our campus identity. This piece is a testament to the diverse stories told not just visually, but auditorily.', '<li>Director: Bob Lee</li><li>Assistant Director: Alice Wong</li><li>D.O.P: David Kim</li><li>Editor: Charlie Tan</li>')">
-                                <img src="https://via.placeholder.com/400x500/FF6B6B/fff?text=Doc+2" class="poster-img"><div class="poster-title">Voices of Campus</div>
+                            <div class="story-poster-card" onclick="viewProfile('Voices of Campus', 'An auditory exploration of what it means to be a student.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+B', 'Bob Lee', '23', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'bob@mail.com', 'Documentary', 'var(--red)', 'Listening to the ambient sounds...', '<li>Director: Bob Lee</li>')">
+                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+2" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Voices of Campus</div><div class="overlay-creator">Created by Bob</div></div>
                             </div>
-                            <div class="story-poster-card" onclick="viewProfile('Behind the Lens', 'A behind-the-scenes look at the passionate individuals.', 'https://via.placeholder.com/400x500/FF6B6B/fff?text=Student+C', 'Charlie Tan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'charlie@mail.com', 'Documentary', 'var(--red)', 'Focusing on the creators themselves. What drives the people who choose to stay behind the camera? A story of passion, grit, and the pursuit of the perfect shot.', '<li>Director: Charlie Tan</li><li>Assistant Director: David Kim</li><li>D.O.P: Alice Wong</li><li>Editor: Bob Lee</li>')">
-                                <img src="https://via.placeholder.com/400x500/FF6B6B/fff?text=Doc+3" class="poster-img"><div class="poster-title">Behind the Lens</div>
+                            <div class="story-poster-card" onclick="viewProfile('Behind the Lens', 'A behind-the-scenes look at the passionate individuals.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+C', 'Charlie Tan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'charlie@mail.com', 'Documentary', 'var(--red)', 'Focusing on the creators themselves...', '<li>Director: Charlie Tan</li>')">
+                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+3" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Behind the Lens</div><div class="overlay-creator">Created by Charlie</div></div>
+                            </div>
+                            <div class="story-poster-card" onclick="viewProfile('Campus Life', 'Another side of the campus.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+D', 'Diana', '22', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'diana@mail.com', 'Documentary', 'var(--red)', 'Campus daily routine...', '<li>Director: Diana</li>')">
+                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+4" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Campus Life</div><div class="overlay-creator">Created by Diana</div></div>
+                            </div>
+                            <div class="story-poster-card" onclick="viewProfile('Night Study', 'The late night grinds.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+E', 'Ethan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'ethan@mail.com', 'Documentary', 'var(--red)', 'Late night library...', '<li>Director: Ethan</li>')">
+                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+5" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Night Study</div><div class="overlay-creator">Created by Ethan</div></div>
                             </div>
                         </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-doc', 1)">&gt;</button>
+                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-doc-home', 1)">&gt;</button>
                     </div>
                 </div>
 
                 <!-- Short Film -->
                 <div class="category-block animate-on-scroll delay-1">
-                    <div class="category-header"><h3 class="category-title" style="border-color: var(--blue);">Short Film</h3></div>
+                    <div class="category-header">
+                        <h3 class="category-title" style="border-color: var(--blue);">Short Film</h3>
+                        <a onclick="toggleGridView('track-short-home', this)" class="view-all-link">View All</a>
+                    </div>
                     <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-short', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-short">
-                            <div class="story-poster-card" onclick="viewProfile('Midnight Train', 'A thrilling short film set entirely on a late-night commuter train.', 'https://via.placeholder.com/400x500/4D96FF/fff?text=Student+D', 'David Kim', '22', 'May 2023', 'Aug 2026', '+60 16-555 4444', 'david@mail.com', 'Short Film', 'var(--blue)', 'When the last train departs, reality begins to bend. A psychological thriller that tests the boundaries of sanity and perception during a seemingly ordinary commute.', '<li>Director: David Kim</li><li>Assistant Director: Eva Green</li><li>D.O.P: Frank White</li><li>Editor: Grace Ho</li>')">
-                                <img src="https://via.placeholder.com/400x500/4D96FF/fff?text=Short+1" class="poster-img"><div class="poster-title">Midnight Train</div>
+                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-short-home', -1)">&lt;</button>
+                        <div class="carousel-track-horiz" id="track-short-home">
+                            <div class="story-poster-card" onclick="viewProfile('Midnight Train', 'A thrilling short film set entirely on a late-night commuter train.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=Student+D', 'David Kim', '22', 'May 2023', 'Aug 2026', '+60 16-555 4444', 'david@mail.com', 'Short Film', 'var(--blue)', 'When the last train departs, reality begins to bend...', '<li>Director: David Kim</li>')">
+                                <img src="https://via.placeholder.com/400x600/4D96FF/fff?text=Short+1" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Midnight Train</div><div class="overlay-creator">Created by David</div></div>
                             </div>
-                            <div class="story-poster-card" onclick="viewProfile('Colour Blind', 'Exploring love and loss in a world devoid of colour.', 'https://via.placeholder.com/400x500/4D96FF/fff?text=Student+E', 'Eva Green', '21', 'Jan 2024', 'Dec 2026', '+60 17-666 5555', 'eva@mail.com', 'Short Film', 'var(--blue)', 'A monochromatic narrative that relies purely on emotion, lighting, and shadow to tell a heartbreaking story of connection in a desensitized world.', '<li>Director: Eva Green</li><li>Assistant Director: David Kim</li><li>D.O.P: Grace Ho</li><li>Editor: Frank White</li>')">
-                                <img src="https://via.placeholder.com/400x500/4D96FF/fff?text=Short+2" class="poster-img"><div class="poster-title">Colour Blind</div>
+                            <div class="story-poster-card" onclick="viewProfile('Colour Blind', 'Exploring love and loss in a world devoid of colour.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=Student+E', 'Eva Green', '21', 'Jan 2024', 'Dec 2026', '+60 17-666 5555', 'eva@mail.com', 'Short Film', 'var(--blue)', 'A monochromatic narrative...', '<li>Director: Eva Green</li>')">
+                                <img src="https://via.placeholder.com/400x600/4D96FF/fff?text=Short+2" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Colour Blind</div><div class="overlay-creator">Created by Eva</div></div>
                             </div>
                         </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-short', 1)">&gt;</button>
+                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-short-home', 1)">&gt;</button>
                     </div>
                 </div>
 
                 <!-- MarComm -->
                 <div class="category-block animate-on-scroll delay-2">
-                    <div class="category-header"><h3 class="category-title" style="border-color: var(--yellow);">The Marketing Lab</h3></div>
+                    <div class="category-header">
+                        <h3 class="category-title" style="border-color: var(--yellow);">The Marketing Lab</h3>
+                        <a onclick="toggleGridView('track-marcomm-home', this)" class="view-all-link">View All</a>
+                    </div>
                     <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-marcomm', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-marcomm">
-                            <div class="story-poster-card" onclick="viewProfile('Gen Z Redefined', 'A bold PR campaign aiming to rewrite the narrative surrounding Gen Z work ethics.', 'https://via.placeholder.com/400x500/FFD93D/1A1A1A?text=Student+F', 'Fiona Lee', '23', 'May 2022', 'Aug 2026', '+60 18-999 0000', 'fiona@mail.com', 'The Marketing Lab', 'var(--yellow)', 'This campaign challenges corporate stereotypes. Through guerrilla marketing and interactive digital platforms, we redefine what it means to be a Gen Z professional in today\'s fast-paced industry.', '<li>Campaign Lead: Fiona Lee</li><li>Art Director: George Ng</li><li>Copywriter: Helen Cho</li><li>Digital Strategist: Ian Tan</li>')">
-                                <img src="https://via.placeholder.com/400x500/FFD93D/1A1A1A?text=Marcomm+1" class="poster-img"><div class="poster-title">Gen Z Redefined</div>
+                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-marcomm-home', -1)">&lt;</button>
+                        <div class="carousel-track-horiz" id="track-marcomm-home">
+                            <div class="story-poster-card" onclick="viewProfile('Gen Z Redefined', 'A bold PR campaign aiming to rewrite the narrative surrounding Gen Z work ethics.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Student+F', 'Fiona Lee', '23', 'May 2022', 'Aug 2026', '+60 18-999 0000', 'fiona@mail.com', 'The Marketing Lab', 'var(--yellow)', 'This campaign challenges corporate stereotypes...', '<li>Lead: Fiona Lee</li>')">
+                                <img src="https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Marcomm+1" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Gen Z Redefined</div><div class="overlay-creator">Created by Fiona</div></div>
                             </div>
-                            <div class="story-poster-card" onclick="viewProfile('Eco-Friendly Future', 'Promoting sustainability through disruptive digital marketing.', 'https://via.placeholder.com/400x500/FFD93D/1A1A1A?text=Student+G', 'George Ng', '22', 'Jan 2023', 'Aug 2026', '+60 14-222 1111', 'george@mail.com', 'The Marketing Lab', 'var(--yellow)', 'Leveraging social media trends to drive real-world ecological change. A comprehensive strategy involving influencer partnerships, viral challenges, and tangible community impact.', '<li>Campaign Lead: George Ng</li><li>Art Director: Fiona Lee</li><li>Copywriter: Ian Tan</li><li>Digital Strategist: Helen Cho</li>')">
-                                <img src="https://via.placeholder.com/400x500/FFD93D/1A1A1A?text=Marcomm+2" class="poster-img"><div class="poster-title">Eco-Friendly Future</div>
+                            <div class="story-poster-card" onclick="viewProfile('Eco-Friendly Future', 'Promoting sustainability through disruptive digital marketing.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Student+G', 'George Ng', '22', 'Jan 2023', 'Aug 2026', '+60 14-222 1111', 'george@mail.com', 'The Marketing Lab', 'var(--yellow)', 'Leveraging social media trends...', '<li>Lead: George Ng</li>')">
+                                <img src="https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Marcomm+2" class="poster-img">
+                                <div class="poster-info-overlay"><div class="overlay-title">Eco-Friendly</div><div class="overlay-creator">Created by George</div></div>
                             </div>
                         </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-marcomm', 1)">&gt;</button>
+                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-marcomm-home', 1)">&gt;</button>
                     </div>
                 </div>
             </section>
@@ -479,21 +511,23 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 页面 2: MEET THE TEAM (独立页面) -->
+        <!-- 页面 2: MEET THE TEAM -->
         <!-- ========================================== -->
         <div id="page-team" class="spa-page">
+            <!-- 4. 团队合照自动轮播 + Hover 丝滑对齐 -->
             <section class="section team-coverflow-section" id="sec-team">
                 <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">TEAM.</span></h2>
                 <div class="coverflow-container animate-on-scroll delay-1">
+                    <!-- 鼠标放置区：停止自动播放 -->
                     <div class="coverflow-track" id="team-track">
-                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Gu Yi Da, Xu Xin Yan" data-members="Tee Ching Yee, Low Vicky, Keh Yao Hui, Ng Zi Hui, Zhang Ji Qiang"><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
-                        <div class="coverflow-card" data-name="Sponsorship Team" data-color="var(--blue)" data-leader="Low Vicky" data-members="Liu Yi Chang, Wu Ao, Du Zi Ye, Tan Chia Hong, Ang Kai Xuan, Peng Yue, Fu Yu Ru, Koh Wen Xuan, Aw Che Wei"><img src="team/sponsorship.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Sponsorship'"></div>
+                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Gu Yi Da, Xu Xin Yan" data-members="Tee Ching Yee, Low Vicky..."><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
+                        <div class="coverflow-card" data-name="Sponsorship Team" data-color="var(--blue)" data-leader="Low Vicky" data-members="Liu Yi Chang, Wu Ao..."><img src="team/sponsorship.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Sponsorship'"></div>
                         <div class="coverflow-card" data-name="Finance Team" data-color="var(--purple)" data-leader="Zhang Ji Qiang" data-members="Jia Mei Hua, Liu Hao Ming"><img src="team/finance.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Finance'"></div>
-                        <div class="coverflow-card" data-name="Secretary Team" data-color="var(--brown)" data-leader="Keh Yao Hui, Ng Zi Hui" data-members="Wang Xin Ran, Darren Tan Di Xing, Qiu Qin Qin, Wang Shang Qing, Goh Won Hao, Li Zi Ming, Leong Joel"><img src="team/secretary.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Secretary'"></div>
-                        <div class="coverflow-card" data-name="Program Team" data-color="var(--yellow)" data-leader="Jesslyn Chu Shi Ying" data-members="Sieo Wan Kee, Chua Yi Wen, Yeoh Wen Qi, Huang Xin Di, Hao Xin Yue, Wang Xi Ge, Li Shi Bo, Li Zhen Da, Sadeim Al Zeyani, Syamalan A/L Christopher A Moses"><img src="team/program.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Program'"></div>
-                        <div class="coverflow-card" data-name="Production Team" data-color="var(--charcoal)" data-leader="Liang Wai Onn" data-members="Shanelle Eve Edmund, Bianca Aurelia, Saamiya Chandni, Li Xiao Nan, Sun Wen Ye, Wang Hua, Chen Ruo Hong, Guo Xuan Yuan, Shen Yan, Zhang Ya Xin, Cao Xian Ya, Wang He Xing Qing, Ong Zhi Yong, Zhou Xin Yang"><img src="team/production.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Production'"></div>
-                        <div class="coverflow-card" data-name="Marketing Team" data-color="var(--red)" data-leader="Ng Jay Rou" data-members="Du Yi Nuo, Huang Ke Qiao, Rahadyan Yoga Valendra, Fion Lee Win Yean, Song Qian, Li Zhuo Chen, Zhang Zheng Ang, Tang Zhen Yao, Guo Ji Jie, Pu Cuo Yong Cuo, Zhang Ruo Di, Queency Kezia"><img src="team/marketing.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Marketing'"></div>
-                        <div class="coverflow-card" data-name="Logistic Team" data-color="var(--gray)" data-leader="Liu Jin Xiang" data-members="Kaameel Chicktay, Zhang Yi Fan, Zhang Jia He, Jazlynn Hannis Jamaluddin, Xie Shi Ya, Du Zhuo Yi, Taro Iwakawa"><img src="team/logistic.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Logistic'"></div>
+                        <div class="coverflow-card" data-name="Secretary Team" data-color="var(--brown)" data-leader="Keh Yao Hui, Ng Zi Hui" data-members="Wang Xin Ran..."><img src="team/secretary.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Secretary'"></div>
+                        <div class="coverflow-card" data-name="Program Team" data-color="var(--yellow)" data-leader="Jesslyn Chu Shi Ying" data-members="Sieo Wan Kee..."><img src="team/program.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Program'"></div>
+                        <div class="coverflow-card" data-name="Production Team" data-color="var(--charcoal)" data-leader="Liang Wai Onn" data-members="Shanelle Eve Edmund..."><img src="team/production.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Production'"></div>
+                        <div class="coverflow-card" data-name="Marketing Team" data-color="var(--red)" data-leader="Ng Jay Rou" data-members="Du Yi Nuo, Huang Ke Qiao..."><img src="team/marketing.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Marketing'"></div>
+                        <div class="coverflow-card" data-name="Logistic Team" data-color="var(--gray)" data-leader="Liu Jin Xiang" data-members="Kaameel Chicktay..."><img src="team/logistic.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Logistic'"></div>
                     </div>
                     <div class="team-info-box" id="team-info-box">
                         <h3 class="info-team-name" id="info-team-name">Team Name</h3>
@@ -507,29 +541,30 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 页面 3: STUDENT PROFILE (个人专页) -->
+        <!-- 页面 3: THE STORIES (独立页: 个人专页区) -->
         <!-- ========================================== -->
         <div id="page-stories" class="spa-page">
             
-            <!-- 个人专页区 1 (Portrait) -->
             <section class="section student-profile-section" id="sec-profile">
                 <div class="profile-card animate-on-scroll">
                     <div class="profile-img-col">
                         <img id="dynamic-profile-img" src="https://via.placeholder.com/400x600/transparent/fff?text=Transparent+Portrait" alt="Student Portrait">
                     </div>
                     <div class="profile-text-col">
-                        <h2 class="profile-title" id="dynamic-profile-title">Title of Artwork</h2>
-                        <p class="profile-comment" id="dynamic-profile-comment">Comment by the student himself. Click on a poster from the Home page to view their full profile and artwork details down below.</p>
+                        <h2 class="profile-title" id="dynamic-profile-title">Welcome to The Stories</h2>
+                        <p class="profile-comment" id="dynamic-profile-comment">Select a project from the gallery on the Home page to view the artist's full profile and artwork details here.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 个人专页区 2 (Details) -->
             <section class="portfolio-details-section" id="sec-portfolio">
                 <div class="portfolio-grid">
                     <div class="portfolio-info-col animate-on-scroll delay-1">
                         <div class="info-blob-bg" id="dynamic-blob"></div>
-                        <div class="info-text-box">
+                        <div class="info-glass-card">
+                            <!-- 7. 贴纸风独立标签 -->
+                            <div class="category-tag-badge" id="dynamic-category-badge">Category</div>
+                            <!-- 7. 个人资料纯白强制 -->
                             <ul class="info-list">
                                 <li><strong>Name:</strong> <span id="dyn-name">Student Name</span></li>
                                 <li><strong>Age:</strong> <span id="dyn-age">00</span></li>
@@ -538,16 +573,22 @@
                                 <li><strong>Phone Number:</strong> <span id="dyn-phone">+60 00-000 0000</span></li>
                                 <li><strong>Email Address:</strong> <span id="dyn-email">student@email.com</span></li>
                             </ul>
-                            <div class="category-tag-badge" id="dynamic-category-badge">Category</div>
                         </div>
                     </div>
 
                     <div class="portfolio-media-col animate-on-scroll delay-2">
                         <div class="media-heading-tag" id="dynamic-tag-top">学生的影片作品</div>
                         <div class="main-video-player"><div class="youtube-btn-mock"></div></div>
+                        
+                        <!-- 7. 缩略图点击调用 Lightbox -->
                         <div class="thumbnail-row">
-                            <div class="thumb-box active">Poster</div><div class="thumb-box">Content</div><div class="thumb-box">Content</div><div class="thumb-box">Content</div><div class="thumb-box">Content</div>
+                            <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/1A1A1A/fff?text=Poster')"><img src="https://via.placeholder.com/200x200/1A1A1A/fff?text=Poster"></div>
+                            <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/FF6B6B/fff?text=Content+1')"><img src="https://via.placeholder.com/200x200/FF6B6B/fff?text=1"></div>
+                            <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/4D96FF/fff?text=Content+2')"><img src="https://via.placeholder.com/200x200/4D96FF/fff?text=2"></div>
+                            <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/FFD93D/1A1A1A?text=Content+3')"><img src="https://via.placeholder.com/200x200/FFD93D/1A1A1A?text=3"></div>
+                            <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/4CC9A6/fff?text=Content+4')"><img src="https://via.placeholder.com/200x200/4CC9A6/fff?text=4"></div>
                         </div>
+                        
                         <div class="description-box">
                             <div class="desc-label">Description:</div>
                             <p class="desc-body" id="dyn-desc">Full description of the artwork goes here. This area is dynamically updated based on the selected project from the gallery above.</p>
@@ -555,35 +596,27 @@
                             <ul class="production-list" id="dyn-prod-team">
                                 <li>Director: xxx</li>
                                 <li>Assistant Director: xxx</li>
-                                <li>D.O.P: xxx</li>
-                                <li>Editor: xxx</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 学生其他作品展示 -->
+            <!-- 5. 改名：Student Artworks，A4海报，Hover展示 -->
             <section class="portfolio-gallery-section animate-on-scroll" id="sec-other-works">
-                <h2 class="portfolio-gallery-title">Other Works</h2>
+                <h2 class="portfolio-gallery-title">Student Artworks</h2>
                 <div class="portfolio-works-grid">
-                    <div class="portfolio-work-card" title="Click to view details" onclick="viewProfile('Project One', 'An exciting video production project showcasing creative storytelling through motion.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=Project+1', 'Student Name', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'student@mail.com', 'Video Production', 'var(--blue)', 'Description Text', '<li>Role: Name</li>')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999' text-anchor='middle' dominant-baseline='middle'%3EProject 1%3C/text%3E%3C/svg%3E" alt="Project 1" class="portfolio-work-img">
-                        <div class="portfolio-work-info">
-                            <div class="portfolio-work-title">Project One</div><div class="portfolio-work-type">Video Production</div>
-                        </div>
+                    <div class="story-poster-card" onclick="viewProfile('Project One', 'Video production project.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=P1', 'Name', '22', 'Jan', 'Aug', '123', 'mail', 'Video', 'var(--blue)', 'Desc', '<li>Role</li>')">
+                        <img src="https://via.placeholder.com/400x600/4D96FF/fff?text=Project+1" class="poster-img">
+                        <div class="poster-info-overlay"><div class="overlay-title">Project One</div><div class="overlay-creator">Created by Name</div></div>
                     </div>
-                    <div class="portfolio-work-card" title="Click to view details" onclick="viewProfile('Project Two', 'A stunning photography series capturing moments of everyday beauty.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Project+2', 'Student Name', '21', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'student@mail.com', 'Photography', 'var(--red)', 'Description Text', '<li>Role: Name</li>')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999' text-anchor='middle' dominant-baseline='middle'%3EProject 2%3C/text%3E%3C/svg%3E" alt="Project 2" class="portfolio-work-img">
-                        <div class="portfolio-work-info">
-                            <div class="portfolio-work-title">Project Two</div><div class="portfolio-work-type">Photography</div>
-                        </div>
+                    <div class="story-poster-card" onclick="viewProfile('Project Two', 'Photography series.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=P2', 'Name', '21', 'May', 'Aug', '123', 'mail', 'Photo', 'var(--red)', 'Desc', '<li>Role</li>')">
+                        <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Project+2" class="poster-img">
+                        <div class="poster-info-overlay"><div class="overlay-title">Project Two</div><div class="overlay-creator">Created by Name</div></div>
                     </div>
-                    <div class="portfolio-work-card" title="Click to view details" onclick="viewProfile('Project Three', 'Dynamic motion graphics that bring data and stories to life.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Project+3', 'Student Name', '22', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'student@mail.com', 'Motion Graphics', 'var(--yellow)', 'Description Text', '<li>Role: Name</li>')">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect fill='%23f0f0f0' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%23999' text-anchor='middle' dominant-baseline='middle'%3EProject 3%3C/text%3E%3C/svg%3E" alt="Project 3" class="portfolio-work-img">
-                        <div class="portfolio-work-info">
-                            <div class="portfolio-work-title">Project Three</div><div class="portfolio-work-type">Motion Graphics</div>
-                        </div>
+                    <div class="story-poster-card" onclick="viewProfile('Project Three', 'Motion graphics.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=P3', 'Name', '22', 'Jan', 'Dec', '123', 'mail', 'Graphics', 'var(--yellow)', 'Desc', '<li>Role</li>')">
+                        <img src="https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Project+3" class="poster-img">
+                        <div class="poster-info-overlay"><div class="overlay-title">Project Three</div><div class="overlay-creator">Created by Name</div></div>
                     </div>
                 </div>
             </section>
@@ -601,7 +634,6 @@
                 <div class="ways-grid animate-on-scroll">
                     <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
                     <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
-                    <!-- 确保 Exhibition 中的 MarComm 黄色圈里的字体是白色 -->
                     <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
                 </div>
             </section>
@@ -616,14 +648,12 @@
             <section class="section contact-footer-section" id="sec-5" style="border-top: none; justify-content: center; min-height: 100vh;">
                 <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                 <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026?igsh=MWlhYmVoaHY4ZWRldQ%3D%3D&utm_source=qr" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026?igshid=NTc4MTIwNjQ2YQ%3D%3D" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette?_r=1&_t=ZS-97hBtSIP381" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://www.xiaohongshu.com/user/profile/648321bd000000001100390d?xsec_token=YBWxG3zbMzEfOm9bmNtF2SgagNQDNunlgrCT1cPExOFhE=&xsec_source=app_share&xhsshare=CopyLink&shareRedId=ODo6MzU2Rk02NzUyOTgwNjc0OTc3PjZN&apptime=1782998672&share_id=27ca9365c4f04ec1951e6a1931745394" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="#" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
                 </div>
-                <div class="footer-spacer" aria-hidden="true"></div>
-                <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
             </section>
         </div>
 
@@ -633,18 +663,10 @@
     <script>
         // --- 核心：单页 SPA 切换逻辑 ---
         function switchPage(pageId, sectionId = null) {
-            // 1. 隐藏所有页面
-            document.querySelectorAll('.spa-page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // 2. 显示目标页面
+            document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
             const targetPage = document.getElementById(pageId);
-            if (targetPage) {
-                targetPage.classList.add('active');
-            }
-
-            // 3. 定位滚动
+            if (targetPage) targetPage.classList.add('active');
+            
             if (sectionId) {
                 setTimeout(() => {
                     const targetSection = document.getElementById(sectionId);
@@ -653,62 +675,74 @@
             } else {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
-            
-            // 如果切到团队页，刷新一下宽度计算防错位
-            if(pageId === 'page-team') {
-                updateCoverflow();
-            }
+            if(pageId === 'page-team') updateCoverflow();
         }
 
-        const modal = document.getElementById("posterModal");
-        function openPosterModal() { modal.style.display = "flex"; }
-        function closePosterModal() { modal.style.display = "none"; }
-        window.onclick = function(event) { if (event.target == modal) { closePosterModal(); } }
+        // --- 10. 弹窗控制 (Join Us Now) ---
+        function openPosterModal() { document.getElementById("posterModal").style.display = "flex"; }
+        function closePosterModal() { document.getElementById("posterModal").style.display = "none"; }
+        
+        // --- 7. 全屏画廊查看器 (Lightbox) ---
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightboxModal').style.display = 'flex';
+        }
 
+        // --- 首屏轮播 ---
         let currentSlide = 0;
         const slides = document.querySelectorAll('.hero-slide');
-        function showSlide(index) { slides.forEach((slide, i) => { slide.classList.remove('active'); if(i === index) slide.classList.add('active'); }); }
+        const indicators = document.querySelectorAll('.indicator');
+        const slideColors = ['var(--charcoal)', 'var(--red)', 'var(--blue)', 'var(--yellow)', 'var(--green)'];
+
+        function showSlide(index) { 
+            slides.forEach((slide, i) => { slide.classList.remove('active'); if(i === index) slide.classList.add('active'); }); 
+            indicators.forEach((ind, i) => {
+                ind.classList.remove('active');
+                ind.style.removeProperty('--active-color');
+                if(i === index) {
+                    ind.classList.add('active');
+                    ind.style.setProperty('--active-color', slideColors[index]);
+                }
+            });
+        }
         function nextSlide() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
         function prevSlide() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }
+        function goToSlide(index) {
+            currentSlide = index;
+            showSlide(currentSlide);
+            clearInterval(autoSlide);
+            autoSlide = setInterval(nextSlide, 5000);
+        }
+        
         let autoSlide = setInterval(nextSlide, 5000);
         document.querySelector('.arrow-left').addEventListener('click', () => { clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); });
         document.querySelector('.arrow-right').addEventListener('click', () => { clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); });
 
+        // --- 倒计时 ---
         const countDownDate = new Date("May 24, 2027 09:00:00").getTime();
-        const timer = setInterval(function() {
+        setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
-            if (distance < 0) { clearInterval(timer); return; }
+            if (distance < 0) return;
             document.getElementById("t-days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById("t-hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById("t-mins").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById("t-secs").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
 
+        // --- 滚动动画 ---
         document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-            }, observerOptions);
-            const footerCanvas = document.querySelector('.footer-canvas');
-            document.querySelectorAll('.animate-on-scroll, .cyan-band, .portfolio-header-bar').forEach(el => { observer.observe(el); });
-            if (footerCanvas) {
-                const contactObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            footerCanvas.classList.add('visible');
-                        } else {
-                            footerCanvas.classList.remove('visible');
-                        }
-                    });
-                }, { root: null, rootMargin: '0px 0px -30% 0px', threshold: 0 });
-                const contactSection = document.getElementById('sec-5');
-                if (contactSection) contactObserver.observe(contactSection);
-            }
+            }, { root: null, rootMargin: '0px', threshold: 0.15 });
+            document.querySelectorAll('.animate-on-scroll, .cyan-band').forEach(el => observer.observe(el));
         });
 
+        // --- 4. 团队合照 3D Coverflow (自动轮播 + Hover 丝滑跟踪) ---
         const teamCards = Array.from(document.querySelectorAll('.coverflow-card'));
         let currentTeam = 0;
+        let teamAutoPlay;
+
         function updateCoverflow() {
             const infoBox = document.getElementById('team-info-box');
             if(!infoBox) return;
@@ -731,30 +765,45 @@
                 else { card.classList.add('card-hidden-right'); }
             });
         }
-        teamCards.forEach((card) => {
-            card.addEventListener('click', () => {
-                if (card.classList.contains('card-prev')) { currentTeam = (currentTeam - 1 + teamCards.length) % teamCards.length; updateCoverflow(); } 
-                else if (card.classList.contains('card-next')) { currentTeam = (currentTeam + 1) % teamCards.length; updateCoverflow(); }
+        
+        function nextTeamCard() { currentTeam = (currentTeam + 1) % teamCards.length; updateCoverflow(); }
+        
+        // Hover 任何卡片立即丝滑对齐该卡片
+        teamCards.forEach((card, index) => {
+            card.addEventListener('mouseenter', () => {
+                currentTeam = index;
+                updateCoverflow();
             });
         });
-        
-        let startX = 0; let isDragging = false; const track = document.getElementById('team-track');
-        if(track) {
-            track.addEventListener('mousedown', (e) => { startX = e.pageX; isDragging = true; }); track.addEventListener('mouseup', (e) => { handleSwipe(e.pageX); }); track.addEventListener('mouseleave', (e) => { if(isDragging) handleSwipe(e.pageX); }); track.addEventListener('touchstart', (e) => { startX = e.changedTouches[0].pageX; isDragging = true; }); track.addEventListener('touchend', (e) => { handleSwipe(e.changedTouches[0].pageX); });
-        }
-        function handleSwipe(endX) {
-            if(!isDragging) return; isDragging = false; let diff = endX - startX;
-            if (diff > 40) { currentTeam = (currentTeam - 1 + teamCards.length) % teamCards.length; updateCoverflow(); } 
-            else if (diff < -40) { currentTeam = (currentTeam + 1) % teamCards.length; updateCoverflow(); }
-        }
-        updateCoverflow();
 
+        // 鼠标进入区域时停止自动轮播，离开时恢复
+        const teamTrack = document.getElementById('team-track');
+        if(teamTrack) {
+            teamAutoPlay = setInterval(nextTeamCard, 3500);
+            teamTrack.addEventListener('mouseenter', () => clearInterval(teamAutoPlay));
+            teamTrack.addEventListener('mouseleave', () => { teamAutoPlay = setInterval(nextTeamCard, 3500); });
+        }
+
+        // --- 8. 瀑布流横向滚动与 View All 网格展开 ---
         function scrollTrack(trackId, direction) {
             const trackToScroll = document.getElementById(trackId);
             if(trackToScroll) { const scrollAmount = trackToScroll.clientWidth * 0.75; trackToScroll.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' }); }
         }
+        function toggleGridView(trackId, btn) {
+            const track = document.getElementById(trackId);
+            const wrapper = track.parentElement;
+            if (track.classList.contains('grid-view')) {
+                track.classList.remove('grid-view');
+                wrapper.querySelectorAll('.track-arrow-horiz').forEach(arr => arr.style.display = 'flex');
+                btn.innerText = 'View All';
+            } else {
+                track.classList.add('grid-view');
+                wrapper.querySelectorAll('.track-arrow-horiz').forEach(arr => arr.style.display = 'none');
+                btn.innerText = 'Show Less';
+            }
+        }
 
-        // --- 点击首页海报，直接跳转至个人专页 (Page 3) 联动函数 ---
+        // --- 点击海报跳转个人页 ---
         function viewProfile(title, comment, imgSrc, studentName, age, enrollSem, gradSem, phone, email, category, color, descText, prodTeamHtml) {
             document.getElementById('dynamic-profile-title').innerText = title;
             document.getElementById('dynamic-profile-comment').innerText = comment;
@@ -770,7 +819,6 @@
             const catBadge = document.getElementById('dynamic-category-badge');
             const topTag = document.getElementById('dynamic-tag-top');
             catBadge.innerText = category;
-            catBadge.style.background = color;
             
             if (category.includes('Marketing')) {
                 topTag.innerText = "学生的营销作品";
@@ -786,7 +834,7 @@
             document.getElementById('dyn-desc').innerText = descText;
             document.getElementById('dyn-prod-team').innerHTML = prodTeamHtml;
 
-            // 核心修复：点击海报后立刻切换到 page-stories 并回到最上方
+            // 切换页面并置顶
             switchPage('page-stories');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
