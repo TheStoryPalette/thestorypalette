@@ -4,53 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Story Palette — Give Colour to Your Story</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fredericka+the+Great&family=Protest+Riot&family=Solitreo&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #FFFDF8;
-            --red: #FF6B6B;
-            --yellow: #FFD93D;
-            --blue: #4D96FF;
-            --purple: #B983FF;
-            --green: #4CC9A6;
-            --charcoal: #1A1A1A;
-            --font-title: 'Protest Riot', sans-serif;
-            --font-sub: 'Solitreo', cursive;
+            --bg: #FFFDF8; --red: #FF6B6B; --yellow: #FFD93D; --blue: #4D96FF;
+            --purple: #B983FF; --green: #4CC9A6; --charcoal: #1A1A1A;
+            --font-title: 'Protest Riot', sans-serif; --font-sub: 'Solitreo', cursive;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: var(--bg); color: var(--charcoal); font-family: 'Space Mono', monospace; }
 
-        /* 页面切换逻辑 */
-        .spa-page { display: none; width: 100vw; min-height: 100vh; position: absolute; top: 0; left: 0; }
-        .spa-page.active { display: flex; flex-direction: column; align-items: center; }
-
-        /* 导航栏 */
+        .spa-page { display: none; width: 100vw; min-height: 100vh; flex-direction: column; align-items: center; }
+        .spa-page.active { display: flex; }
         .navbar { position: fixed; top: 0; width: 100%; height: 75px; display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; z-index: 1000; background: rgba(255, 253, 248, 0.9); backdrop-filter: blur(10px); }
         .nav-links { display: flex; gap: 2vw; list-style: none; font-family: var(--font-title); font-size: 1.2rem; }
         .nav-link { cursor: pointer; }
-
-        /* 修复背景：全屏透出泼墨 */
         .canvas-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; opacity: 0.18; }
 
-        /* Student Artworks 大厅页面样式 */
-        .portfolio-gallery-section { width: 100%; padding: 120px 6vw; background: transparent; }
-        .portfolio-gallery-title { font-family: var(--font-title); font-size: 3.5rem; text-align: center; margin-bottom: 30px; }
-        .portfolio-works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-        .story-poster-card { aspect-ratio: 1/1.4; background: #fff; border: 3px solid var(--charcoal); cursor: pointer; }
+        /* 修复跳转按钮 */
+        .category-view-all { font-family: var(--font-title); text-decoration: underline; cursor: pointer; padding: 8px 25px; background: #fff; border: 2px solid var(--yellow); border-radius: 30px; box-shadow: 3px 3px 0 var(--yellow); }
+        .category-view-all:hover { background: var(--yellow); box-shadow: 5px 5px 0 var(--charcoal); transform: translate(-2px, -2px); }
+
+        /* 修复海报图片拉伸 */
         .poster-img { width: 100%; height: 100%; object-fit: fill; }
-        .category-view-all { font-family: var(--font-title); text-decoration: underline; cursor: pointer; padding: 8px 25px; background: #fff; border: 2px solid var(--yellow); border-radius: 30px; }
-        
-        /* 个人详情页 */
-        .student-profile-section { width: 100%; padding-top: 110px; background: url('background.jpg') no-repeat center 15% / cover; }
-        .back-btn { padding: 10px 20px; background: #fff; border: 2px solid var(--charcoal); cursor: pointer; margin-left: 6vw; }
-        .profile-card { display: flex; gap: 6vw; padding: 40px; align-items: center; justify-content: center; }
-        .profile-img-col img { width: 320px; border: 4px solid var(--charcoal); border-radius: 12px; }
-        .profile-title { font-family: var(--font-title); font-size: 4rem; }
+        .story-poster-card { aspect-ratio: 1/1.4; background: #fff; border: 3px solid var(--charcoal); cursor: pointer; overflow: hidden; }
+
+        /* 修复团队职位显示 */
+        .info-team-text { font-family: var(--font-sub); font-size: 1.25rem; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -68,37 +51,54 @@
         </ul>
     </nav>
 
-    <!-- 首页 -->
+    <!-- Home -->
     <div id="page-home" class="spa-page active">
         <section class="section" style="padding-top: 150px;">
-            <h1>Home Page Content</h1>
-            <div class="category-header">
-                <h3>Documentary</h3>
-                <a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a>
+            <div class="countdown-wrapper">
+                <h3>Location: Level 8, Block G, UCSI University Kuala Lumpur Campus</h3>
+                <p>UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur</p>
+                <p>Date: 27 August 2026 (Thursday)</p>
+            </div>
+            
+            <div class="category-block">
+                <div class="category-header">
+                    <h3>Documentary</h3>
+                    <a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a>
+                </div>
+            </div>
+            <div class="category-block">
+                <div class="category-header">
+                    <h3>Short Film</h3>
+                    <a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a>
+                </div>
+            </div>
+            <div class="category-block">
+                <div class="category-header">
+                    <h3>The Marketing Lab</h3>
+                    <a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a>
+                </div>
             </div>
         </section>
     </div>
 
-    <!-- The Stories 大厅页 -->
+    <!-- Stories (包含大厅与详情) -->
     <div id="page-stories" class="spa-page">
-        <div id="stories-gallery-view" class="portfolio-gallery-section">
-            <h2 class="portfolio-gallery-title">STUDENT ARTWORKS</h2>
+        <div id="stories-gallery-view" class="section">
+            <h2>Student Artworks</h2>
             <div class="portfolio-works-grid">
-                <!-- 海报卡片 -->
-                <div class="story-poster-card" onclick="goToDetailView('The Unseen Colours', '...')">
+                <!-- 示例卡片，拉伸填充 -->
+                <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('...', '...', 'poster.png', '...')">
                     <img src="poster.png" class="poster-img">
                 </div>
             </div>
         </div>
-        <!-- 个人详情页（初始隐藏） -->
+        
         <div id="stories-detail-view" style="display: none; width: 100%;">
-            <section class="student-profile-section">
-                <button onclick="backToStoriesGallery()" class="back-btn">&larr; Back</button>
+            <section class="student-profile-section" style="background: url('background.jpg') no-repeat center 15% / cover;">
+                <button onclick="backToStoriesGallery()" class="back-btn">← Back</button>
                 <div class="profile-card">
                     <div class="profile-img-col"><img id="dynamic-profile-img" src="poster.png"></div>
-                    <div class="profile-text-col">
-                        <h2 class="profile-title" id="dynamic-profile-title">Title</h2>
-                    </div>
+                    <div class="profile-text-col"><h2 id="dynamic-profile-title">Title</h2></div>
                 </div>
             </section>
         </div>
@@ -107,21 +107,29 @@
     <!-- About Us -->
     <div id="page-about" class="spa-page">
         <section class="section">
-            <h2>About Us</h2>
+            <div id="team-track">
+                <!-- Data 示例，确保不含 Leader/Position 前缀 -->
+                <div class="coverflow-card" data-name="Management Team" data-leader="Exhibition Director: Gu Yi Da<br>Joint Director: Xu Xin Yan..." data-members="Gu Yi Da, Xu Xin Yan..."></div>
+            </div>
+            <div class="team-info-box">
+                <h3 id="info-team-name"></h3>
+                <p class="info-team-text" id="info-team-leader"></p>
+                <p class="info-team-text" id="info-team-members"></p>
+            </div>
         </section>
     </div>
 
     <!-- Exhibition -->
     <div id="page-exhibition" class="spa-page">
-        <section class="section">
-            <h2>Exhibition</h2>
-        </section>
+        <section class="section"><h2>Exhibition</h2></section>
     </div>
 
     <!-- Contact -->
     <div id="page-contact" class="spa-page">
         <section class="section">
             <h2>Contact Information</h2>
+            <a href="https://www.youtube.com/@TheStoryPalette-o9i">YouTube</a>
+            <a href="https://xhslink.cn/m/4AruRbN4qQZ">Rednote</a>
         </section>
     </div>
 
@@ -129,8 +137,7 @@
         function switchPage(pageId, sectionId = null, category = null) {
             document.querySelectorAll('.spa-page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            if(category) { /* 触发过滤逻辑 */ }
-            window.scrollTo(0,0);
+            if(category) { /* 自动点击分类 */ }
         }
 
         function goToDetailView(title, comment, imgSrc) {
@@ -144,6 +151,16 @@
             document.getElementById('stories-detail-view').style.display = 'none';
             document.getElementById('stories-gallery-view').style.display = 'flex';
         }
+
+        // Team info update logic
+        const cards = document.querySelectorAll('.coverflow-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                document.getElementById('info-team-name').innerText = card.dataset.name;
+                document.getElementById('info-team-leader').innerHTML = card.dataset.leader;
+                document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
+            });
+        });
     </script>
 </body>
 </html>
