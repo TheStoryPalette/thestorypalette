@@ -130,11 +130,10 @@
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
         
-        .tba-info { display: flex; flex-direction: column; gap: 8px; align-items: center; margin-top: 15px; width: 100%; }
-        .tba-row { display: grid; grid-template-columns: 75px 15px 1fr; align-items: center; width: 180px; max-width: 90vw; font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: var(--charcoal); letter-spacing: 1px; }
-        .tba-label { text-align: left; }
-        .tba-colon { text-align: center; }
-        .tba-value { text-align: left; }
+        .event-info { display: flex; flex-direction: column; gap: clamp(20px, 3vh, 35px); align-items: center; margin-top: clamp(30px, 5vh, 50px); width: 100%; max-width: 600px; text-align: center; }
+        .event-info-item { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
+        .event-info-label { font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: var(--charcoal); font-weight: 700; letter-spacing: 1px; }
+        .event-info-value { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.5rem); color: var(--charcoal); line-height: 1.6; }
 
         /* --- About Us --- */
         #page-home .about-us-section { min-height: auto; padding: 60px 6vw; margin: 20px 0; }
@@ -144,8 +143,22 @@
         .about-text { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.5vw, 1.4rem); line-height: 1.4; color: var(--charcoal); text-shadow: 1px 1px 0 rgba(255,255,255,0.8), -1px -1px 0 rgba(255,255,255,0.8); }
         .btn-discover { margin-top: 5px; padding: 10px 24px; background: var(--yellow); color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; display: inline-block; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; align-self: flex-start;}
         .btn-discover:hover { background: var(--red); color: #fff; transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
-        .video-placeholder { width: 100%; aspect-ratio: 16 / 9; max-height: 38vh; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; }
-        .video-placeholder img { width: 100%; height: 100%; object-fit: contain; }
+        .video-placeholder { 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            max-height: 38vh; 
+            border: 4px solid var(--charcoal); 
+            box-shadow: 12px 12px 0 var(--charcoal); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            padding: 0; 
+        }
+        .video-placeholder img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: fill; 
+            display: block;
+        }
 
         /* --- 首页瀑布流画廊 --- */
         .stories-showcase-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; min-height: auto; }
@@ -534,10 +547,15 @@
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
                     
-                    <div class="tba-info">
-                        <div class="tba-row"><span class="tba-label">Venue</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
-                        <div class="tba-row"><span class="tba-label">Date</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
-                        <div class="tba-row"><span class="tba-label">Time</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
+                    <div class="event-info">
+                        <div class="event-info-item">
+                            <div class="event-info-label">DATE</div>
+                            <div class="event-info-value">27 August 2026<br>(Thursday)</div>
+                        </div>
+                        <div class="event-info-item">
+                            <div class="event-info-label">VENUE</div>
+                            <div class="event-info-value">Level 8, Block G<br>UCSI University Kuala Lumpur Campus<br>UCSI Heights, 1, Jln UCSI<br>Taman Connaught, 56000<br>Federal Territory of Kuala Lumpur</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1059,11 +1077,22 @@
         document.querySelector('.arrow-right').addEventListener('click', () => { clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); });
 
         // --- 倒计时 ---
-        const countDownDate = new Date("May 24, 2027 09:00:00").getTime();
+        // 核心修改：将目标日期改为 2026年8月27日
+        const countDownDate = new Date("August 27, 2026 09:00:00").getTime();
+        
         setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
-            if (distance < 0) return;
+            
+            // 如果倒计时结束，显示 0
+            if (distance < 0) {
+                document.getElementById("t-days").innerHTML = "00";
+                document.getElementById("t-hours").innerHTML = "00";
+                document.getElementById("t-mins").innerHTML = "00";
+                document.getElementById("t-secs").innerHTML = "00";
+                return;
+            }
+            
             document.getElementById("t-days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById("t-hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById("t-mins").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
