@@ -439,22 +439,22 @@
 
     <!-- 导航栏 -->
     <nav class="navbar">
-        <a class="nav-logo" onclick="switchPage('page_home')">
+        <a class="nav-logo" onclick="switchPage('page-home')">
             <img src="logo.png" alt="The Story Palette Logo" class="nav-logo-static" onerror="this.src='https://via.placeholder.com/45x36/transparent/1A1A1A?text=LOGO'">
             <span class="logo-text">The Story Palette</span>
         </a>
         <ul class="nav-links">
-            <li><a class="nav-link" onclick="switchPage('page_home')">Home</a></li>
+            <li><a class="nav-link" onclick="switchPage('page-home')">Home</a></li>
             <li class="dropdown">
-                <a class="nav-link" onclick="switchPage('page_about')">About Us</a>
+                <a class="nav-link" onclick="switchPage('page-about')">About Us</a>
                 <ul class="dropdown-menu">
-                    <li><a onclick="switchPage('page_about')">The Exhibition</a></li>
-                    <li><a onclick="switchPage('page_about', 'sec-team')">Meet the Team</a></li>
+                    <li><a onclick="switchPage('page-about')">The Exhibition</a></li>
+                    <li><a onclick="switchPage('page-about', 'sec-team')">Meet the Team</a></li>
                 </ul>
             </li>
-            <li><a class="nav-link" onclick="switchPage('page_stories')">The Stories</a></li>
-            <li><a class="nav-link" onclick="switchPage('page_exhibition')">Exhibition</a></li>
-            <li><a class="nav-link" onclick="switchPage('page_contact')">Contact</a></li>
+            <li><a class="nav-link" onclick="switchPage('page-stories')">The Stories</a></li>
+            <li><a class="nav-link" onclick="switchPage('page-exhibition')">Exhibition</a></li>
+            <li><a class="nav-link" onclick="switchPage('page-contact')">Contact</a></li>
         </ul>
         <button class="btn-add-nav" onclick="openPosterModal()">Join Us Now</button>
     </nav>
@@ -478,7 +478,7 @@
         <!-- ========================================== -->
         <!-- 页面 1: HOME PAGE -->
         <!-- ========================================== -->
-        <div id="page_home" class="spa-page active">
+        <div id="page-home" class="spa-page active">
             
             <section class="hero-slider-container" id="sec-0">
                 <button class="slider-arrow arrow-left" onclick="prevSlide()">&lt;</button>
@@ -515,7 +515,7 @@
                 </div>
             </section>
 
-            <!-- 倒计时 (含 Venue 三行首部左对齐，并完美与上方文本轴心对齐) -->
+            <!-- 倒计时 -->
             <section class="section" id="sec-1">
                 <div class="countdown-logo-wrap animate-on-scroll">
                     <img src="logo.png" alt="The Story Palette Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
@@ -535,7 +535,6 @@
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
                     
-                    <!-- Venue 三行居中对齐，内部首部/冒号/内容左对齐 -->
                     <div class="tba-info">
                         <div class="tba-row"><span class="tba-label">Venue</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
                         <div class="tba-row"><span class="tba-label">Date</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
@@ -551,7 +550,7 @@
                     <div class="about-text-col">
                         <p class="about-text animate-on-scroll delay-1" style="font-size: 1.3rem;">The exhibition themed "The Story Palette" is a dynamic graduation showcase organized by the Mass Communication Students from UCSI University Kuala Lumpur Campus that brings together diverse creative voices.</p>
                         <p class="about-text animate-on-scroll delay-2" style="font-size: 1.3rem;">Our mission is to bring different stories created by students from different pathways into one shared palette. From visual storytelling to brand influence, every piece of work on display represents a unique perspective, blending together to form one vibrant collective canvas.</p>
-                        <a onclick="switchPage('page_about')" class="btn-discover animate-on-scroll delay-3">Discover Our Full Story &rarr;</a>
+                        <a onclick="switchPage('page-about')" class="btn-discover animate-on-scroll delay-3">Discover Our Full Story &rarr;</a>
                     </div>
                     <div class="about-media-col animate-on-scroll delay-3">
                         <div class="video-placeholder" style="max-height: 40vh;">
@@ -562,18 +561,16 @@
             </section>
 
             <!-- 首页瀑布流画廊 -->
-            <section class="section stories-showcase-section" id="sec_stories_gallery" style="min-height: auto; padding-top: 40px;">
+            <section class="section stories-showcase-section" id="sec-stories-gallery" style="min-height: auto; padding-top: 40px;">
                 <div class="global-stories-header">
                     <h2 class="global-stories-title">The Stories</h2>
-                    <!-- 全局 View All 已移除 -->
                 </div>
 
                 <!-- Documentary -->
                 <div class="category-block animate-on-scroll">
-                    <!-- 核心更新：下划线与类别右侧紧贴跳转链接 -->
                     <div class="category-header" style="border-bottom: 4px solid var(--red);">
                         <h3 class="category-title" style="border:none;">Documentary</h3>
-                        <a class="category-view-all" onclick="switchPage('page_stories', null, 'Documentary')">View All</a>
+                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
                         <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-doc-home', -1)">&lt;</button>
@@ -599,7 +596,7 @@
                 <div class="category-block animate-on-scroll delay-1">
                     <div class="category-header" style="border-bottom: 4px solid var(--blue);">
                         <h3 class="category-title" style="border:none;">Short Film</h3>
-                        <a class="category-view-all" onclick="switchPage('page_stories', null, 'Short Film')">View All</a>
+                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
                         <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-short-home', -1)">&lt;</button>
@@ -621,7 +618,7 @@
                 <div class="category-block animate-on-scroll delay-2">
                     <div class="category-header" style="border-bottom: 4px solid var(--yellow);">
                         <h3 class="category-title" style="border:none;">The Marketing Lab</h3>
-                        <a class="category-view-all" onclick="switchPage('page_stories', null, 'The Marketing Lab')">View All</a>
+                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
                         <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-marcomm-home', -1)">&lt;</button>
@@ -640,7 +637,7 @@
                 </div>
             </section>
             
-            <!-- 核心更新：联系方式区域的所有 Youtube 和 Rednote 超链接 -->
+            <!-- Contact (Home Page bottom) -->
             <section class="shared-contact-section">
                 <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                 <div class="social-circles-container animate-on-scroll delay-1">
@@ -657,7 +654,7 @@
         <!-- ========================================== -->
         <!-- 页面 2: ABOUT US -->
         <!-- ========================================== -->
-        <div id="page_about" class="spa-page">
+        <div id="page-about" class="spa-page">
             <div style="width: 100%; aspect-ratio: 4 / 1; min-height: 180px; margin-top: 75px; background: url('about_us_top_photo.jpg') center/cover no-repeat;"></div>
             
             <section class="section" style="padding: 60px 6vw; min-height: auto; max-width: 900px;">
@@ -666,6 +663,7 @@
                 <p style="font-family: var(--font-sub); font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-align: justify;">Here, every student is an independent “artist”, and every graduation project is “a stroke of colour” on the canvas. Each project represents a different way of seeing, thinking and communicating, while the three pathways contribute their own distinctive colours to the collective identity of Mass Communication students.</p>
             </section>
 
+            <!-- 1. Meet The Team (JS 已去除了 "Leader / Position:" 强制前缀) -->
             <section class="section team-coverflow-section" id="sec-team" style="padding-top: 20px;">
                 <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">TEAM.</span></h2>
                 <div class="coverflow-container animate-on-scroll delay-1">
@@ -681,7 +679,7 @@
                     </div>
                     <div class="team-info-box" id="team-info-box">
                         <h3 class="info-team-name" id="info-team-name">Team Name</h3>
-                        <p class="info-team-text" id="info-team-leader"><strong>Position:</strong> ...</p>
+                        <p class="info-team-text" id="info-team-leader">...</p>
                         <p class="info-team-text" id="info-team-members"><strong>Members:</strong> ...</p>
                     </div>
                 </div>
@@ -741,52 +739,9 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- 页面 4: EXHIBITION -->
-        <!-- ========================================== -->
-        <div id="page_exhibition" class="spa-page">
-            <section class="section" id="sec-exhibition-1">
-                <h2 class="sec-header">THREE WAYS TO <span class="c-blue" style="white-space: nowrap;">TELL A STORY.</span></h2>
-                <div class="ways-grid animate-on-scroll">
-                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
-                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
-                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
-                </div>
-            </section>
-
-            <section class="shared-contact-section">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- 页面 5: CONTACT -->
-        <!-- ========================================== -->
-        <div id="page_contact" class="spa-page">
-            <section class="section contact-footer-section" style="border-top: none; justify-content: center; min-height: 80vh;">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
-        <!-- ========================================== -->
         <!-- 页面 3: THE STORIES (包含大厅与详情页) -->
         <!-- ========================================== -->
-        <div id="page_stories" class="spa-page">
+        <div id="page-stories" class="spa-page">
             
             <!-- 视图 A：海报大厅总览视图 -->
             <div id="stories_gallery_view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
@@ -794,7 +749,6 @@
                     <h2 class="portfolio-gallery-title">Student Artworks</h2>
                     
                     <div class="category-filter-tabs">
-                        <!-- 分配 ID 供跳转后点击 -->
                         <button class="filter-tab active" id="filter_tab_all" onclick="filterArtworks('all', this)">All</button>
                         <button class="filter-tab" id="filter_tab_doc" onclick="filterArtworks('Documentary', this)">Documentary</button>
                         <button class="filter-tab" id="filter_tab_short" onclick="filterArtworks('Short Film', this)">Short Film</button>
@@ -803,7 +757,7 @@
 
                     <div class="portfolio-works-grid" id="main-artworks-grid">
                         <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=ucsi+university', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
-                            <!-- 核心测试：使用 fill 拉伸以消除白边且不裁切画面 -->
+                            <!-- object-fit: fill 强制拉伸填满框，彻底消除白边且不裁剪图片内容 -->
                             <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=UCSI+University" class="poster-img">
                             <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
                         </div>
@@ -971,6 +925,49 @@
             </div>
         </div>
 
+        <!-- ========================================== -->
+        <!-- 页面 4: EXHIBITION -->
+        <!-- ========================================== -->
+        <div id="page-exhibition" class="spa-page">
+            <section class="section" id="sec-exhibition-1">
+                <h2 class="sec-header">THREE WAYS TO <span class="c-blue" style="white-space: nowrap;">TELL A STORY.</span></h2>
+                <div class="ways-grid animate-on-scroll">
+                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
+                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
+                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
+                </div>
+            </section>
+
+            <section class="shared-contact-section">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 页面 5: CONTACT -->
+        <!-- ========================================== -->
+        <div id="page-contact" class="spa-page">
+            <section class="section contact-footer-section" style="border-top: none; justify-content: center; min-height: 80vh;">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
+        </div>
+
     </div>
 
     <!-- JavaScript 逻辑 -->
@@ -981,7 +978,7 @@
             const targetPage = document.getElementById(pageId);
             if (targetPage) targetPage.classList.add('active');
             
-            if (pageId === 'page_stories') {
+            if (pageId === 'page-stories') {
                 document.getElementById('stories_gallery_view').style.display = 'flex';
                 document.getElementById('stories_detail_view').style.display = 'none';
 
@@ -1021,7 +1018,7 @@
                 }
             }
             
-            if(pageId === 'page_about') updateCoverflow();
+            if(pageId === 'page-about') updateCoverflow();
         }
 
         // --- 弹窗控制 ---
@@ -1104,7 +1101,8 @@
                     setTimeout(() => {
                         document.getElementById('info-team-name').innerHTML = card.dataset.name;
                         document.getElementById('info-team-name').style.color = card.dataset.color;
-                        document.getElementById('info-team-leader').innerHTML = "<strong>Leader / Position:</strong> " + card.dataset.leader;
+                        // 已去除 Leader / Position 前缀，直接显示传入的信息
+                        document.getElementById('info-team-leader').innerHTML = card.dataset.leader;
                         document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
                         card.style.setProperty('--active-color', card.dataset.color);
                         infoBox.style.opacity = 1; 
@@ -1193,7 +1191,7 @@
             document.getElementById('dynamic-portrait-bg').style.background = color;
 
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
-            document.getElementById('page_stories').classList.add('active');
+            document.getElementById('page-stories').classList.add('active');
 
             document.getElementById('stories_gallery_view').style.display = 'none';
             document.getElementById('stories_detail_view').style.display = 'flex';
