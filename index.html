@@ -187,6 +187,7 @@
         }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
         
+        /* 图片填充不裁剪 */
         .poster-img {
             width: 100%;
             height: 100%;
@@ -208,28 +209,112 @@
         .track-arrow-horiz:hover { background: var(--yellow); }
         .track-arrow-left { left: -20px; } .track-arrow-right { right: -20px; }
 
-        /* --- 底部统一联系方式与固定黑色页脚 --- */
-        .shared-contact-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 6vw 140px; background: transparent; border-top: 2px dashed rgba(26,26,26,0.1); margin-top: 60px; }
-        .contact-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 4rem); color: var(--charcoal); margin-bottom: 30px; text-transform: uppercase; text-align: center; }
-        .social-circles-container { display: flex; justify-content: center; gap: 20px; }
-        .social-circle-btn { display: flex; justify-content: center; align-items: center; width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--charcoal); color: var(--charcoal); text-decoration: none; transition: all 0.3s; background: #fff; }
-        .social-circle-btn svg { width: 50%; height: 50%; }
-        .social-circle-btn span { font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; }
-        .social-circle-btn:hover { transform: translateY(-5px); color: #fff; background: var(--charcoal); box-shadow: 6px 6px 0 rgba(26,26,26,0.2); }
+        /* --- Meet The Team --- */
+        .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: visible; padding: 100px 6vw; min-height: 100vh; }
+        .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; gap: 40px; margin-top: 20px; }
+        .coverflow-track { position: relative; width: 100%; height: 420px; display: flex; justify-content: center; align-items: center; perspective: 1400px; transform-style: preserve-3d; cursor: default; }
+        .coverflow-card { position: absolute; top: 50%; width: 260px; aspect-ratio: 3 / 4; background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); display: block; transform: translateY(-50%); cursor: pointer; }
+        .coverflow-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         
-        .footer-canvas { position: fixed; bottom: 0; left: 0; z-index: 1000; width: 100vw; height: var(--footer-h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: 700; clip-path: polygon(0 0, 12% 0, 30% 6%, 70% 6%, 88% 0, 100% 0, 100% 100%, 0 100%); }
+        .card-active { transform: translateX(0) translateZ(100px) translateY(-50%) scale(1); z-index: 10; opacity: 1; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border-color: var(--active-color, var(--charcoal)); }
+        .card-prev-1 { transform: translateX(-52%) translateZ(20px) translateY(-50%) scale(0.88) rotateY(12deg); z-index: 6; opacity: 0.85; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card-next-1 { transform: translateX(52%) translateZ(20px) translateY(-50%) scale(0.88) rotateY(-12deg); z-index: 6; opacity: 0.85; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
+        .card-prev-2 { transform: translateX(-98%) translateZ(-80px) translateY(-50%) scale(0.75) rotateY(25deg); z-index: 3; opacity: 0.45; }
+        .card-next-2 { transform: translateX(98%) translateZ(-80px) translateY(-50%) scale(0.75) rotateY(-25deg); z-index: 3; opacity: 0.45; }
+        .card-hidden-left { transform: translateX(-140%) translateZ(-200px) translateY(-50%) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; }
+        .card-hidden-right { transform: translateX(140%) translateZ(-200px) translateY(-50%) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; }
+        
+        .team-info-box { text-align: center; width: 100%; max-width: 1000px; min-height: 280px; padding: 25px; transition: opacity 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; }
+        .info-team-name { font-family: var(--font-title); font-size: 2.2rem; text-shadow: 1px 1px 0 rgba(26,26,26,0.2); transition: color 0.3s ease; }
+        .info-team-text { font-family: var(--font-sub); font-size: 1.25rem; line-height: 1.6; color: var(--charcoal); font-weight: bold; width: 100%; word-wrap: break-word; }
 
-        /* 移动端兼容 */
+        /* --- 其他页面保持原样 --- */
+        .pathways-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; }
+        .pathways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; width: 100%; max-width: 1200px; margin-top: 20px; }
+        .pathway-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .pathway-img-wrap { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; }
+        .pathway-img-wrap img { width: 100%; height: 100%; object-fit: contain; filter: none; box-shadow: none; }
+        .pathway-title { font-family: var(--font-fredericka); font-size: 2.2rem; color: var(--charcoal); margin-bottom: 2px; }
+        .pathway-subtitle { font-family: var(--font-title); font-size: 1.4rem; color: var(--charcoal); margin-bottom: 15px; letter-spacing: 1px; }
+        .pathway-desc { font-family: var(--font-sub); font-size: 1.2rem; line-height: 1.6; color: var(--charcoal); }
+
+        .concept-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; text-align: center; }
+        .concept-title { font-family: var(--font-title); font-size: clamp(2.8rem, 5vw, 4.5rem); color: var(--charcoal); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        .concept-content-box { position: relative; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 280px; }
+        .concept-logo-animated { width: clamp(180px, 25vw, 280px); height: auto; object-fit: contain; display: block; mix-blend-mode: multiply; border-radius: 0; animation: autoBreatheNoticeable 2.8s infinite alternate ease-in-out; }
+        .concept-subtitle { font-family: var(--font-fredericka); font-size: clamp(2.0rem, 3.5vw, 3.2rem); color: var(--charcoal); margin-top: 30px; margin-bottom: 20px; }
+        .concept-desc { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.6rem); line-height: 1.6; color: var(--charcoal); max-width: 850px; text-align: center; }
+
+        .info-blob-bg { 
+            position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: clamp(350px, 45vw, 550px); height: clamp(350px, 45vw, 550px); 
+            background: var(--red); 
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+            animation: morphBlobInfo 12s ease-in-out infinite alternate;
+            z-index: 0; transition: background 0.5s ease; 
+            box-shadow: inset 10px 10px 20px rgba(0,0,0,0.05); 
+        }
+        @keyframes morphBlobInfo { 
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
+            50% { border-radius: 45% 55% 50% 50% / 50% 45% 55% 50%; transform: translate(-50%, -50%) scale(1.03) rotate(5deg); } 
+            100% { border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; transform: translate(-50%, -50%) scale(0.97) rotate(-5deg); } 
+        }
+
+        .student-profile-section { 
+            width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            padding: 110px 6vw 40px 6vw; position: relative; 
+            background: transparent;
+        }
+
+        .back-btn-wrapper { width: 100%; max-width: 1200px; padding: 10px 0 10px 0; display: flex; justify-content: flex-start; z-index: 20; }
+        .back-btn { padding: 10px 20px; background: #fff; border: 2px solid var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; cursor: pointer; box-shadow: 3px 3px 0 var(--charcoal); transition: all 0.2s; }
+        .back-btn:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--charcoal); }
+        .profile-card { width: 100%; max-width: 1200px; background: transparent; border: none; box-shadow: none; display: flex; align-items: center; justify-content: center; gap: 6vw; padding: 20px 40px; margin: auto 0; z-index: 2; }
+        .profile-img-col { flex: 0.8; display: flex; justify-content: center; align-items: center; position: relative; }
+        .decorated-portrait-wrap { position: relative; width: 100%; max-width: 320px; aspect-ratio: 3 / 4; margin: 0 auto; transform: rotate(-2deg); transition: transform 0.4s ease; }
+        .decorated-portrait-wrap:hover { transform: rotate(0deg) translateY(-8px); }
+        .decorated-portrait-bg { position: absolute; top: 20px; left: -20px; width: 100%; height: 100%; background: var(--yellow); border: 4px solid var(--charcoal); border-radius: 12px; z-index: 1; box-shadow: 10px 10px 0 rgba(26,26,26,0.15); }
+        .decorated-portrait-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; border: 4px solid var(--charcoal); border-radius: 12px; z-index: 2; background: #fff; }
+        .decorated-tape { position: absolute; top: -16px; left: 50%; transform: translateX(-50%) rotate(4deg); width: 110px; height: 32px; background: rgba(255, 253, 248, 0.85); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 rgba(26,26,26,0.15); z-index: 3; }
+        .profile-text-col { flex: 1.2; display: flex; flex-direction: column; justify-content: center; padding: 20px 0; color: var(--charcoal); text-align: left; }
+        .profile-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5.5rem); margin-bottom: 20px; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; line-height: 1.1;}
+        .profile-comment { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 2.2rem); line-height: 1.5; text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff; }
+
+        .portfolio-details-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 40px 6vw 80px; position: relative; }
+        .portfolio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; width: 100%; max-width: 1200px; align-items: flex-start; }
+        .portfolio-info-col { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; padding: 40px 0; min-height: 400px; }
+        .info-glass-card { position: relative; z-index: 2; width: 80%; display: flex; flex-direction: column; align-items: flex-start; }
+        .category-tag-badge { font-family: var(--font-title); font-size: 1.2rem; color: #1a1a1a !important; background: var(--red); padding: 8px 24px; display: inline-block; margin-bottom: 25px; border: 2px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); letter-spacing: 1px; transform: rotate(-3deg); transition: background 0.5s ease; }
+        .info-list { list-style: none; display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .info-list li { font-size: 1.05rem; line-height: 1.4; color: var(--charcoal) !important; border-bottom: 1px solid rgba(26,26,26,0.3); padding-bottom: 6px; display: flex; flex-direction: column; gap: 4px; text-shadow: none; }
+        .info-list li:last-child { border-bottom: none; }
+        .info-list strong { font-family: var(--font-title); font-size: 1.15em; color: var(--charcoal) !important; text-shadow: none; }
+        .info-list span { font-family: var(--font-sub); font-size: 1.3em; color: var(--charcoal) !important; text-shadow: none; }
+        .portfolio-media-col { display: flex; flex-direction: column; gap: 15px; width: 100%; }
+        .main-video-player { width: 100%; aspect-ratio: 16 / 9; background: #000; border: 4px solid var(--charcoal); box-shadow: 10px 10px 0 rgba(26,26,26,0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: transform 0.3s ease; }
+        .youtube-btn-mock { width: 80px; height: 55px; background: #FF0000; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
+        .youtube-btn-mock::before { content: ''; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
+        .thumbnail-row { display: flex; gap: 15px; width: 100%; overflow-x: auto; padding-bottom: 10px; }
+        .thumb-box { flex: 1; min-width: 80px; aspect-ratio: 1; background: #e0e0e0; border: 2px solid var(--charcoal); border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold; color: rgba(26,26,26,0.5); transition: transform 0.2s; overflow: hidden;}
+        .thumb-box img { width: 100%; height: 100%; object-fit: cover;}
+        .thumb-box:hover { transform: translateY(-3px); box-shadow: 3px 3px 0 var(--charcoal); border-color: var(--blue); }
+        .description-box { margin-top: 10px; background: #fff; padding: 20px; border: 2px solid var(--charcoal); border-radius: 12px; }
+        .desc-label, .production-label { font-family: var(--font-sub); font-size: 2rem; color: var(--charcoal); font-weight: 700; }
+        .production-label { margin-top: 20px; margin-bottom: 5px; }
+        .desc-body, .production-list { font-family: var(--font-sub); font-size: 1.3rem; line-height: 1.5; color: var(--charcoal); }
+        .production-list { list-style: none; }
+
         @media (max-width: 900px) {
             .navbar { padding: 0 5vw; } .nav-links { display: none; }
-            .countdown-logo-wrap { width: 140px; } .timer-box { padding: 15px; border-radius: 30px; gap: 10px; } .timer-card { width: 45%; padding: 15px; } .timer-circle { width: 60px; height: 60px; font-size: 1.5rem; } .time-divider { display: none; } 
+            .countdown-logo-wrap { width: 140px; }
+            .timer-cards-wrapper { gap: 10px; } .timer-card { width: 45%; padding: 15px; } .timer-circle { width: 60px; height: 60px; font-size: 1.5rem; }
             .about-content-grid { grid-template-columns: 1fr; gap: 30px; }
-            .coverflow-track { height: 300px; } .coverflow-card { border-width: 3px; }
-            .story-poster-card { flex: 0 0 calc(65% - 10px); } .track-arrow-horiz { display: none; } 
-            .profile-card { flex-direction: column; padding: 0 20px; text-align: center; max-height: none; } .profile-img-col { margin-bottom: 40px; } .profile-text-col { padding: 0; align-items: center; text-align: center; }
-            .portfolio-grid { grid-template-columns: 1fr; gap: 40px; } .portfolio-info-col { min-height: auto; padding-bottom: 40px;}
-            .ways-grid { grid-template-columns: 1fr; gap: 12px; }
-            .pathways-grid { grid-template-columns: 1fr; gap: 40px; }
+            .coverflow-track { height: 300px; }
+            .story-poster-card { flex: 0 0 calc(65% - 10px); }
+            .profile-card { flex-direction: column; padding: 0 20px; text-align: center; } 
+            .profile-img-col { margin-bottom: 40px; } .profile-text-col { padding: 0; align-items: center; }
+            .portfolio-grid { grid-template-columns: 1fr; gap: 40px; }
         }
     </style>
 </head>
@@ -311,7 +396,6 @@
                     <div class="hero-content"><h1 class="slide-title c-green">Your Story Could Be<br>The Next Colour</h1></div>
                 </div>
 
-                <!-- 底部条形引导栏 -->
                 <div class="hero-indicators">
                     <div class="indicator active" onclick="goToSlide(0)" style="--active-color: var(--charcoal);"></div>
                     <div class="indicator" onclick="goToSlide(1)"></div>
@@ -342,7 +426,10 @@
                     </div>
                     
                     <div class="tba-info">
-                        <div class="tba-row"><span>Venue: Level 8, Block G, UCSI University Kuala Lumpur Campus</span><span>UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur</span></div>
+                        <div class="tba-row">
+                            <span>Venue: Level 8, Block G, UCSI University Kuala Lumpur Campus</span>
+                            <span>UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur</span>
+                        </div>
                         <div class="tba-row"><span>Date: 27 August 2026 (Thursday)</span></div>
                     </div>
                 </div>
@@ -373,8 +460,8 @@
 
                 <!-- Documentary -->
                 <div class="category-block animate-on-scroll">
-                    <div class="category-header">
-                        <h3 class="category-title">Documentary</h3>
+                    <div class="category-header" style="border-bottom: 4px solid var(--red);">
+                        <h3 class="category-title" style="border:none;">Documentary</h3>
                         <a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
@@ -399,8 +486,8 @@
 
                 <!-- Short Film -->
                 <div class="category-block animate-on-scroll delay-1">
-                    <div class="category-header">
-                        <h3 class="category-title">Short Film</h3>
+                    <div class="category-header" style="border-bottom: 4px solid var(--blue);">
+                        <h3 class="category-title" style="border:none;">Short Film</h3>
                         <a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
@@ -421,8 +508,8 @@
 
                 <!-- The Marketing Lab -->
                 <div class="category-block animate-on-scroll delay-2">
-                    <div class="category-header">
-                        <h3 class="category-title">The Marketing Lab</h3>
+                    <div class="category-header" style="border-bottom: 4px solid var(--yellow);">
+                        <h3 class="category-title" style="border:none;">The Marketing Lab</h3>
                         <a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a>
                     </div>
                     <div class="carousel-wrapper-horiz">
@@ -578,7 +665,6 @@
 
     </div>
 
-    <!-- JavaScript 逻辑 -->
     <script>
         function switchPage(pageId, sectionId = null, categoryToFilter = null) {
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
@@ -598,6 +684,8 @@
                         default: tabId = 'filter_tab_all';
                     }
                     setTimeout(() => { const tabBtn = document.getElementById(tabId); if (tabBtn) tabBtn.click(); }, 50);
+                } else {
+                    setTimeout(() => { const tabAll = document.getElementById('filter_tab_all'); if(tabAll) tabAll.click(); }, 50);
                 }
             } else {
                 if (sectionId) {
@@ -611,11 +699,7 @@
 
         function openPosterModal() { document.getElementById("posterModal").style.display = "flex"; }
         function closePosterModal() { document.getElementById("posterModal").style.display = "none"; }
-        
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightboxModal').style.display = 'flex';
-        }
+        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightboxModal').style.display = 'flex'; }
 
         let currentSlide = 0;
         const slides = document.querySelectorAll('.hero-slide');
@@ -627,10 +711,7 @@
             indicators.forEach((ind, i) => {
                 ind.classList.remove('active');
                 ind.style.removeProperty('--active-color');
-                if(i === index) {
-                    ind.classList.add('active');
-                    ind.style.setProperty('--active-color', slideColors[index]);
-                }
+                if(i === index) { ind.classList.add('active'); ind.style.setProperty('--active-color', slideColors[index]); }
             });
         }
         function nextSlide() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
@@ -669,7 +750,6 @@
             infoBox.style.opacity = 0;
             teamCards.forEach((card, index) => {
                 card.classList.remove('card-active', 'card-prev-1', 'card-next-1', 'card-prev-2', 'card-next-2', 'card-hidden-left', 'card-hidden-right');
-                
                 let diff = (index - currentTeam + teamCards.length) % teamCards.length;
                 if (diff > teamCards.length / 2) diff -= teamCards.length;
 
@@ -724,6 +804,7 @@
         function goToDetailView(title, comment, imgSrc, studentName, age, enrollSem, gradSem, phone, email, category, color, descText, prodTeamHtml) {
             document.getElementById('dynamic_profile_title').innerText = title;
             document.getElementById('dynamic_profile_comment').innerText = comment;
+            
             document.getElementById('dyn-name').innerText = studentName;
             document.getElementById('dyn-age').innerText = age;
             document.getElementById('dyn-enroll').innerText = enrollSem;
@@ -736,13 +817,16 @@
             document.getElementById('dynamic-blob').style.background = color;
             document.getElementById('dyn-desc').innerText = descText;
             document.getElementById('dyn-prod-team').innerHTML = prodTeamHtml;
+
             document.getElementById('dynamic-profile-img').src = imgSrc;
             document.getElementById('dynamic-portrait-bg').style.background = color;
 
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
             document.getElementById('page-stories').classList.add('active');
+
             document.getElementById('stories_gallery_view').style.display = 'none';
             document.getElementById('stories_detail_view').style.display = 'flex';
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
