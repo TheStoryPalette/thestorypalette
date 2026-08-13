@@ -156,7 +156,6 @@
         .category-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 15px; padding-bottom: 5px; margin-bottom: 15px;}
         .category-title { font-family: var(--font-title); font-size: clamp(2rem, 3vw, 2.8rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; border: none; }
         
-        /* 核心修改 1：重做 View All 样式，使其靠在下划线右侧 */
         .category-view-all {
             font-family: var(--font-title);
             font-size: clamp(1rem, 1.2vw, 1.2rem);
@@ -182,7 +181,7 @@
         }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
         
-        /* 核心修改 2：彻底消除容器留白，使用 object-fit: fill 强行拉伸填满，不裁剪任何画面 */
+        /* 使用 object-fit: fill 强行拉伸填满，不裁剪任何画面且不留白 */
         .poster-img {
             width: 100%;
             height: 100%;
@@ -320,7 +319,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: fill; /* 同样保持不留白、不裁切 */
+            object-fit: fill; 
             border: 4px solid var(--charcoal);
             border-radius: 12px;
             z-index: 2;
@@ -637,7 +636,6 @@
                 </div>
             </section>
             
-            <!-- Contact (Home Page bottom) -->
             <section class="shared-contact-section">
                 <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                 <div class="social-circles-container animate-on-scroll delay-1">
@@ -655,7 +653,7 @@
         <!-- 页面 2: ABOUT US -->
         <!-- ========================================== -->
         <div id="page-about" class="spa-page">
-            <div style="width: 100%; aspect-ratio: 4 / 1; min-height: 180px; margin-top: 75px; background: url('about_us_top_photo.jpg') center/cover no-repeat;"></div>
+            <div style="width: 100%; aspect-ratio: 4 / 1; min-height: 180px; margin-top: 75px; background: url('about us top photo.jpg') center/cover no-repeat;"></div>
             
             <section class="section" style="padding: 60px 6vw; min-height: auto; max-width: 900px;">
                 <h2 style="font-family: var(--font-title); font-size: 2.8rem; margin-bottom: 25px; text-align: center;">About The Exhibition</h2>
@@ -663,7 +661,6 @@
                 <p style="font-family: var(--font-sub); font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-align: justify;">Here, every student is an independent “artist”, and every graduation project is “a stroke of colour” on the canvas. Each project represents a different way of seeing, thinking and communicating, while the three pathways contribute their own distinctive colours to the collective identity of Mass Communication students.</p>
             </section>
 
-            <!-- 1. Meet The Team (JS 已去除了 "Leader / Position:" 强制前缀) -->
             <section class="section team-coverflow-section" id="sec-team" style="padding-top: 20px;">
                 <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">TEAM.</span></h2>
                 <div class="coverflow-container animate-on-scroll delay-1">
@@ -739,6 +736,49 @@
         </div>
 
         <!-- ========================================== -->
+        <!-- 页面 4: EXHIBITION -->
+        <!-- ========================================== -->
+        <div id="page-exhibition" class="spa-page">
+            <section class="section" id="sec-exhibition-1">
+                <h2 class="sec-header">THREE WAYS TO <span class="c-blue" style="white-space: nowrap;">TELL A STORY.</span></h2>
+                <div class="ways-grid animate-on-scroll">
+                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
+                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
+                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
+                </div>
+            </section>
+
+            <section class="shared-contact-section">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- 页面 5: CONTACT -->
+        <!-- ========================================== -->
+        <div id="page-contact" class="spa-page">
+            <section class="section contact-footer-section" style="border-top: none; justify-content: center; min-height: 80vh;">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
+        </div>
+
+        <!-- ========================================== -->
         <!-- 页面 3: THE STORIES (包含大厅与详情页) -->
         <!-- ========================================== -->
         <div id="page-stories" class="spa-page">
@@ -749,6 +789,7 @@
                     <h2 class="portfolio-gallery-title">Student Artworks</h2>
                     
                     <div class="category-filter-tabs">
+                        <!-- 分配 ID 供跳转后点击 -->
                         <button class="filter-tab active" id="filter_tab_all" onclick="filterArtworks('all', this)">All</button>
                         <button class="filter-tab" id="filter_tab_doc" onclick="filterArtworks('Documentary', this)">Documentary</button>
                         <button class="filter-tab" id="filter_tab_short" onclick="filterArtworks('Short Film', this)">Short Film</button>
@@ -757,7 +798,6 @@
 
                     <div class="portfolio-works-grid" id="main-artworks-grid">
                         <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=ucsi+university', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
-                            <!-- object-fit: fill 强制拉伸填满框，彻底消除白边且不裁剪图片内容 -->
                             <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=UCSI+University" class="poster-img">
                             <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
                         </div>
@@ -925,49 +965,6 @@
             </div>
         </div>
 
-        <!-- ========================================== -->
-        <!-- 页面 4: EXHIBITION -->
-        <!-- ========================================== -->
-        <div id="page-exhibition" class="spa-page">
-            <section class="section" id="sec-exhibition-1">
-                <h2 class="sec-header">THREE WAYS TO <span class="c-blue" style="white-space: nowrap;">TELL A STORY.</span></h2>
-                <div class="ways-grid animate-on-scroll">
-                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
-                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
-                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
-                </div>
-            </section>
-
-            <section class="shared-contact-section">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- 页面 5: CONTACT -->
-        <!-- ========================================== -->
-        <div id="page-contact" class="spa-page">
-            <section class="section contact-footer-section" style="border-top: none; justify-content: center; min-height: 80vh;">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
     </div>
 
     <!-- JavaScript 逻辑 -->
@@ -1101,7 +1098,6 @@
                     setTimeout(() => {
                         document.getElementById('info-team-name').innerHTML = card.dataset.name;
                         document.getElementById('info-team-name').style.color = card.dataset.color;
-                        // 已去除 Leader / Position 前缀，直接显示传入的信息
                         document.getElementById('info-team-leader').innerHTML = card.dataset.leader;
                         document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
                         card.style.setProperty('--active-color', card.dataset.color);
