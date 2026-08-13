@@ -144,8 +144,23 @@
         .about-text { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.5vw, 1.4rem); line-height: 1.4; color: var(--charcoal); text-shadow: 1px 1px 0 rgba(255,255,255,0.8), -1px -1px 0 rgba(255,255,255,0.8); }
         .btn-discover { margin-top: 5px; padding: 10px 24px; background: var(--yellow); color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; display: inline-block; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; align-self: flex-start;}
         .btn-discover:hover { background: var(--red); color: #fff; transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
-        .video-placeholder { width: 100%; aspect-ratio: 16 / 9; max-height: 38vh; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; }
-        .video-placeholder img { width: 100%; height: 100%; object-fit: contain; }
+        /* 移除 video-placeholder 的白边留白，并设置 object-fit: fill */
+        .video-placeholder { 
+            width: 100%; 
+            aspect-ratio: 16 / 9; 
+            max-height: 38vh; 
+            border: 4px solid var(--charcoal); 
+            box-shadow: 12px 12px 0 var(--charcoal); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            padding: 0; 
+        }
+        .video-placeholder img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: fill; 
+            display: block;
+        }
 
         /* --- 首页瀑布流画廊 --- */
         .stories-showcase-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; min-height: auto; }
@@ -535,9 +550,8 @@
                     </div>
                     
                     <div class="tba-info">
-                        <div class="tba-row"><span class="tba-label">Venue</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
-                        <div class="tba-row"><span class="tba-label">Date</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
-                        <div class="tba-row"><span class="tba-label">Time</span><span class="tba-colon">:</span><span class="tba-value">TBA</span></div>
+                        <div class="tba-row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba-label">Date</span><span class="tba-colon">:</span><span class="tba-value">27 August 2026 (Thursday)</span></div>
+                        <div class="tba-row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba-label">Venue</span><span class="tba-colon">:</span><span class="tba-value">Level 8, Block G, UCSI University Kuala Lumpur Campus, UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur.</span></div>
                     </div>
                 </div>
             </section>
