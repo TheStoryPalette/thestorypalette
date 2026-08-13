@@ -1,163 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Story Palette — Give Colour to Your Story</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Fredericka+the+Great&family=Protest+Riot&family=Solitreo&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg: #FFFDF8;
-            --red: #FF6B6B;
-            --yellow: #FFD93D;
-            --blue: #4D96FF;
-            --purple: #B983FF;
-            --green: #4CC9A6;
-            --charcoal: #1A1A1A;
-            --font_logo: 'Caveat Brush', cursive;
-            --font_title: 'Protest Riot', sans-serif;
-            --font_sub: 'Solitreo', cursive;
-            --font_mono: 'Space Mono', monospace;
-            --font_fredericka: 'Fredericka the Great', serif;
-            --footer_h: clamp(70px, 10vh, 110px);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        html { scroll-behavior: smooth; }
-        body { width: 100vw; overflow-x: hidden; background-color: var(--bg); color: var(--charcoal); font-family: var(--font_mono); position: relative; }
-
-        .animate_on_scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-        .animate_on_scroll.is_visible { opacity: 1; transform: translateY(0); }
-        .delay_1 { transition-delay: 0.15s; }
-        .delay_2 { transition-delay: 0.3s; }
-
-        .canvas_bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden; }
-        .paint_blob { position: absolute; opacity: 0.18; filter: blur(40px); border-radius: 50%; animation: floatBlob 15s infinite alternate ease-in-out; }
-        .blob_1 { width: 45vw; height: 45vw; background: var(--yellow); top: -10%; left: -10%; animation-duration: 18s; }
-        .blob_2 { width: 50vw; height: 50vw; background: var(--red); bottom: -15%; right: -10%; animation-duration: 22s; animation-delay: -5s; }
-        .blob_3 { width: 35vw; height: 35vw; background: var(--blue); top: 30%; right: 20%; animation-duration: 16s; animation-delay: -2s; }
-        .blob_4 { width: 40vw; height: 40vw; background: var(--purple); bottom: 10%; left: 15%; animation-duration: 25s; animation-delay: -8s; }
-        .blob_5 { width: 30vw; height: 30vw; background: var(--green); top: 10%; left: 45%; animation-duration: 19s; animation-delay: -12s; }
-        @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1) rotate(0deg); } 50% { transform: translate(5%, 8%) scale(1.1) rotate(10deg); } 100% { transform: translate(-5%, -5%) scale(0.95) rotate(-5deg); } }
-
-        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 75px; display: flex; justify-content: space-between; align-items: center; padding: 0 4vw; z-index: 1000; background: rgba(255, 253, 248, 0.85); backdrop-filter: blur(12px); border-bottom: 2px solid rgba(26,26,26,0.1); }
-        .nav_logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
-        .nav_logo_static { width: auto; max-width: 45px; height: 36px; object-fit: contain; object_position: center; display: block; border: none; border-radius: 50%; }
-        .logo_text { font-family: var(--font_logo); font-size: 1.8rem; color: var(--charcoal); padding-top: 5px; display: inline-block; }
-        .nav_links { display: flex; align-items: center; gap: 2vw; list-style: none; font-family: var(--font_title); font-size: 1.2rem; }
-        .nav_link { text-decoration: none; color: var(--charcoal); cursor: pointer; }
-        .btn_add_nav { padding: 8px 20px; background: #fff; color: var(--charcoal); font-family: var(--font_title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; box_shadow: 4px 4px 0 var(--charcoal); }
-
-        .spa_page { display: none; width: 100vw; min-height: 100vh; flex-direction: column; align-items: center; opacity: 0; animation: fadeInPage 0.5s ease forwards; position: relative; z-index: 10; }
-        .spa_page.active { display: flex; }
-        @keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-
-        .section { width: 100%; padding: 120px 6vw; display: flex; flex-direction: column; align-items: center; }
-
-        .video_placeholder { width: 100%; aspect-ratio: 16 / 9; max-height: 38vh; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; padding: 0; }
-        .video_placeholder img { width: 100%; height: 100%; object-fit: fill; display: block; }
-
-        .story_poster_card { flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; background: #fff; border: 3px solid var(--charcoal); border_radius: 12px; overflow: hidden; box_shadow: 6px 6px 0 rgba(26,26,26,0.15); cursor: pointer; position: relative; }
-        .poster_img { width: 100%; height: 100%; object-fit: fill; display: block; }
-        
-        .category_view_all { font-family: var(--font_title); font-size: clamp(1rem, 1.2vw, 1.2rem); color: var(--charcoal); text-decoration: underline; cursor: pointer; margin-bottom: 2px; }
-        
-        .team_info_box { text-align: center; width: 100%; max-width: 1000px; padding: 25px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .info_team_name { font-family: var(--font_title); font-size: 2.2rem; }
-        .info_team_text { font-family: var(--font_sub); font-size: 1.25rem; line-height: 1.6; color: var(--charcoal); font-weight: bold; }
-
-        .student_profile_section { width: 100%; min-height: 100vh; padding: 110px 6vw 40px 6vw; background: url('background.jpg') no-repeat center 15% / cover; }
-        .profile_card { width: 100%; max-width: 1200px; display: flex; align-items: center; justify-content: center; gap: 6vw; padding: 20px 40px; margin: auto 0; }
-        .profile_img_col { flex: 0.8; display: flex; justify-content: center; align-items: center; }
-        .profile_img_col img { width: 100%; max-width: 320px; border: 4px solid var(--charcoal); border-radius: 12px; background: #fff; }
-        .profile_text_col { flex: 1.2; text-align: left; }
-        .profile_title { font-family: var(--font_title); font-size: 4rem; }
-        .profile_comment { font-family: var(--font_sub); font-size: 2rem; }
-
-        .shared_contact_section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 100px 6vw; }
-        .social_circle_btn { width: 60px; height: 60px; border-radius: 50%; border: 3px solid var(--charcoal); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--charcoal); background: #fff; }
-        .footer_canvas { position: fixed; bottom: 0; left: 0; width: 100vw; height: var(--footer_h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; }
-    </style>
-</head>
-<body>
-
-    <div class="canvas_bg">
-        <div class="paint_blob blob_1"></div><div class="paint_blob blob_2"></div><div class="paint_blob blob_3"></div><div class="paint_blob blob_4"></div><div class="paint_blob blob_5"></div>
+<section class="section" id="sec-1">
+    <div class="countdown-logo-wrap animate-on-scroll">
+        <img src="logo.png" alt="The Story Palette Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
     </div>
-
-    <nav class="navbar">
-        <a class="nav_logo" onclick="switchPage('page_home')">
-            <img src="logo.png" alt="Logo" class="nav_logo_static">
-            <span class="logo_text">The Story Palette</span>
-        </a>
-        <ul class="nav_links">
-            <li><a class="nav_link" onclick="switchPage('page_home')">Home</a></li>
-            <li><a class="nav_link" onclick="switchPage('page_stories')">The Stories</a></li>
-            <li><a class="nav_link" onclick="switchPage('page_contact')">Contact</a></li>
-        </ul>
-        <button class="btn_add_nav" onclick="openPosterModal()">Join Us Now</button>
-    </nav>
-
-    <div id="page_home" class="spa_page active">
-        <section class="section" id="sec-1">
-            <div class="countdown_logo_wrap"><img src="logo.png" alt="Logo" class="hero_logo_animated"></div>
-            <h2 class="countdown_title">The Story Palette</h2>
-            <div class="tba_info">
-                <div class="tba_row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba_label">Date</span><span class="tba_colon">:</span><span class="tba_value">27 August 2026 (Thursday)</span></div>
-                <div class="tba_row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba_label">Venue</span><span class="tba_colon">:</span><span class="tba_value">Level 8, Block G, UCSI University Kuala Lumpur Campus, UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur.</span></div>
-            </div>
-        </section>
-        <section class="stories_showcase_section">
-            <div class="category_block">
-                <div class="category_header" style="border-bottom: 4px solid var(--red);">
-                    <h3 class="category_title">Documentary</h3>
-                    <a class="category_view_all" onclick="switchPage('page_stories', null, 'Documentary')">View All</a>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div id="page_stories" class="spa_page">
-        <div id="stories_gallery_view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-            <section class="portfolio_gallery_section">
-                <h2 class="portfolio_gallery_title">Student Artworks</h2>
-                <div class="category_filter_tabs">
-                    <button class="filter_tab active" id="filter_tab_all" onclick="filterArtworks('all', this)">All</button>
-                    <button class="filter_tab" id="filter_tab_doc" onclick="filterArtworks('Documentary', this)">Documentary</button>
-                    <button class="filter_tab" id="filter_tab_short" onclick="filterArtworks('Short Film', this)">Short Film</button>
-                </div>
-            </section>
+    <h2 class="countdown-title animate-on-scroll delay-1">The Story Palette</h2>
+    <h3 class="countdown-subtitle animate-on-scroll delay-1">UCSI Mass Comm Final Year Project Exhibition</h3>
+    <div class="countdown-wrapper animate-on-scroll delay-2">
+        <h3 class="countdown-heading">COUNTDOWN</h3>
+        <p class="countdown-tag" style="margin-bottom: 20px;">Our Event Starts In</p>
+        <div class="timer-cards-wrapper">
+            <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--blue);"><span id="t-days">00</span></div><div class="timer-label">DAYS</div></div>
+            <div class="time-divider">:</div>
+            <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--red);"><span id="t-hours">00</span></div><div class="timer-label">HOURS</div></div>
+            <div class="time-divider">:</div>
+            <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--yellow);"><span id="t-mins">00</span></div><div class="timer-label">MINUTES</div></div>
+            <div class="time-divider">:</div>
+            <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
         </div>
-        <div id="stories_detail_view" style="display: none; width: 100%;">
-            <section class="student_profile_section">
-                <button onclick="backToStoriesGallery()" class="back_btn">&larr; Back</button>
-            </section>
+        
+        <div class="tba-info">
+            <div class="tba-row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba-label">Date</span><span class="tba-colon">:</span><span class="tba-value">27 August 2026 (Thursday)</span></div>
+            <div class="tba-row" style="width: auto; grid-template-columns: 60px 15px 1fr;"><span class="tba-label">Venue</span><span class="tba-colon">:</span><span class="tba-value">Level 8, Block G, UCSI University Kuala Lumpur Campus, UCSI Heights, 1, Jln UCSI, Taman Connaught, 56000 Wilayah Persekutuan, Federal Territory of Kuala Lumpur.</span></div>
         </div>
     </div>
-
-    <script>
-        function switchPage(pageId, sectionId = null, categoryToFilter = null) {
-            document.querySelectorAll('.spa_page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            if (pageId === 'page_stories') {
-                document.getElementById('stories_gallery_view').style.display = 'flex';
-                document.getElementById('stories_detail_view').style.display = 'none';
-                if (categoryToFilter) {
-                    setTimeout(() => {
-                        const tab = document.getElementById(categoryToFilter === 'Documentary' ? 'filter_tab_doc' : 'filter_tab_short');
-                        if(tab) tab.click();
-                    }, 50);
-                }
-            }
-        }
-        function backToStoriesGallery() {
-            document.getElementById('stories_detail_view').style.display = 'none';
-            document.getElementById('stories_gallery_view').style.display = 'flex';
-        }
-    </script>
-</body>
-</html>
+</section>
