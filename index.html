@@ -132,7 +132,7 @@
         
         .event-info { display: flex; flex-direction: column; gap: clamp(20px, 3vh, 35px); align-items: center; margin-top: clamp(30px, 5vh, 50px); width: 100%; max-width: 600px; text-align: center; }
         .event-info-item { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
-        .event-info-label { font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: var(--charcoal); font-weight: 700; letter-spacing: 1px; }
+        .event-info-label { font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: rgba(26,26,26,0.7); letter-spacing: 1px; }
         .event-info-value { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.5rem); color: var(--charcoal); line-height: 1.6; }
 
         /* --- About Us --- */
@@ -556,6 +556,10 @@
                             <div class="event-info-label">VENUE</div>
                             <div class="event-info-value">Level 8, Block G<br>UCSI University Kuala Lumpur Campus<br>UCSI Heights, 1, Jln UCSI<br>Taman Connaught, 56000<br>Federal Territory of Kuala Lumpur</div>
                         </div>
+                        <div class="event-info-item">
+                            <div class="event-info-label">TIME</div>
+                            <div class="event-info-value">10.00AM - 6.00PM</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -683,12 +687,12 @@
                 <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">TEAM.</span></h2>
                 <div class="coverflow-container animate-on-scroll delay-1">
                     <div class="coverflow-track" id="team-track">
-                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Exhibition Director: Gu Yi Da<br>Joint Director: Xu Xin Yan<br>Vice Director 1: Tee Ching Yee, Low Vicky<br>Secretary: Keh Yao Hui, Ng Zi Hui<br>Head of Treasurer: Zhang Ji Qiang" data-members="Gu Yi Da, Xu Xin Yan, Tee Ching Yee, Low Vicky, Keh Yao Hui, Ng Zi Hui, Zhang Ji Qiang"><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
+                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Exhibition Director: Gu Yi Da<br>Joint Director: Xu Xin Yan<br>Vice Director 1: Tee Ching Yee, Low Vicky<br>Secretary: Keh Yao Hui, Ng Zi Hui<br>Head of Treasurer: Zhang Ji Qiang" data-members=""><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
                         <div class="coverflow-card" data-name="Sponsorship Team" data-color="var(--blue)" data-leader="Leader: Low Vicky" data-members="Liu Yi Chang, Wu Ao, Du Zi Ye, Tan Chia Hong, Ang Kai Xuan, Peng Yue, Fu Yu Ru, Koh Wen Xuan, Aw Che Wei"><img src="team/sponsorship.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Sponsorship'"></div>
                         <div class="coverflow-card" data-name="Treasury Team" data-color="var(--purple)" data-leader="Leader: Zhang Ji Qiang" data-members="Jia Mei Hua, Liu Hao Ming"><img src="team/finance.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Treasury'"></div>
                         <div class="coverflow-card" data-name="Secretary Team" data-color="var(--brown)" data-leader="Leaders: Keh Yao Hui, Ng Zi Hui" data-members="Wang Xin Ran, Darren Tan Di Xing, Qiu Qin Qin, Wang Shang Qing, Goh Won Hao, Li Zi Ming, Leong Joel"><img src="team/secretary.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Secretary'"></div>
                         <div class="coverflow-card" data-name="Program Team" data-color="var(--yellow)" data-leader="Leader: Jesslyn Chu Shi Ying" data-members="Sieo Wan Kee, Chua Yi Wen, Yeoh Wen Qi, Huang Xin Di, Hao Xin Yue, Wang Xi Ge, Li Shi Bo, Li Zhen Da, Sadeim Al Zeyani, Syamalan A/L Christopher A Moses"><img src="team/program.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Program'"></div>
-                        <div class="coverflow-card" data-name="Production Team" data-color="var(--charcoal)" data-leader="Leader: Liang Wai Onn" data-members="Shanelle Eve Edmund, Bianca Aurelia, Saamiya Aurelia, Li Xiao Nan, Sun Wen Ye, Wang Hua, Chen Ruo Hong, Guo Xuan Yuan, Shen Yan, Zhang Ya Xin, Cao Xian Ya, Wang He Xing Qing, Ong Zhi Yong, Zhou Xin Yang"><img src="team/production.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Production'"></div>
+                        <div class="coverflow-card" data-name="Production Team" data-color="var(--charcoal)" data-leader="Leader: Liang Wai Onn" data-members="Shanelle Eve Edmund, Bianca Aurelia, Saamiya Chandni, Li Xiao Nan, Sun Wen Ye, Wang Hua, Chen Ruo Hong, Guo Xuan Yuan, Shen Yan, Zhang Ya Xin, Cao Xian Ya, Wang He Xing Qing, Ong Zhi Yong, Zhou Xin Yang"><img src="team/production.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Production'"></div>
                         <div class="coverflow-card" data-name="Marketing Team" data-color="var(--red)" data-leader="Leader: Ng Jay Rou" data-members="Du Yi Nuo, Huang Ke Qiao, Rahadyan Yoga Valendra, Fion Lee Win Yean, Song Qian, Li Zhuo Chen, Zhang Zheng Ang, Tang Zhen Yao, Guo Ji Jie, Pu Cuo Yong Cuo, Zhang Ruo Di, Queency Kezia"><img src="team/marketing.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Marketing'"></div>
                         <div class="coverflow-card" data-name="Logistic Team" data-color="var(--gray)" data-leader="Leader: Liu Jin Xiang" data-members="Kaameel Chicktay, Zhang Yi Fan, Zhang Jia He, Jazlynn Hannis Jamaluddin, Xie Shi Ya, Du Zhuo Yi, Taro Iwakawa"><img src="team/logistic.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Logistic'"></div>
                     </div>
@@ -816,6 +820,7 @@
 
                     <div class="portfolio-works-grid" id="main-artworks-grid">
                         <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=ucsi+university', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
+                            <!-- object-fit: fill 强制拉伸填满框，彻底消除白边且不裁剪图片内容 -->
                             <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=UCSI+University" class="poster-img">
                             <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
                         </div>
@@ -1128,7 +1133,15 @@
                         document.getElementById('info-team-name').innerHTML = card.dataset.name;
                         document.getElementById('info-team-name').style.color = card.dataset.color;
                         document.getElementById('info-team-leader').innerHTML = card.dataset.leader;
-                        document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
+                        
+                        // 核心修改：动态隐藏或显示 Member 标签及内容
+                        if (card.dataset.members) {
+                            document.getElementById('info-team-members').style.display = 'block';
+                            document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
+                        } else {
+                            document.getElementById('info-team-members').style.display = 'none';
+                        }
+                        
                         card.style.setProperty('--active-color', card.dataset.color);
                         infoBox.style.opacity = 1; 
                     }, 150);
