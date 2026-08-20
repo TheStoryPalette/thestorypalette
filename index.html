@@ -12,21 +12,12 @@
     
     <style>
         :root {
-            --bg: #FFFDF8;
-            --red: #FF6B6B;
-            --yellow: #FFD93D;
-            --blue: #4D96FF;
-            --purple: #B983FF;
-            --green: #4CC9A6;
-            --cyan: #00E5FF;
-            --charcoal: #1A1A1A;
-            --gray: #808080;
-            --brown: #8B4513;
+            --bg: #FFFDF8; --red: #FF6B6B; --yellow: #FFD93D; --blue: #4D96FF;
+            --purple: #B983FF; --green: #4CC9A6; --cyan: #00E5FF; --charcoal: #1A1A1A;
+            --gray: #808080; --brown: #8B4513;
             
-            --font-logo: 'Caveat Brush', cursive;
-            --font-title: 'Protest Riot', sans-serif;
-            --font-sub: 'Solitreo', cursive;
-            --font-mono: 'Space Mono', monospace;
+            --font-logo: 'Caveat Brush', cursive; --font-title: 'Protest Riot', sans-serif;
+            --font-sub: 'Solitreo', cursive; --font-mono: 'Space Mono', monospace;
             --font-fredericka: 'Fredericka the Great', serif;
             --footer-h: clamp(70px, 10vh, 110px);
         }
@@ -37,8 +28,7 @@
 
         .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
         .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
-        .delay-1 { transition-delay: 0.15s; }
-        .delay-2 { transition-delay: 0.3s; }
+        .delay-1 { transition-delay: 0.15s; } .delay-2 { transition-delay: 0.3s; }
 
         /* 底层画笔背景 */
         .canvas-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; overflow: hidden; }
@@ -72,19 +62,14 @@
         .btn-add-nav { padding: 8px 20px; background: #fff; color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; position: relative; z-index: 1; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; }
         .btn-add-nav:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
 
-        /* 弹窗海报 */
-        .poster-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        /* 弹窗海报 & Lightbox */
+        .poster-modal, .lightbox-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
         .modal-content { position: relative; max-width: 90%; max-height: 90vh; text-align: center; }
-        .modal-content img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
-        .close-modal { position: absolute; top: -20px; right: -40px; color: #fff; font-size: 3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.3s ease; }
-        .close-modal:hover { color: var(--red); }
-
-        /* Lightbox */
-        .lightbox-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; animation: fadeIn 0.3s ease; }
-        .lightbox-modal img { max-width: 90vw; max-height: 90vh; object-fit: contain; box-shadow: 0 0 30px rgba(0,0,0,0.5); border: 2px solid #333; }
-        .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 50px; color: #fff; cursor: pointer; transition: color 0.3s ease; }
-        .lightbox-close:hover { color: var(--red); }
+        .modal-content img, .lightbox-modal img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
+        .close-modal, .lightbox-close { position: absolute; font-size: 3rem; color: #fff; cursor: pointer; transition: color 0.3s ease; }
+        .close-modal { top: -20px; right: -40px; } .lightbox-close { top: 20px; right: 30px; font-size: 50px; z-index: 10000; }
+        .close-modal:hover, .lightbox-close:hover { color: var(--red); }
 
         /* 独立分页容器 */
         .spa-page { display: none; width: 100vw; min-height: 100vh; flex-direction: column; align-items: center; opacity: 0; animation: fadeInPage 0.5s ease forwards; position: relative; z-index: 10; }
@@ -103,22 +88,17 @@
         .hero-content { position: relative; z-index: 2; padding: 0 8vw; }
         .slide-title { font-family: var(--font-title); font-size: clamp(3rem, 6vw, 6.5rem); color: var(--charcoal); line-height: 1.1; letter-spacing: 2px; text-transform: capitalize; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
         .slide-sub { font-family: var(--font-sub); font-size: clamp(1.8rem, 2.8vw, 3.2rem); color: var(--charcoal); margin-top: 15px; text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; }
-        .c-red { color: var(--red); } .c-yellow { color: var(--yellow); } .c-blue { color: var(--blue); } .c-purple { color: var(--purple); } .c-green { color: var(--green); }
+        .c-red { color: var(--red); } .c-yellow { color: var(--yellow); } .c-blue { color: var(--blue); } .c-purple { color: var(--purple); } .c-green { color: var(--green); } .c-cyan { color: var(--cyan); } .c-brown { color: var(--brown); }
         .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: 2px solid var(--charcoal); color: var(--charcoal); border-radius: 50%; width: 55px; height: 55px; font-size: 1.8rem; font-family: var(--font-title); cursor: pointer; z-index: 100; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
         .slider-arrow:hover { background: var(--charcoal); color: #fff; scale: 1.1; } .arrow-left { left: 4vw; } .arrow-right { right: 4vw; }
-
         .hero-indicators { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 100; }
         .indicator { width: 35px; height: 6px; background: rgba(255,255,255,0.6); border-radius: 4px; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .indicator.active { width: 70px; background: var(--active-color, var(--charcoal)); }
 
-        /* --- 倒计时 --- */
+        /* 倒计时 */
         .countdown-logo-wrap { width: clamp(180px, 25vw, 280px); margin-bottom: clamp(15px, 2vh, 25px); }
         .hero-logo-animated { width: 100%; height: auto; object-fit: contain; display: block; mix-blend-mode: multiply; border-radius: 0; animation: autoBreatheNoticeable 2.8s infinite alternate ease-in-out; }
-        @keyframes autoBreatheNoticeable { 
-            0% { transform: translateY(0) scale(1) rotate(0deg); } 
-            50% { transform: translateY(-14px) scale(1.08) rotate(-3deg); }
-            100% { transform: translateY(-6px) scale(1.03) rotate(3deg); } 
-        }
+        @keyframes autoBreatheNoticeable { 0% { transform: translateY(0) scale(1) rotate(0deg); } 50% { transform: translateY(-14px) scale(1.08) rotate(-3deg); } 100% { transform: translateY(-6px) scale(1.03) rotate(3deg); } }
         
         .countdown-title { font-family: var(--font-fredericka); font-size: clamp(3rem, 5vw, 4.5rem); color: var(--charcoal); line-height: 1.1; text-align: center; }
         .countdown-subtitle { font-family: var(--font-fredericka); font-size: clamp(1.2rem, 2vw, 2rem); color: var(--charcoal); text-align: center; margin-bottom: clamp(30px, 6vh, 50px); }
@@ -129,13 +109,12 @@
         .timer-card { background: #fff; border-radius: 20px; box-shadow: 0 10px 25px rgba(26,26,26,0.06); border: 2px solid rgba(26,26,26,0.05); padding: clamp(15px, 2vh, 25px); width: clamp(110px, 14vw, 150px); display: flex; flex-direction: column; align-items: center; }
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
-        
         .event-info { display: flex; flex-direction: column; gap: clamp(20px, 3vh, 35px); align-items: center; margin-top: clamp(30px, 5vh, 50px); width: 100%; max-width: 600px; text-align: center; }
         .event-info-item { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
         .event-info-label { font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: rgba(26,26,26,0.7); letter-spacing: 1px; }
         .event-info-value { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.5rem); color: var(--charcoal); line-height: 1.6; }
 
-        /* --- About Us --- */
+        /* About Us */
         #page-home .about-us-section { min-height: auto; padding: 60px 6vw; margin: 20px 0; }
         .about-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); text-transform: uppercase; color: var(--charcoal); margin-bottom: 1.5rem; position: relative; z-index: 2; letter-spacing: 2px; text-align: left; }
         .about-content-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4vw; width: 100%; max-width: 1200px; position: relative; z-index: 2; align-items: center; }
@@ -143,86 +122,50 @@
         .about-text { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.5vw, 1.4rem); line-height: 1.4; color: var(--charcoal); text-shadow: 1px 1px 0 rgba(255,255,255,0.8), -1px -1px 0 rgba(255,255,255,0.8); }
         .btn-discover { margin-top: 5px; padding: 10px 24px; background: var(--yellow); color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; display: inline-block; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; align-self: flex-start;}
         .btn-discover:hover { background: var(--red); color: #fff; transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
-        .video-placeholder { 
-            width: 100%; 
-            aspect-ratio: 16 / 9; 
-            max-height: 38vh; 
-            border: 4px solid var(--charcoal); 
-            box-shadow: 12px 12px 0 var(--charcoal); 
-            border-radius: 12px; 
-            overflow: hidden; 
-            padding: 0; 
-        }
-        .video-placeholder img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: fill; 
-            display: block;
-        }
+        .video-placeholder { width: 100%; aspect-ratio: 16 / 9; max-height: 38vh; border: 4px solid var(--charcoal); box-shadow: 12px 12px 0 var(--charcoal); border-radius: 12px; overflow: hidden; }
+        .video-placeholder img { width: 100%; height: 100%; object-fit: fill; display: block; }
 
-        /* --- 首页瀑布流画廊 --- */
-        .stories-showcase-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; min-height: auto; }
+        /* 画廊和分类大厅 */
+        .stories-showcase-section, .portfolio-gallery-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 80px 6vw; min-height: auto; }
         .global-stories-header { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 15px; margin-bottom: 20px;}
         .global-stories-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; }
-        
         .category-block { width: 100%; max-width: 1200px; display: flex; flex-direction: column; gap: 15px; margin-bottom: 40px; }
+        .category-block.empty-category { display: none !important; }
         .category-header { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 15px; padding-bottom: 5px; margin-bottom: 15px;}
-        .category-title { font-family: var(--font-title); font-size: clamp(2rem, 3vw, 2.8rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; border: none; }
-        
-        .category-view-all {
-            font-family: var(--font-title);
-            font-size: clamp(1rem, 1.2vw, 1.2rem);
-            color: var(--charcoal);
-            text-decoration: underline;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            margin-bottom: 2px; /* 让文本对齐底部的边框线 */
-        }
-        .category-view-all:hover {
-            color: var(--blue);
-        }
+        .category-title { font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; border: none; }
+        .category-view-all { font-family: var(--font-title); font-size: clamp(1rem, 1.2vw, 1.2rem); color: var(--charcoal); text-decoration: underline; cursor: pointer; transition: color 0.3s ease; margin-bottom: 2px; white-space: nowrap; }
+        .category-view-all:hover { color: var(--blue); }
         
         .carousel-wrapper-horiz { position: relative; width: 100%; display: flex; align-items: center; }
         .carousel-track-horiz { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 10px 30px 10px; width: 100%; scrollbar-width: none; background: transparent; transition: all 0.3s ease; }
         .carousel-track-horiz::-webkit-scrollbar { display: none; }
 
-        .story-poster-card { 
-            flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; 
-            background: #fff; border: 3px solid var(--charcoal); border-radius: 12px; overflow: hidden; 
-            box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            cursor: pointer; position: relative; display: block;
-        }
+        .story-poster-card { flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; background: #fff; border: 3px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; display: block; }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
-        
-        /* 使用 object-fit: fill 强行拉伸填满，不裁剪任何画面且不留白 */
-        .poster-img {
-            width: 100%;
-            height: 100%;
-            object-fit: fill; 
-            background: #e0e0e0;
-            transition: transform 0.4s ease;
-        }
-        
-        .poster-info-overlay { 
-            position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); 
-            padding: 15px; border-top: 3px solid var(--charcoal); transform: translateY(101%); 
-            transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-        }
+        .poster-img { width: 100%; height: 100%; object-fit: fill; background: #e0e0e0; transition: transform 0.4s ease; }
+        .poster-info-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); padding: 15px; border-top: 3px solid var(--charcoal); transform: translateY(101%); transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .story-poster-card:hover .poster-info-overlay { transform: translateY(0); }
         .overlay-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--charcoal); margin-bottom: 5px; line-height: 1.2;}
         .overlay-creator { font-family: var(--font-sub); font-size: 1rem; color: rgba(26,26,26,0.8); }
 
         .track-arrow-horiz { position: absolute; z-index: 10; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: 2px solid var(--charcoal); width: 45px; height: 45px; border-radius: 50%; font-family: var(--font-title); font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; }
-        .track-arrow-horiz:hover { background: var(--yellow); }
-        .track-arrow-left { left: -20px; } .track-arrow-right { right: -20px; }
+        .track-arrow-horiz:hover { background: var(--yellow); } .track-arrow-left { left: -20px; } .track-arrow-right { right: -20px; }
 
-        /* --- Meet The Team --- */
+        /* The Stories 大厅过滤 */
+        .portfolio-gallery-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; text-align: center; position: relative; padding-bottom: 15px; margin-bottom: 25px; }
+        .portfolio-gallery-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 150px; height: 4px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
+        .category-filter-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
+        .filter-tab { padding: 8px 22px; font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); border-radius: 30px; cursor: pointer; transition: all 0.3s ease; background: #fff; color: var(--charcoal); box-shadow: 3px 3px 0 var(--charcoal); opacity: 0.65; }
+        .filter-tab:hover { opacity: 1; transform: translateY(-2px); }
+        .filter-tab.active { background: var(--yellow); opacity: 1; box-shadow: 5px 5px 0 var(--charcoal); transform: translate(-2px, -2px); }
+        .portfolio-works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; }
+
+        /* Meet The Team */
         .team-coverflow-section { display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: visible; padding: 100px 6vw; min-height: 100vh; }
         .coverflow-container { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; position: relative; gap: 40px; margin-top: 20px; }
         .coverflow-track { position: relative; width: 100%; height: 420px; display: flex; justify-content: center; align-items: center; perspective: 1400px; transform-style: preserve-3d; cursor: default; }
         .coverflow-card { position: absolute; top: 50%; width: 260px; aspect-ratio: 3 / 4; background: #fff; border-radius: 15px; border: 4px solid var(--charcoal); overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); display: block; transform: translateY(-50%); cursor: pointer; }
         .coverflow-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        
         .card-active { transform: translateX(0) translateZ(100px) translateY(-50%) scale(1); z-index: 10; opacity: 1; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border-color: var(--active-color, var(--charcoal)); }
         .card-prev-1 { transform: translateX(-52%) translateZ(20px) translateY(-50%) scale(0.88) rotateY(12deg); z-index: 6; opacity: 0.85; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
         .card-next-1 { transform: translateX(52%) translateZ(20px) translateY(-50%) scale(0.88) rotateY(-12deg); z-index: 6; opacity: 0.85; box-shadow: 0 15px 30px rgba(0,0,0,0.15); }
@@ -230,182 +173,71 @@
         .card-next-2 { transform: translateX(98%) translateZ(-80px) translateY(-50%) scale(0.75) rotateY(-25deg); z-index: 3; opacity: 0.45; }
         .card-hidden-left { transform: translateX(-140%) translateZ(-200px) translateY(-50%) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; }
         .card-hidden-right { transform: translateX(140%) translateZ(-200px) translateY(-50%) scale(0.6); z-index: 1; opacity: 0; pointer-events: none; }
-        
         .team-info-box { text-align: center; width: 100%; max-width: 1000px; min-height: 280px; padding: 25px; transition: opacity 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 12px; }
         .info-team-name { font-family: var(--font-title); font-size: 2.2rem; text-shadow: 1px 1px 0 rgba(26,26,26,0.2); transition: color 0.3s ease; }
         .info-team-text { font-family: var(--font-sub); font-size: 1.25rem; line-height: 1.6; color: var(--charcoal); font-weight: bold; width: 100%; word-wrap: break-word; }
 
-        /* --- 第四部分：FTV / Journalism / MarComm 三色板块区 --- */
-        .pathways-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; }
+        /* Pathways */
+        .pathways-section, .concept-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; }
         .pathways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4vw; width: 100%; max-width: 1200px; margin-top: 20px; }
         .pathway-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
         .pathway-img-wrap { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; }
-        .pathway-img-wrap img { width: 100%; height: 100%; object-fit: contain; filter: none; box-shadow: none; }
+        .pathway-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
         .pathway-title { font-family: var(--font-fredericka); font-size: 2.2rem; color: var(--charcoal); margin-bottom: 2px; }
         .pathway-subtitle { font-family: var(--font-title); font-size: 1.4rem; color: var(--charcoal); margin-bottom: 15px; letter-spacing: 1px; }
         .pathway-desc { font-family: var(--font-sub); font-size: 1.2rem; line-height: 1.6; color: var(--charcoal); }
 
-        /* --- 第三部分：Exhibition Theme Concept (纯净居中 Logo 呼吸动效) --- */
-        .concept-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 6vw; position: relative; text-align: center; }
+        .concept-section { text-align: center; }
         .concept-title { font-family: var(--font-title); font-size: clamp(2.8rem, 5vw, 4.5rem); color: var(--charcoal); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
         .concept-content-box { position: relative; width: 100%; max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 280px; }
-        .concept-logo-animated { width: clamp(180px, 25vw, 280px); height: auto; object-fit: contain; display: block; mix-blend-mode: multiply; border-radius: 0; animation: autoBreatheNoticeable 2.8s infinite alternate ease-in-out; }
+        .concept-logo-animated { width: clamp(180px, 25vw, 280px); height: auto; object-fit: contain; mix-blend-mode: multiply; animation: autoBreatheNoticeable 2.8s infinite alternate ease-in-out; }
         .concept-subtitle { font-family: var(--font-fredericka); font-size: clamp(2.0rem, 3.5vw, 3.2rem); color: var(--charcoal); margin-top: 30px; margin-bottom: 20px; }
         .concept-desc { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.6rem); line-height: 1.6; color: var(--charcoal); max-width: 850px; text-align: center; }
 
-        /* --- 动态调色盘缓和动效 --- */
-        .info-blob-bg { 
-            position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); 
-            width: clamp(350px, 45vw, 550px); height: clamp(350px, 45vw, 550px); 
-            background: var(--red); 
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
-            animation: morphBlobInfo 12s ease-in-out infinite alternate;
-            z-index: 0; transition: background 0.5s ease; 
-            box-shadow: inset 10px 10px 20px rgba(0,0,0,0.05); 
-        }
-        @keyframes morphBlobInfo { 
-            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(-50%, -50%) scale(1) rotate(0deg); } 
-            50% { border-radius: 45% 55% 50% 50% / 50% 45% 55% 50%; transform: translate(-50%, -50%) scale(1.03) rotate(5deg); } 
-            100% { border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; transform: translate(-50%, -50%) scale(0.97) rotate(-5deg); } 
-        }
+        .info-blob-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: clamp(350px, 45vw, 550px); height: clamp(350px, 45vw, 550px); background: var(--red); border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation: morphBlobInfo 12s ease-in-out infinite alternate; z-index: 0; transition: background 0.5s ease; box-shadow: inset 10px 10px 20px rgba(0,0,0,0.05); }
+        @keyframes morphBlobInfo { 0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(-50%, -50%) scale(1) rotate(0deg); } 50% { border-radius: 45% 55% 50% 50% / 50% 45% 55% 50%; transform: translate(-50%, -50%) scale(1.03) rotate(5deg); } 100% { border-radius: 50% 50% 40% 60% / 60% 40% 50% 50%; transform: translate(-50%, -50%) scale(0.97) rotate(-5deg); } }
 
-        /* --- The Stories (个人专页区) --- */
-        .student-profile-section { 
-            width: 100%; 
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            padding: 110px 6vw 40px 6vw; position: relative; 
-            background: url('background.jpg') no-repeat center 15% / cover;
-        }
-
-        .back-btn-wrapper {
-            width: 100%; max-width: 1200px; 
-            padding: 10px 0 10px 0; 
-            display: flex; justify-content: flex-start; 
-            z-index: 20;
-        }
-        .back-btn {
-            padding: 10px 20px; background: #fff; border: 2px solid var(--charcoal); 
-            font-family: var(--font-title); font-size: 1.1rem; cursor: pointer; 
-            box-shadow: 3px 3px 0 var(--charcoal); transition: all 0.2s;
-        }
+        /* The Stories Detail View */
+        .student-profile-section { width: 100%; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 110px 6vw 40px 6vw; position: relative; background: url('background.jpg') no-repeat center 15% / cover; }
+        .back-btn-wrapper { width: 100%; max-width: 1200px; padding: 10px 0; display: flex; justify-content: flex-start; z-index: 20; }
+        .back-btn { padding: 10px 20px; background: #fff; border: 2px solid var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; cursor: pointer; box-shadow: 3px 3px 0 var(--charcoal); transition: all 0.2s; }
         .back-btn:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--charcoal); }
-        
-        .profile-card { 
-            width: 100%; max-width: 1200px; background: transparent; border: none; box-shadow: none; 
-            display: flex; align-items: center; justify-content: center; gap: 6vw; overflow: visible; padding: 20px 40px; margin: auto 0; 
-            z-index: 2;
-        }
-        
-        /* 手账风照片展位设计 */
-        .profile-img-col { 
-            flex: 0.8; display: flex; justify-content: center; align-items: center; position: relative; 
-        }
-        .decorated-portrait-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            aspect-ratio: 3 / 4;
-            margin: 0 auto;
-            transform: rotate(-2deg);
-            transition: transform 0.4s ease;
-        }
-        .decorated-portrait-wrap:hover {
-            transform: rotate(0deg) translateY(-8px);
-        }
-        .decorated-portrait-bg {
-            position: absolute;
-            top: 20px;
-            left: -20px;
-            width: 100%;
-            height: 100%;
-            background: var(--yellow);
-            border: 4px solid var(--charcoal);
-            border-radius: 12px;
-            z-index: 1;
-            box-shadow: 10px 10px 0 rgba(26,26,26,0.15);
-        }
-        .decorated-portrait-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: fill; 
-            border: 4px solid var(--charcoal);
-            border-radius: 12px;
-            z-index: 2;
-            background: #fff;
-        }
-        .decorated-tape {
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%) rotate(4deg);
-            width: 110px;
-            height: 32px;
-            background: rgba(255, 253, 248, 0.85);
-            border: 2px solid var(--charcoal);
-            box-shadow: 3px 3px 0 rgba(26,26,26,0.15);
-            z-index: 3;
-        }
-
+        .profile-card { width: 100%; max-width: 1200px; display: flex; align-items: center; justify-content: center; gap: 6vw; padding: 20px 40px; z-index: 2; }
+        .profile-img-col { flex: 0.8; display: flex; justify-content: center; align-items: center; position: relative; }
+        .decorated-portrait-wrap { position: relative; width: 100%; max-width: 320px; aspect-ratio: 3 / 4; margin: 0 auto; transform: rotate(-2deg); transition: transform 0.4s ease; }
+        .decorated-portrait-wrap:hover { transform: rotate(0deg) translateY(-8px); }
+        .decorated-portrait-bg { position: absolute; top: 20px; left: -20px; width: 100%; height: 100%; background: var(--yellow); border: 4px solid var(--charcoal); border-radius: 12px; z-index: 1; box-shadow: 10px 10px 0 rgba(26,26,26,0.15); transition: background 0.5s ease;}
+        .decorated-portrait-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; border: 4px solid var(--charcoal); border-radius: 12px; z-index: 2; background: #fff; }
+        .decorated-tape { position: absolute; top: -16px; left: 50%; transform: translateX(-50%) rotate(4deg); width: 110px; height: 32px; background: rgba(255, 253, 248, 0.85); border: 2px solid var(--charcoal); box-shadow: 3px 3px 0 rgba(26,26,26,0.15); z-index: 3; }
         .profile-text-col { flex: 1.2; display: flex; flex-direction: column; justify-content: center; padding: 20px 0; color: var(--charcoal); text-align: left; }
         .profile-title { font-family: var(--font-title); font-size: clamp(3rem, 5vw, 5.5rem); margin-bottom: 20px; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff; line-height: 1.1;}
         .profile-comment { font-family: var(--font-sub); font-size: clamp(1.4rem, 2vw, 2.2rem); line-height: 1.5; text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff; }
-
-        .portfolio-details-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 40px 6vw 80px; position: relative; }
+        
         .portfolio-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 60px; width: 100%; max-width: 1200px; align-items: flex-start; }
         .portfolio-info-col { position: relative; width: 100%; display: flex; justify-content: center; align-items: center; padding: 40px 0; min-height: 400px; }
         .info-glass-card { position: relative; z-index: 2; width: 80%; display: flex; flex-direction: column; align-items: flex-start; }
-        
-        .category-tag-badge { 
-            font-family: var(--font-title); font-size: 1.2rem; color: #1a1a1a !important; background: var(--red); 
-            padding: 8px 24px; display: inline-block; margin-bottom: 25px; 
-            border: 2px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); 
-            letter-spacing: 1px; transform: rotate(-3deg); transition: background 0.5s ease; 
-        }
-        
+        .category-tag-badge { font-family: var(--font-title); font-size: 1.2rem; color: #1a1a1a !important; background: var(--red); padding: 8px 24px; display: inline-block; margin-bottom: 25px; border: 2px solid var(--charcoal); box-shadow: 6px 6px 0 var(--charcoal); letter-spacing: 1px; transform: rotate(-3deg); transition: background 0.5s ease; }
         .info-list { list-style: none; display: flex; flex-direction: column; gap: 15px; width: 100%; }
-        .info-list li { font-size: 1.05rem; line-height: 1.4; color: var(--charcoal) !important; border-bottom: 1px solid rgba(26,26,26,0.3); padding-bottom: 6px; display: flex; flex-direction: column; gap: 4px; text-shadow: none; }
+        .info-list li { font-size: 1.05rem; line-height: 1.4; color: var(--charcoal) !important; border-bottom: 1px solid rgba(26,26,26,0.3); padding-bottom: 6px; display: flex; flex-direction: column; gap: 4px; }
         .info-list li:last-child { border-bottom: none; }
-        .info-list strong { font-family: var(--font-title); font-size: 1.15em; color: var(--charcoal) !important; text-shadow: none; }
-        .info-list span { font-family: var(--font-sub); font-size: 1.3em; color: var(--charcoal) !important; text-shadow: none; }
+        .info-list strong { font-family: var(--font-title); font-size: 1.15em; color: var(--charcoal) !important; }
+        .info-list span { font-family: var(--font-sub); font-size: 1.3em; color: var(--charcoal) !important; }
 
         .portfolio-media-col { display: flex; flex-direction: column; gap: 15px; width: 100%; }
         .main-video-player { width: 100%; aspect-ratio: 16 / 9; background: #000; border: 4px solid var(--charcoal); box-shadow: 10px 10px 0 rgba(26,26,26,0.1); border-radius: 12px; display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; transition: transform 0.3s ease; }
         .youtube-btn-mock { width: 80px; height: 55px; background: #FF0000; border-radius: 12px; display: flex; justify-content: center; align-items: center; }
         .youtube-btn-mock::before { content: ''; border-style: solid; border-width: 15px 0 15px 25px; border-color: transparent transparent transparent #fff; margin-left: 5px; }
-        
         .thumbnail-row { display: flex; gap: 15px; width: 100%; overflow-x: auto; padding-bottom: 10px; }
         .thumb-box { flex: 1; min-width: 80px; aspect-ratio: 1; background: #e0e0e0; border: 2px solid var(--charcoal); border-radius: 8px; cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; font-weight: bold; color: rgba(26,26,26,0.5); transition: transform 0.2s; overflow: hidden;}
         .thumb-box img { width: 100%; height: 100%; object-fit: cover;}
         .thumb-box:hover { transform: translateY(-3px); box-shadow: 3px 3px 0 var(--charcoal); border-color: var(--blue); }
-        
         .description-box { margin-top: 10px; background: #fff; padding: 20px; border: 2px solid var(--charcoal); border-radius: 12px; }
         .desc-label, .production-label { font-family: var(--font-sub); font-size: 2rem; color: var(--charcoal); font-weight: 700; }
         .production-label { margin-top: 20px; margin-bottom: 5px; }
         .desc-body, .production-list { font-family: var(--font-sub); font-size: 1.3rem; line-height: 1.5; color: var(--charcoal); }
         .production-list { list-style: none; }
 
-        /* --- Student Artworks 大厅页面模块样式 --- */
-        .portfolio-gallery-section { display: flex; flex-direction: column; align-items: center; width: 100%; padding: 60px 6vw; background: transparent; }
-        .portfolio-gallery-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--charcoal); letter-spacing: 2px; text-transform: uppercase; text-align: center; position: relative; padding-bottom: 15px; margin-bottom: 25px; }
-        .portfolio-gallery-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 150px; height: 4px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-        
-        .category-filter-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 30px; }
-        .filter-tab { padding: 8px 22px; font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); border-radius: 30px; cursor: pointer; transition: all 0.3s ease; background: #fff; color: var(--charcoal); box-shadow: 3px 3px 0 var(--charcoal); opacity: 0.65; }
-        .filter-tab:hover { opacity: 1; transform: translateY(-2px); }
-        .filter-tab.active { background: var(--yellow); opacity: 1; box-shadow: 5px 5px 0 var(--charcoal); transform: translate(-2px, -2px); }
-
-        .portfolio-works-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 30px; width: 100%; max-width: 1200px; }
-        
-        .carousel-wrapper-horiz { position: relative; width: 100%; max-width: 1200px; display: flex; align-items: center; margin-bottom: 20px; }
-        .carousel-track-horiz { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 10px 10px 25px 10px; width: 100%; scrollbar-width: none; background: transparent; }
-        .carousel-track-horiz::-webkit-scrollbar { display: none; }
-
-        /* --- Exhibition --- */
+        /* Exhibition */
         .ways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2vw; width: 100%; max-width: 1080px; margin-bottom: 60px; }
         .way-card { padding: 30px 20px; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; min-height: 250px; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .way-card:nth-child(1) { background: var(--red); border-radius: 65% 35% 50% 50% / 45% 60% 40% 55%; }
@@ -414,7 +246,7 @@
         .way-card h3 { font-family: var(--font-title); font-size: 1.6rem; margin-bottom: 12px; letter-spacing: 1px; }
         .way-card p { font-size: 0.9rem; line-height: 1.4; font-family: var(--font-mono); color: #fff !important; }
 
-        /* --- 底部统一联系方式与固定黑色页脚 --- */
+        /* Contact & Footer */
         .shared-contact-section { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 6vw 140px; background: transparent; border-top: 2px dashed rgba(26,26,26,0.1); margin-top: 60px; }
         .contact-title { font-family: var(--font-title); font-size: clamp(2.5rem, 4vw, 4rem); color: var(--charcoal); margin-bottom: 30px; text-transform: uppercase; text-align: center; }
         .social-circles-container { display: flex; justify-content: center; gap: 20px; }
@@ -422,10 +254,8 @@
         .social-circle-btn svg { width: 50%; height: 50%; }
         .social-circle-btn span { font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; }
         .social-circle-btn:hover { transform: translateY(-5px); color: #fff; background: var(--charcoal); box-shadow: 6px 6px 0 rgba(26,26,26,0.2); }
-        
         .footer-canvas { position: fixed; bottom: 0; left: 0; z-index: 1000; width: 100vw; height: var(--footer-h); background: var(--charcoal); color: var(--bg); display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: 700; clip-path: polygon(0 0, 12% 0, 30% 6%, 70% 6%, 88% 0, 100% 0, 100% 100%, 0 100%); }
 
-        /* 移动端兼容 */
         @media (max-width: 900px) {
             .navbar { padding: 0 5vw; } .nav-links { display: none; }
             .countdown-logo-wrap { width: 140px; } .timer-box { padding: 15px; border-radius: 30px; gap: 10px; } .timer-card { width: 45%; padding: 15px; } .timer-circle { width: 60px; height: 60px; font-size: 1.5rem; } .time-divider { display: none; } 
@@ -442,17 +272,15 @@
 <body>
 
     <div class="canvas-bg">
-        <div class="paint-blob blob-1"></div>
-        <div class="paint-blob blob-2"></div>
-        <div class="paint-blob blob-3"></div>
-        <div class="paint-blob blob-4"></div>
+        <div class="paint-blob blob-1"></div><div class="paint-blob blob-2"></div>
+        <div class="paint-blob blob-3"></div><div class="paint-blob blob-4"></div>
         <div class="paint-blob blob-5"></div>
     </div>
 
     <!-- 导航栏 -->
     <nav class="navbar">
         <a class="nav-logo" onclick="switchPage('page-home')">
-            <img src="logo.png" alt="The Story Palette Logo" class="nav-logo-static" onerror="this.src='https://via.placeholder.com/45x36/transparent/1A1A1A?text=LOGO'">
+            <img src="logo.png" alt="Logo" class="nav-logo-static" onerror="this.src='https://via.placeholder.com/45x36/transparent/1A1A1A?text=LOGO'">
             <span class="logo-text">The Story Palette</span>
         </a>
         <ul class="nav-links">
@@ -471,15 +299,13 @@
         <button class="btn-add-nav" onclick="openPosterModal()">Join Us Now</button>
     </nav>
 
-    <!-- 弹窗海报 -->
+    <!-- 弹窗 -->
     <div id="posterModal" class="poster-modal" onclick="closePosterModal()">
         <div class="modal-content" onclick="event.stopPropagation();">
             <div class="close-modal" onclick="closePosterModal()">&times;</div>
             <img src="poster.png" alt="Event Poster" onerror="this.src='https://via.placeholder.com/800x1200.png?text=poster.png'">
         </div>
     </div>
-
-    <!-- Lightbox -->
     <div id="lightboxModal" class="lightbox-modal" onclick="this.style.display='none'">
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="">
@@ -487,37 +313,31 @@
 
     <div class="deck-container">
         
-        <!-- ========================================== -->
         <!-- 页面 1: HOME PAGE -->
-        <!-- ========================================== -->
         <div id="page-home" class="spa-page active">
-            
             <section class="hero-slider-container" id="sec-0">
                 <button class="slider-arrow arrow-left" onclick="prevSlide()">&lt;</button>
                 <button class="slider-arrow arrow-right" onclick="nextSlide()">&gt;</button>
-                
                 <div class="hero-slide active">
-                    <img src="slide1.jpg" class="hero-bg-img" alt="Slide 1" onerror="this.src='https://via.placeholder.com/1920x1080/FFD93D/1A1A1A?text=Slide+1'">
+                    <img src="slide1.jpg" class="hero-bg-img" onerror="this.src='https://via.placeholder.com/1920x1080/FFD93D/1A1A1A?text=Slide+1'">
                     <div class="hero-content"><h1 class="slide-title">Every Story Has A Colour</h1></div>
                 </div>
                 <div class="hero-slide">
-                    <img src="slide2.jpg" class="hero-bg-img" alt="Slide 2" onerror="this.src='https://via.placeholder.com/1920x1080/FF6B6B/fff?text=Slide+2'">
+                    <img src="slide2.jpg" class="hero-bg-img" onerror="this.src='https://via.placeholder.com/1920x1080/FF6B6B/fff?text=Slide+2'">
                     <div class="hero-content"><h1 class="slide-title c-red">Movie - Film & Television</h1><p class="slide-sub">"Stories through moving images"</p></div>
                 </div>
                 <div class="hero-slide">
-                    <img src="slide3.jpg" class="hero-bg-img" alt="Slide 3" onerror="this.src='https://via.placeholder.com/1920x1080/4D96FF/fff?text=Slide+3'">
+                    <img src="slide3.jpg" class="hero-bg-img" onerror="this.src='https://via.placeholder.com/1920x1080/4D96FF/fff?text=Slide+3'">
                     <div class="hero-content"><h1 class="slide-title c-blue">Report - Journalism</h1><p class="slide-sub">"Stories through words, reporting and discovery"</p></div>
                 </div>
                 <div class="hero-slide">
-                    <img src="slide4.jpg" class="hero-bg-img" alt="Slide 4" onerror="this.src='https://via.placeholder.com/1920x1080/1A1A1A/FFD93D?text=Slide+4'">
+                    <img src="slide4.jpg" class="hero-bg-img" onerror="this.src='https://via.placeholder.com/1920x1080/1A1A1A/FFD93D?text=Slide+4'">
                     <div class="hero-content"><h1 class="slide-title c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">Create - MarComm</h1><p class="slide-sub">"Stories through campaigns, creativity and connection."</p></div>
                 </div>
                 <div class="hero-slide">
-                    <img src="slide5.jpg" class="hero-bg-img" alt="Slide 5" onerror="this.src='https://via.placeholder.com/1920x1080/4CC9A6/fff?text=Slide+5'">
+                    <img src="slide5.jpg" class="hero-bg-img" onerror="this.src='https://via.placeholder.com/1920x1080/4CC9A6/fff?text=Slide+5'">
                     <div class="hero-content"><h1 class="slide-title c-green">Your Story Could Be<br>The Next Colour</h1></div>
                 </div>
-
-                <!-- 底部条形引导栏 -->
                 <div class="hero-indicators">
                     <div class="indicator active" onclick="goToSlide(0)" style="--active-color: var(--charcoal);"></div>
                     <div class="indicator" onclick="goToSlide(1)"></div>
@@ -530,7 +350,7 @@
             <!-- 倒计时 -->
             <section class="section" id="sec-1">
                 <div class="countdown-logo-wrap animate-on-scroll">
-                    <img src="logo.png" alt="The Story Palette Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
+                    <img src="logo.png" alt="Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
                 </div>
                 <h2 class="countdown-title animate-on-scroll delay-1">The Story Palette</h2>
                 <h3 class="countdown-subtitle animate-on-scroll delay-1">UCSI Mass Comm Final Year Project Exhibition</h3>
@@ -538,123 +358,65 @@
                     <h3 class="countdown-heading">COUNTDOWN</h3>
                     <p class="countdown-tag" style="margin-bottom: 20px;">Our Event Starts In</p>
                     <div class="timer-cards-wrapper">
-                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--blue);"><span id="t-days">00</span></div><div class="timer-label">DAYS</div></div>
-                        <div class="time-divider">:</div>
-                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--red);"><span id="t-hours">00</span></div><div class="timer-label">HOURS</div></div>
-                        <div class="time-divider">:</div>
-                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--yellow);"><span id="t-mins">00</span></div><div class="timer-label">MINUTES</div></div>
-                        <div class="time-divider">:</div>
+                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--blue);"><span id="t-days">00</span></div><div class="timer-label">DAYS</div></div><div class="time-divider">:</div>
+                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--red);"><span id="t-hours">00</span></div><div class="timer-label">HOURS</div></div><div class="time-divider">:</div>
+                        <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--yellow);"><span id="t-mins">00</span></div><div class="timer-label">MINUTES</div></div><div class="time-divider">:</div>
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
-                    
                     <div class="event-info">
-                        <div class="event-info-item">
-                            <div class="event-info-label">DATE</div>
-                            <div class="event-info-value">27 August 2026<br>(Thursday)</div>
-                        </div>
-                        <div class="event-info-item">
-                            <div class="event-info-label">VENUE</div>
-                            <div class="event-info-value">Level 8, Block G<br>UCSI University Kuala Lumpur Campus<br>UCSI Heights, 1, Jln UCSI<br>Taman Connaught, 56000<br>Federal Territory of Kuala Lumpur</div>
-                        </div>
-                        <div class="event-info-item">
-                            <div class="event-info-label">TIME</div>
-                            <div class="event-info-value">10.00AM - 6.00PM</div>
-                        </div>
+                        <div class="event-info-item"><div class="event-info-label">DATE</div><div class="event-info-value">27 August 2026<br>(Thursday)</div></div>
+                        <div class="event-info-item"><div class="event-info-label">VENUE</div><div class="event-info-value">Level 8, Block G<br>UCSI University Kuala Lumpur Campus<br>UCSI Heights, 1, Jln UCSI<br>Taman Connaught, 56000<br>Federal Territory of Kuala Lumpur</div></div>
+                        <div class="event-info-item"><div class="event-info-label">TIME</div><div class="event-info-value">10.00AM - 6.00PM</div></div>
                     </div>
                 </div>
             </section>
 
             <!-- About Us -->
-            <section class="section about-us-section" id="sec-about" style="min-height: auto; padding: 60px 6vw;">
+            <section class="section about-us-section" id="sec-about">
                 <h2 class="about-title animate-on-scroll" style="font-size: 3rem;">ABOUT US</h2>
                 <div class="about-content-grid" style="gap: 2vw;">
                     <div class="about-text-col">
-                        <p class="about-text animate-on-scroll delay-1" style="font-size: 1.3rem;">The exhibition themed "The Story Palette" is a dynamic graduation showcase organized by the Mass Communication Students from UCSI University Kuala Lumpur Campus that brings together diverse creative voices.</p>
-                        <p class="about-text animate-on-scroll delay-2" style="font-size: 1.3rem;">Our mission is to bring different stories created by students from different pathways into one shared palette. From visual storytelling to brand influence, every piece of work on display represents a unique perspective, blending together to form one vibrant collective canvas.</p>
+                        <p class="about-text animate-on-scroll delay-1">The exhibition themed "The Story Palette" is a dynamic graduation showcase organized by the Mass Communication Students from UCSI University Kuala Lumpur Campus that brings together diverse creative voices.</p>
+                        <p class="about-text animate-on-scroll delay-2">Our mission is to bring different stories created by students from different pathways into one shared palette. From visual storytelling to brand influence, every piece of work on display represents a unique perspective, blending together to form one vibrant collective canvas.</p>
                         <a onclick="switchPage('page-about')" class="btn-discover animate-on-scroll delay-3">Discover Our Full Story &rarr;</a>
                     </div>
                     <div class="about-media-col animate-on-scroll delay-3">
-                        <div class="video-placeholder" style="max-height: 40vh;">
-                            <img src="promo.jpg" alt="Promo Image" onerror="this.src='https://via.placeholder.com/1920x1080/FFD93D/1A1A1A?text=promo.jpg'">
-                        </div>
+                        <div class="video-placeholder" style="max-height: 40vh;"><img src="promo.jpg" onerror="this.src='https://via.placeholder.com/1920x1080/FFD93D/1A1A1A?text=promo.jpg'"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- 首页瀑布流画廊 -->
-            <section class="section stories-showcase-section" id="sec-stories-gallery" style="min-height: auto; padding-top: 40px;">
-                <div class="global-stories-header">
-                    <h2 class="global-stories-title">The Stories</h2>
-                </div>
+            <!-- 首页瀑布流画廊 (自动隐藏空分类) -->
+            <section class="section stories-showcase-section" id="sec-stories-gallery">
+                <div class="global-stories-header"><h2 class="global-stories-title">The Stories</h2></div>
 
-                <!-- Documentary -->
-                <div class="category-block animate-on-scroll">
-                    <div class="category-header" style="border-bottom: 4px solid var(--red);">
-                        <h3 class="category-title" style="border:none;">Documentary</h3>
-                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a>
-                    </div>
-                    <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-doc-home', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-doc-home">
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+A', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
-                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+1" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Voices of Campus', 'An auditory exploration of what it means to be a student.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+B', 'Bob Lee', '23', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'bob@mail.com', 'Documentary', 'var(--red)', 'Listening to the ambient sounds...', '<li>Director: Bob Lee</li>')">
-                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Voices of Campus</div><div class="overlay-creator">Created by Bob</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Behind the Lens', 'A behind-the-scenes look at the passionate individuals.', 'https://via.placeholder.com/400x600/FF6B6B/fff?text=Student+C', 'Charlie Tan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'charlie@mail.com', 'Documentary', 'var(--red)', 'Focusing on the creators themselves...', '<li>Director: Charlie Tan</li>')">
-                                <img src="https://via.placeholder.com/400x600/FF6B6B/fff?text=Doc+3" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Behind the Lens</div><div class="overlay-creator">Created by Charlie</div></div>
-                            </div>
-                        </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-doc-home', 1)">&gt;</button>
-                    </div>
+                <div class="category-block animate-on-scroll" id="block-doc">
+                    <div class="category-header" style="border-bottom: 4px solid var(--red);"><h3 class="category-title" style="border:none;">Documentary</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-doc-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-doc-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-doc-track', 1)">&gt;</button></div>
                 </div>
-
-                <!-- Short Film -->
-                <div class="category-block animate-on-scroll delay-1">
-                    <div class="category-header" style="border-bottom: 4px solid var(--blue);">
-                        <h3 class="category-title" style="border:none;">Short Film</h3>
-                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a>
-                    </div>
-                    <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-short-home', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-short-home">
-                            <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Midnight Train', 'A thrilling short film set entirely on a late-night commuter train.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=Student+D', 'David Kim', '22', 'May 2023', 'Aug 2026', '+60 16-555 4444', 'david@mail.com', 'Short Film', 'var(--blue)', 'When the last train departs, reality begins to bend...', '<li>Director: David Kim</li>')">
-                                <img src="https://via.placeholder.com/400x600/4D96FF/fff?text=Short+1" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Midnight Train</div><div class="overlay-creator">Created by David</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Colour Blind', 'Exploring love and loss in a world devoid of colour.', 'https://via.placeholder.com/400x600/4D96FF/fff?text=Student+E', 'Eva Green', '21', 'Jan 2024', 'Dec 2026', '+60 17-666 5555', 'eva@mail.com', 'Short Film', 'var(--blue)', 'A monochromatic narrative...', '<li>Director: Eva Green</li>')">
-                                <img src="https://via.placeholder.com/400x600/4D96FF/fff?text=Short+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Colour Blind</div><div class="overlay-creator">Created by Eva</div></div>
-                            </div>
-                        </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-short-home', 1)">&gt;</button>
-                    </div>
+                <div class="category-block animate-on-scroll delay-1" id="block-short">
+                    <div class="category-header" style="border-bottom: 4px solid var(--blue);"><h3 class="category-title" style="border:none;">Short Film</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-short-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-short-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-short-track', 1)">&gt;</button></div>
                 </div>
-
-                <!-- The Marketing Lab -->
-                <div class="category-block animate-on-scroll delay-2">
-                    <div class="category-header" style="border-bottom: 4px solid var(--yellow);">
-                        <h3 class="category-title" style="border:none;">The Marketing Lab</h3>
-                        <a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a>
-                    </div>
-                    <div class="carousel-wrapper-horiz">
-                        <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('track-marcomm-home', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="track-marcomm-home">
-                            <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Gen Z Redefined', 'A bold PR campaign aiming to rewrite the narrative surrounding Gen Z work ethics.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Student+F', 'Fiona Lee', '23', 'May 2022', 'Aug 2026', '+60 18-999 0000', 'fiona@mail.com', 'The Marketing Lab', 'var(--yellow)', 'This campaign challenges corporate stereotypes...', '<li>Lead: Fiona Lee</li>')">
-                                <img src="https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Marcomm+1" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Gen Z Redefined</div><div class="overlay-creator">Created by Fiona</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Eco-Friendly Future', 'Promoting sustainability through disruptive digital marketing.', 'https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Student+G', 'George Ng', '22', 'Jan 2023', 'Aug 2026', '+60 14-222 1111', 'george@mail.com', 'The Marketing Lab', 'var(--yellow)', 'Leveraging social media trends...', '<li>Lead: George Ng</li>')">
-                                <img src="https://via.placeholder.com/400x600/FFD93D/1A1A1A?text=Marcomm+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Eco-Friendly</div><div class="overlay-creator">Created by George</div></div>
-                            </div>
-                        </div>
-                        <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('track-marcomm-home', 1)">&gt;</button>
-                    </div>
+                <div class="category-block animate-on-scroll delay-2" id="block-marcomm">
+                    <div class="category-header" style="border-bottom: 4px solid var(--yellow);"><h3 class="category-title" style="border:none;">The Marketing Lab</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-marcomm-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-marcomm-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-marcomm-track', 1)">&gt;</button></div>
+                </div>
+                <div class="category-block animate-on-scroll delay-1" id="block-corp">
+                    <div class="category-header" style="border-bottom: 4px solid var(--purple);"><h3 class="category-title" style="border:none;">Corporate Videos & Brand Films</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Corporate Videos & Brand Films')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-corp-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-corp-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-corp-track', 1)">&gt;</button></div>
+                </div>
+                <div class="category-block animate-on-scroll delay-1" id="block-mv">
+                    <div class="category-header" style="border-bottom: 4px solid var(--cyan);"><h3 class="category-title" style="border:none;">Music Videos</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Music Videos')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-mv-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-mv-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-mv-track', 1)">&gt;</button></div>
+                </div>
+                <div class="category-block animate-on-scroll delay-1" id="block-psa">
+                    <div class="category-header" style="border-bottom: 4px solid var(--green);"><h3 class="category-title" style="border:none;">Public Service Announcements (PSA)</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Public Service Announcements (PSA)')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-psa-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-psa-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-psa-track', 1)">&gt;</button></div>
+                </div>
+                <div class="category-block animate-on-scroll delay-1" id="block-vert">
+                    <div class="category-header" style="border-bottom: 4px solid var(--brown);"><h3 class="category-title" style="border:none;">Vertical Cinematic Video</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Vertical Cinematic Video')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-vert-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-vert-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-vert-track', 1)">&gt;</button></div>
                 </div>
             </section>
             
@@ -668,26 +430,21 @@
                     <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
                 </div>
             </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
         </div>
 
-        <!-- ========================================== -->
         <!-- 页面 2: ABOUT US -->
-        <!-- ========================================== -->
         <div id="page-about" class="spa-page">
             <div style="width: 100%; aspect-ratio: 4 / 1; min-height: 180px; margin-top: 75px; background: url('about us top photo.jpg') center/cover no-repeat;"></div>
-            
             <section class="section" style="padding: 60px 6vw; min-height: auto; max-width: 900px;">
                 <h2 style="font-family: var(--font-title); font-size: 2.8rem; margin-bottom: 25px; text-align: center;">About The Exhibition</h2>
                 <p style="font-family: var(--font-sub); font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-align: justify;">The Story Palette is a Final Year Project Exhibition presented by the Mass Communication students of UCSI University Kuala Lumpur Campus. Unlike many university programmes, UCSI University’s Mass Communication programme offers three distinctive pathways: Film & Television, Journalism, and Marketing Communication, allowing students to pursue the creative and professional direction that best suits their future. The exhibition brings these different choices together on one platform, creating a unique palette of stories, perspectives and voices.</p>
                 <p style="font-family: var(--font-sub); font-size: 1.4rem; line-height: 1.8; margin-bottom: 20px; text-align: justify;">Here, every student is an independent “artist”, and every graduation project is “a stroke of colour” on the canvas. Each project represents a different way of seeing, thinking and communicating, while the three pathways contribute their own distinctive colours to the collective identity of Mass Communication students.</p>
             </section>
-
-            <section class="section team-coverflow-section" id="sec-team" style="padding-top: 20px;">
-                <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow" style="text-shadow: 2px 2px 0 var(--charcoal);">TEAM.</span></h2>
+            <section class="section team-coverflow-section" id="sec-team">
+                <h2 class="sec-header animate-on-scroll">MEET THE <span class="c-yellow">TEAM.</span></h2>
                 <div class="coverflow-container animate-on-scroll delay-1">
                     <div class="coverflow-track" id="team-track">
-                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Exhibition Director: Gu Yi Da<br>Joint Director: Xu Xin Yan<br>Vice Director 1: Tee Ching Yee, Low Vicky<br>Secretary: Keh Yao Hui, Ng Zi Hui<br>Head of Treasurer: Zhang Ji Qiang" data-members=""><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
+                        <div class="coverflow-card" data-name="Management Team" data-color="var(--green)" data-leader="Exhibition Director: Gu Yi Da<br>Joint Director: Xu Xin Yan<br>Vice Director 1: Tee Ching Yee, Low Vicky<br>Secretary: Keh Yao Hui, Ng Zi Hui<br>Head of Treasurer: Zhang Ji Qiang"><img src="team/management.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Management'"></div>
                         <div class="coverflow-card" data-name="Sponsorship Team" data-color="var(--blue)" data-leader="Leader: Low Vicky" data-members="Liu Yi Chang, Wu Ao, Du Zi Ye, Tan Chia Hong, Ang Kai Xuan, Peng Yue, Fu Yu Ru, Koh Wen Xuan, Aw Che Wei"><img src="team/sponsorship.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Sponsorship'"></div>
                         <div class="coverflow-card" data-name="Treasury Team" data-color="var(--purple)" data-leader="Leader: Zhang Ji Qiang" data-members="Jia Mei Hua, Liu Hao Ming"><img src="team/finance.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Treasury'"></div>
                         <div class="coverflow-card" data-name="Secretary Team" data-color="var(--brown)" data-leader="Leaders: Keh Yao Hui, Ng Zi Hui" data-members="Wang Xin Ran, Darren Tan Di Xing, Qiu Qin Qin, Wang Shang Qing, Goh Won Hao, Li Zi Ming, Leong Joel"><img src="team/secretary.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Secretary'"></div>
@@ -696,54 +453,22 @@
                         <div class="coverflow-card" data-name="Marketing Team" data-color="var(--red)" data-leader="Leader: Ng Jay Rou" data-members="Du Yi Nuo, Huang Ke Qiao, Rahadyan Yoga Valendra, Fion Lee Win Yean, Song Qian, Li Zhuo Chen, Zhang Zheng Ang, Tang Zhen Yao, Guo Ji Jie, Pu Cuo Yong Cuo, Zhang Ruo Di, Queency Kezia"><img src="team/marketing.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Marketing'"></div>
                         <div class="coverflow-card" data-name="Logistic Team" data-color="var(--gray)" data-leader="Leader: Liu Jin Xiang" data-members="Kaameel Chicktay, Zhang Yi Fan, Zhang Jia He, Jazlynn Hannis Jamaluddin, Xie Shi Ya, Du Zhuo Yi, Taro Iwakawa"><img src="team/logistic.png" onerror="this.src='https://via.placeholder.com/600x800.png?text=Logistic'"></div>
                     </div>
-                    <div class="team-info-box" id="team-info-box">
-                        <h3 class="info-team-name" id="info-team-name">Team Name</h3>
-                        <p class="info-team-text" id="info-team-leader">...</p>
-                        <p class="info-team-text" id="info-team-members"><strong>Members:</strong> ...</p>
-                    </div>
+                    <div class="team-info-box" id="team-info-box"><h3 class="info-team-name" id="info-team-name">Team Name</h3><p class="info-team-text" id="info-team-leader">...</p><p class="info-team-text" id="info-team-members">...</p></div>
                 </div>
             </section>
-
-            <!-- 2. Exhibition Theme Concept 概念区 -->
             <section class="concept-section animate-on-scroll">
                 <h2 class="concept-title">Exhibition Theme Concept</h2>
-                <div class="concept-content-box">
-                    <img src="logo.png" alt="The Story Palette Logo" class="concept-logo-animated" onerror="this.src='logo.jpg'">
-                </div>
+                <div class="concept-content-box"><img src="logo.png" class="concept-logo-animated" onerror="this.src='logo.jpg'"></div>
                 <h3 class="concept-subtitle">The Story Palette</h3>
                 <p class="concept-desc">"Palette" symbolizes diversity and integration. Every graduate represents a unique color. When these different voices come together, they interweave into this vibrant palette belongings to the graduating cohort.</p>
             </section>
-
-            <!-- 3. 三色板块区 -->
             <section class="pathways-section animate-on-scroll">
                 <div class="pathways-grid">
-                    <div class="pathway-card">
-                        <div class="pathway-img-wrap">
-                            <img src="ftv.png" alt="FTV" onerror="this.src='https://via.placeholder.com/220x220/FF6B6B/fff?text=ftv'">
-                        </div>
-                        <h3 class="pathway-title">Red Patch</h3>
-                        <h4 class="pathway-subtitle">Film & Television</h4>
-                        <p class="pathway-desc">Symbolizes passionate lighting and shadow, dynamics, and visual storytelling.</p>
-                    </div>
-                    <div class="pathway-card">
-                        <div class="pathway-img-wrap">
-                            <img src="journalism.png" alt="Journalism" onerror="this.src='https://via.placeholder.com/220x220/4D96FF/fff?text=journalism'">
-                        </div>
-                        <h3 class="pathway-title">Blue Patch</h3>
-                        <h4 class="pathway-subtitle">Journalism</h4>
-                        <p class="pathway-desc">Symbolizes the pen, truth, text and in-depth reporting.</p>
-                    </div>
-                    <div class="pathway-card">
-                        <div class="pathway-img-wrap">
-                            <img src="marcomm.png" alt="MarComm" onerror="this.src='https://via.placeholder.com/220x220/FFD93D/1A1A1A?text=marcomm'">
-                        </div>
-                        <h3 class="pathway-title">Yellow Patch</h3>
-                        <h4 class="pathway-subtitle">Marketing Communication</h4>
-                        <p class="pathway-desc">Symbolizes by a megaphone, representing sound, brand and influence.</p>
-                    </div>
+                    <div class="pathway-card"><div class="pathway-img-wrap"><img src="ftv.png" onerror="this.src='https://via.placeholder.com/220'"></div><h3 class="pathway-title">Red Patch</h3><h4 class="pathway-subtitle">Film & Television</h4><p class="pathway-desc">Symbolizes passionate lighting and shadow, dynamics, and visual storytelling.</p></div>
+                    <div class="pathway-card"><div class="pathway-img-wrap"><img src="journalism.png" onerror="this.src='https://via.placeholder.com/220'"></div><h3 class="pathway-title">Blue Patch</h3><h4 class="pathway-subtitle">Journalism</h4><p class="pathway-desc">Symbolizes the pen, truth, text and in-depth reporting.</p></div>
+                    <div class="pathway-card"><div class="pathway-img-wrap"><img src="marcomm.png" onerror="this.src='https://via.placeholder.com/220'"></div><h3 class="pathway-title">Yellow Patch</h3><h4 class="pathway-subtitle">Marketing Communication</h4><p class="pathway-desc">Symbolizes by a megaphone, representing sound, brand and influence.</p></div>
                 </div>
             </section>
-
             <section class="shared-contact-section">
                 <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                 <div class="social-circles-container animate-on-scroll delay-1">
@@ -754,103 +479,27 @@
                     <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
                 </div>
             </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
         </div>
 
-        <!-- ========================================== -->
-        <!-- 页面 4: EXHIBITION -->
-        <!-- ========================================== -->
-        <div id="page-exhibition" class="spa-page">
-            <section class="section" id="sec-exhibition-1">
-                <h2 class="sec-header">THREE WAYS TO <span class="c-blue" style="white-space: nowrap;">TELL A STORY.</span></h2>
-                <div class="ways-grid animate-on-scroll">
-                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
-                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
-                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
-                </div>
-            </section>
-
-            <section class="shared-contact-section">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- 页面 5: CONTACT -->
-        <!-- ========================================== -->
-        <div id="page-contact" class="spa-page">
-            <section class="section contact-footer-section" style="border-top: none; justify-content: center; min-height: 80vh;">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-            <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
-        </div>
-
-        <!-- ========================================== -->
         <!-- 页面 3: THE STORIES (包含大厅与详情页) -->
-        <!-- ========================================== -->
         <div id="page-stories" class="spa-page">
             
-            <!-- 视图 A：海报大厅总览视图 -->
+            <!-- 大厅 -->
             <div id="stories_gallery_view" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
                 <section class="portfolio-gallery-section" style="padding-top: 140px;">
                     <h2 class="portfolio-gallery-title">Student Artworks</h2>
-                    
                     <div class="category-filter-tabs">
-                        <!-- 分配 ID 供跳转后点击 -->
                         <button class="filter-tab active" id="filter_tab_all" onclick="filterArtworks('all', this)">All</button>
                         <button class="filter-tab" id="filter_tab_doc" onclick="filterArtworks('Documentary', this)">Documentary</button>
                         <button class="filter-tab" id="filter_tab_short" onclick="filterArtworks('Short Film', this)">Short Film</button>
                         <button class="filter-tab" id="filter_tab_mar" onclick="filterArtworks('The Marketing Lab', this)">The Marketing Lab</button>
+                        <button class="filter-tab" id="filter_tab_corp" onclick="filterArtworks('Corporate Videos & Brand Films', this)">Corporate Videos & Brand Films</button>
+                        <button class="filter-tab" id="filter_tab_mv" onclick="filterArtworks('Music Videos', this)">Music Videos</button>
+                        <button class="filter-tab" id="filter_tab_psa" onclick="filterArtworks('Public Service Announcements (PSA)', this)">Public Service Announcements (PSA)</button>
+                        <button class="filter-tab" id="filter_tab_vert" onclick="filterArtworks('Vertical Cinematic Video', this)">Vertical Cinematic Video</button>
                     </div>
-
-                    <div class="portfolio-works-grid" id="main-artworks-grid">
-                        <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=ucsi+university', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
-                            <!-- object-fit: fill 强制拉伸填满框，彻底消除白边且不裁剪图片内容 -->
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=UCSI+University" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Voices of Campus', 'An auditory exploration of what it means to be a student.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=doc+2', 'Bob Lee', '23', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'bob@mail.com', 'Documentary', 'var(--red)', 'Listening to the ambient sounds...', '<li>Director: Bob Lee</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Doc+2" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Voices of Campus</div><div class="overlay-creator">Created by Bob</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Behind the Lens', 'A behind-the-scenes look at the passionate individuals.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=doc+3', 'Charlie Tan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'charlie@mail.com', 'Documentary', 'var(--red)', 'Focusing on the creators themselves...', '<li>Director: Charlie Tan</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Doc+3" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Behind the Lens</div><div class="overlay-creator">Created by Charlie</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Midnight Train', 'A thrilling short film set entirely on a late-night commuter train.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=short+1', 'David Kim', '22', 'May 2023', 'Aug 2026', '+60 16-555 4444', 'david@mail.com', 'Short Film', 'var(--blue)', 'When the last train departs, reality begins to bend...', '<li>Director: David Kim</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Short+1" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Midnight Train</div><div class="overlay-creator">Created by David</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Colour Blind', 'Exploring love and loss in a world devoid of colour.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=short+2', 'Eva Green', '21', 'Jan 2024', 'Dec 2026', '+60 17-666 5555', 'eva@mail.com', 'Short Film', 'var(--blue)', 'A monochromatic narrative...', '<li>Director: Eva Green</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Short+2" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Colour Blind</div><div class="overlay-creator">Created by Eva</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Gen Z Redefined', 'A bold PR campaign aiming to rewrite the narrative surrounding Gen Z work ethics.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=marcomm+1', 'Fiona Lee', '23', 'May 2022', 'Aug 2026', '+60 18-999 0000', 'fiona@mail.com', 'The Marketing Lab', 'var(--yellow)', 'This campaign challenges corporate stereotypes...', '<li>Lead: Fiona Lee</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Marcomm+1" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Gen Z Redefined</div><div class="overlay-creator">Created by Fiona</div></div>
-                        </div>
-                        <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Eco-Friendly Future', 'Promoting sustainability through disruptive digital marketing.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=marcomm+2', 'George Ng', '22', 'Jan 2023', 'Aug 2026', '+60 14-222 1111', 'george@mail.com', 'The Marketing Lab', 'var(--yellow)', 'Leveraging social media trends...', '<li>Lead: George Ng</li>')">
-                            <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Marcomm+2" class="poster-img">
-                            <div class="poster-info-overlay"><div class="overlay-title">Eco-Friendly</div><div class="overlay-creator">Created by George</div></div>
-                        </div>
-                    </div>
+                    <div class="portfolio-works-grid" id="main-artworks-grid"></div>
                 </section>
-
                 <section class="shared-contact-section">
                     <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                     <div class="social-circles-container animate-on-scroll delay-1">
@@ -861,33 +510,22 @@
                         <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
                     </div>
                 </section>
-                <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
             </div>
 
-            <!-- 视图 B：个人专页详情视图 -->
+            <!-- 个人详情页 -->
             <div id="stories_detail_view" style="width: 100%; display: none; flex-direction: column; align-items: center;">
-                
                 <section class="section student-profile-section">
-                    <div class="back-btn-wrapper">
-                        <button onclick="backToStoriesGallery()" class="back-btn">&larr; Back to All Artworks</button>
-                    </div>
-
+                    <div class="back-btn-wrapper"><button onclick="backToStoriesGallery()" class="back-btn">&larr; Back to All Artworks</button></div>
                     <div class="profile-card animate-on-scroll is-visible">
                         <div class="profile-img-col">
-                            <div class="decorated-portrait-wrap">
-                                <div class="decorated-portrait-bg" id="dynamic-portrait-bg"></div>
-                                <img id="dynamic-profile-img" src="https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Portrait" alt="Student Portrait" class="decorated-portrait-img">
-                                <div class="decorated-tape"></div>
-                            </div>
+                            <div class="decorated-portrait-wrap"><div class="decorated-portrait-bg" id="dynamic-portrait-bg"></div><img id="dynamic-profile-img" src="" class="decorated-portrait-img"><div class="decorated-tape"></div></div>
                         </div>
-
                         <div class="profile-text-col">
-                            <h2 class="profile-title" id="dynamic_profile_title" style="font-family: var(--font-title);">Welcome to The Stories</h2>
-                            <p class="profile-comment" id="dynamic_profile_comment" style="font-family: var(--font-sub);">Select a project from the gallery to view the artist's full profile and artwork details here.</p>
+                            <h2 class="profile-title" id="dynamic_profile_title">Welcome</h2>
+                            <p class="profile-comment" id="dynamic_profile_comment">Select a project.</p>
                         </div>
                     </div>
                 </section>
-
                 <section class="portfolio-details-section">
                     <div class="portfolio-grid">
                         <div class="portfolio-info-col">
@@ -895,85 +533,40 @@
                             <div class="info-glass-card">
                                 <div class="category-tag-badge" id="dynamic-category-badge">Category</div>
                                 <ul class="info-list">
-                                    <li><strong>Name:</strong> <span id="dyn-name">Student Name</span></li>
+                                    <li><strong>Name:</strong> <span id="dyn-name">Name</span></li>
                                     <li><strong>Age:</strong> <span id="dyn-age">00</span></li>
-                                    <li><strong>Enrollment Semester:</strong> <span id="dyn-enroll">XXX 202X</span></li>
-                                    <li><strong>Graduation Semester:</strong> <span id="dyn-grad">XXX 202X</span></li>
-                                    <li><strong>Phone Number:</strong> <span id="dyn-phone">+60 00-000 0000</span></li>
-                                    <li><strong>Email Address:</strong> <span id="dyn-email">student@email.com</span></li>
+                                    <li><strong>Enrollment Semester:</strong> <span id="dyn-enroll">XXX</span></li>
+                                    <li><strong>Graduation Semester:</strong> <span id="dyn-grad">XXX</span></li>
+                                    <li><strong>Phone Number:</strong> <span id="dyn-phone">+60</span></li>
+                                    <li><strong>Email Address:</strong> <span id="dyn-email">mail</span></li>
                                 </ul>
                             </div>
                         </div>
-
                         <div class="portfolio-media-col">
-                            <div class="main-video-player"><div class="youtube-btn-mock"></div></div>
-                            
-                            <div class="thumbnail-row">
-                                <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/1A1A1A/fff?text=Poster')"><img src="https://via.placeholder.com/200x200/1A1A1A/fff?text=Poster"></div>
-                                <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/FF6B6B/fff?text=Content+1')"><img src="https://via.placeholder.com/200x200/1A1A1A/fff?text=1"></div>
-                                <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/4D96FF/fff?text=Content+2')"><img src="https://via.placeholder.com/200x200/1A1A1A/fff?text=2"></div>
-                                <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/FFD93D/1A1A1A/fff?text=Content+3')"><img src="https://via.placeholder.com/200x200/1A1A1A/fff?text=3"></div>
-                                <div class="thumb-box" onclick="openLightbox('https://via.placeholder.com/1200x800/4CC9A6/fff?text=Content+4')"><img src="https://via.placeholder.com/400x400/4CC9A6/fff?text=4"></div>
-                            </div>
-                            
+                            <div class="main-video-player" id="dyn-video"><div class="youtube-btn-mock"></div></div>
+                            <div class="thumbnail-row" id="dyn-thumbnails"></div>
                             <div class="description-box">
-                                <div class="desc-label">Description:</div>
-                                <p class="desc-body" id="dyn-desc">Full description of the artwork goes here.</p>
-                                <div class="production-label">Production Team:</div>
-                                <ul class="production-list" id="dyn-prod-team">
-                                    <li>Director: xxx</li>
-                                </ul>
+                                <div class="desc-label">Description:</div><p class="desc-body" id="dyn-desc"></p>
+                                <div class="production-label">Production Team:</div><ul class="production-list" id="dyn-prod-team"></ul>
                             </div>
                         </div>
                     </div>
                 </section>
-
                 <section class="portfolio-gallery-section" style="width: 100%; border-top: 2px dashed rgba(26,26,26,0.1); padding-top: 60px;">
                     <h2 class="portfolio-gallery-title">Student Artworks</h2>
-                    
                     <div class="category-filter-tabs">
                         <button class="filter-tab active" onclick="filterArtworks('all', this)">All</button>
                         <button class="filter-tab" onclick="filterArtworks('Documentary', this)">Documentary</button>
                         <button class="filter-tab" onclick="filterArtworks('Short Film', this)">Short Film</button>
                         <button class="filter-tab" onclick="filterArtworks('The Marketing Lab', this)">The Marketing Lab</button>
+                        <button class="filter-tab" onclick="filterArtworks('Corporate Videos & Brand Films', this)">Corporate Videos</button>
                     </div>
-
                     <div class="carousel-wrapper-horiz">
                         <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('student-artworks-track-bottom', -1)">&lt;</button>
-                        <div class="carousel-track-horiz" id="student-artworks-track-bottom">
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('The Unseen Colours', 'This project dives deep into the unseen struggles of modern campus life.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=ucsi+university', 'Alice Wong', '22', 'Jan 2023', 'Aug 2026', '+60 12-345 6789', 'alice@mail.com', 'Documentary', 'var(--red)', 'This documentary explores the vibrant but often overlooked emotional spectrum of university students...', '<li>Director: Alice Wong</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=UCSI+University" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">The Unseen Colours</div><div class="overlay-creator">Created by Alice</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Voices of Campus', 'An auditory exploration of what it means to be a student.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=doc+2', 'Bob Lee', '23', 'May 2022', 'Aug 2026', '+60 11-222 3333', 'bob@mail.com', 'Documentary', 'var(--red)', 'Listening to the ambient sounds...', '<li>Director: Bob Lee</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Doc+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Voices of Campus</div><div class="overlay-creator">Created by Bob</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Documentary" onclick="goToDetailView('Behind the Lens', 'A behind-the-scenes look at the passionate individuals.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=doc+3', 'Charlie Tan', '21', 'Jan 2023', 'Dec 2026', '+60 19-888 7777', 'charlie@mail.com', 'Documentary', 'var(--red)', 'Focusing on the creators themselves...', '<li>Director: Charlie Tan</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Doc+3" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Behind the Lens</div><div class="overlay-creator">Created by Charlie</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Midnight Train', 'A thrilling short film set entirely on a late-night commuter train.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=short+1', 'David Kim', '22', 'May 2023', 'Aug 2026', '+60 16-555 4444', 'david@mail.com', 'Short Film', 'var(--blue)', 'When the last train departs, reality begins to bend...', '<li>Director: David Kim</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Short+1" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Midnight Train</div><div class="overlay-creator">Created by David</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="Short Film" onclick="goToDetailView('Colour Blind', 'Exploring love and loss in a world devoid of colour.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=short+2', 'Eva Green', '21', 'Jan 2024', 'Dec 2026', '+60 17-666 5555', 'eva@mail.com', 'Short Film', 'var(--blue)', 'A monochromatic narrative...', '<li>Director: Eva Green</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Short+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Colour Blind</div><div class="overlay-creator">Created by Eva</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Gen Z Redefined', 'A bold PR campaign aiming to rewrite the narrative surrounding Gen Z work ethics.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=marcomm+1', 'Fiona Lee', '23', 'May 2022', 'Aug 2026', '+60 18-999 0000', 'fiona@mail.com', 'The Marketing Lab', 'var(--yellow)', 'This campaign challenges corporate stereotypes...', '<li>Lead: Fiona Lee</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Marcomm+1" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Gen Z Redefined</div><div class="overlay-creator">Created by Fiona</div></div>
-                            </div>
-                            <div class="story-poster-card" data-category="The Marketing Lab" onclick="goToDetailView('Eco-Friendly Future', 'Promoting sustainability through disruptive digital marketing.', 'https://via.placeholder.com/1200x800/transparent/transparent.png?text=marcomm+2', 'George Ng', '22', 'Jan 2023', 'Aug 2026', '+60 14-222 1111', 'george@mail.com', 'The Marketing Lab', 'var(--yellow)', 'Leveraging social media trends...', '<li>Lead: George Ng</li>')">
-                                <img src="https://via.placeholder.com/1200x800/e0e0e0/1a1a1a?text=Marcomm+2" class="poster-img">
-                                <div class="poster-info-overlay"><div class="overlay-title">Eco-Friendly</div><div class="overlay-creator">Created by George</div></div>
-                            </div>
-                        </div>
+                        <div class="carousel-track-horiz" id="student-artworks-track-bottom"></div>
                         <button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('student-artworks-track-bottom', 1)">&gt;</button>
                     </div>
                 </section>
-
                 <section class="shared-contact-section">
                     <h2 class="contact-title animate-on-scroll">Contact Information</h2>
                     <div class="social-circles-container animate-on-scroll delay-1">
@@ -984,15 +577,252 @@
                         <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
                     </div>
                 </section>
-                <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
             </div>
         </div>
 
+        <!-- 页面 4: EXHIBITION -->
+        <div id="page-exhibition" class="spa-page">
+            <section class="section" id="sec-exhibition-1">
+                <h2 class="sec-header">THREE WAYS TO <span class="c-blue">TELL A STORY.</span></h2>
+                <div class="ways-grid animate-on-scroll">
+                    <div class="way-card"><h3>MOVIE — FTV</h3><p>“Stories through moving images.”</p></div>
+                    <div class="way-card"><h3>REPORT — Journalism</h3><p>“Stories through words, reporting, and discovery.”</p></div>
+                    <div class="way-card"><h3>CREATE — MarComm</h3><p>“Stories through campaigns, creativity, and connection.”</p></div>
+                </div>
+            </section>
+            <section class="shared-contact-section">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+        </div>
+
+        <!-- 页面 5: CONTACT -->
+        <div id="page-contact" class="spa-page">
+            <section class="section contact-footer-section" style="min-height: 80vh;">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
+
     </div>
 
-    <!-- JavaScript 逻辑 -->
     <script>
-        // --- 核心优化与修改：SPA 页面切换，增加可选参数跳转后进行自动过滤 ---
+        // ----------------------------------------------------
+        // 数据库 (共 66 位同学)
+        // ----------------------------------------------------
+        const studentData = [
+            // 1. Corporate Videos & Brand Films
+            { id: "corp_01", category: "Corporate Videos & Brand Films", title: "Bridging Cultures Through Community Engagement", studentName: "Liu Yichang", posterImg: "poster/Corporate Videos & Brand Films/1_Bridging_Cultures_Through Community_ Engagement_Liu Yichang.png" },
+            
+            // 2. Music Videos
+            { id: "mv_01", category: "Music Videos", title: "Becoming an Interesting Adult", studentName: "Sieo Wan Kee", posterImg: "poster/Music Videos/1_Becoming_an Interesting_Adult_Sieo Wan Kee.jpg" },
+            
+            // 3. Public Service Announcements (PSA)
+            { id: "psa_01", category: "Public Service Announcements (PSA)", title: "The Last Choice", studentName: "Zhang Zhengang", posterImg: "poster/Public Service Announcements (PSA)/1_The Last Choice_Zhang Zhengang.jpg" },
+            
+            // 4. Vertical Cinematic Video
+            { id: "vert_01", category: "Vertical Cinematic Video", title: "In Plain Sight", studentName: "Queency Kezia", posterImg: "poster/Vertical Cinematic Video/1_In Plain_Sight_Queency Kezia.png" },
+            
+            // 5. The Marketing Lab (7人)
+            { id: "marcomm_01", category: "The Marketing Lab", title: "Britannia Language Centre", studentName: "Sadeim Al zeyani", posterImg: "poster/marcomm/1_Britannia Language Centre_Sadeim Al zeyani.png" },
+            { id: "marcomm_02", category: "The Marketing Lab", title: "Pawmised Land", studentName: "Low Vicky", posterImg: "poster/marcomm/2_Pawmised Land_Low Vicky.png" },
+            { id: "marcomm_03", category: "The Marketing Lab", title: "Magnify Music & Art Centre", studentName: "Keh Yao Hui", posterImg: "poster/marcomm/3_Magnify Music & Art Centre_Keh Yao Hui.jpg" },
+            { id: "marcomm_04", category: "The Marketing Lab", title: "Eyeconlens", studentName: "Ng Zi Hui", posterImg: "poster/marcomm/4_Eyeconlens_Ng Zi Hui.jpg" },
+            { id: "marcomm_05", category: "The Marketing Lab", title: "Mega Hygiene", studentName: "Tee Ching Yee", posterImg: "poster/marcomm/5_Mega Hygiene_Tee Ching Yee.png" },
+            { id: "marcomm_06", category: "The Marketing Lab", title: "Korean Dessert & Coffee", studentName: "Aw Che Wei", posterImg: "poster/marcomm/6_Korean Dessert & Coffee_Aw Che Wei.png" },
+            { id: "marcomm_07", category: "The Marketing Lab", title: "Nice 2 Meet You Flower Shop", studentName: "Koh Wen Xuan", posterImg: "poster/marcomm/7_Nice 2 Meet You Flower Shop_Koh Wen Xuan.png" },
+
+            // 6. Short Film (25人)
+            { id: "short_01", category: "Short Film", title: "New Life of Leftover Food", studentName: "Pucuoyongcuo", posterImg: "poster/short_film/1_New Life of Leftover Food_Pucuoyongcuo.jpg" },
+            { id: "short_02", category: "Short Film", title: "The Forgotten Temperature", studentName: "TangZhenYao", posterImg: "poster/short_film/2_The Forgotten Temperature_TangZhenYao.png" },
+            { id: "short_03", category: "Short Film", title: "Light of Broken Wings", studentName: "Zhang Ruo Di", posterImg: "poster/short_film/3_Light of Broken Wings_Zhang Ruo Di.jpg" },
+            { id: "short_04", category: "Short Film", title: "Swipe Right", studentName: "SaamiyaChandni", posterImg: "poster/short_film/4_Swipe Right_SaamiyaChandni.jpg" },
+            { id: "short_05", category: "Short Film", title: "Vlog Nightmare", studentName: "Du Zhuoyi", posterImg: "poster/short_film/5_Vlog Nightmare_Du Zhuoyi.png" },
+            { id: "short_06", category: "Short Film", title: "Film Graduates Real Life in the Industry", studentName: "Zhang Jiahe", posterImg: "poster/short_film/6_Film Graduates Real Life in the Industry_Zhang Jiahe.jpg" },
+            { id: "short_07", category: "Short Film", title: "Restart", studentName: "Huang Keqiao", posterImg: "poster/short_film/7_Restart_Huang Keqiao.jpg" },
+            { id: "short_08", category: "Short Film", title: "Natural Light by the Window", studentName: "Song Qian", posterImg: "poster/short_film/8_Natural Light by the Window _Song Qian.jpg" },
+            { id: "short_09", category: "Short Film", title: "For You", studentName: "Li Shibo", posterImg: "poster/short_film/9_For You_Li Shibo.png" },
+            { id: "short_10", category: "Short Film", title: "Offline", studentName: "Yeoh Wen Qi", posterImg: "poster/short_film/10_Offline_Yeoh Wen Qi.jpg" },
+            { id: "short_11", category: "Short Film", title: "FitQuest", studentName: "Darren Tan Di Xing", posterImg: "poster/short_film/11_FitQuest_Darren Tan Di Xing.png" },
+            { id: "short_12", category: "Short Film", title: "OFFLINE", studentName: "Tan Chia Hong", posterImg: "poster/short_film/12_OFFLINE_Tan Chia Hong.jpg" },
+            { id: "short_13", category: "Short Film", title: "Protecting Stray Animals", studentName: "Wang HeXingQing", posterImg: "poster/short_film/13_Protecting Stray Animals_Wang HeXingQing.jpg" },
+            { id: "short_14", category: "Short Film", title: "Beyond the Classroom The Side Hustle Generation", studentName: "Zhang Yaxin", posterImg: "poster/short_film/14_Beyond the Classroom The Side Hustle Generation_Zhang Yaxin.png" },
+            { id: "short_15", category: "Short Film", title: "Everything is Machable", studentName: "Shen Yan", posterImg: "poster/short_film/15_Everything is Machable_Shen Yan.png" },
+            { id: "short_16", category: "Short Film", title: "The Quite Ones", studentName: "Guo Jijie", posterImg: "poster/short_film/16_The Quite Ones_Guo Jijie.png" },
+            { id: "short_17", category: "Short Film", title: "I Once Had a Home", studentName: "Sun Wenye", posterImg: "poster/short_film/17_I Once Had a Home_Sun Wenye.png" },
+            { id: "short_18", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/18_The Distance Between_Liang Wai Onn.png" },
+            { id: "short_19", category: "Short Film", title: "Inherited", studentName: "Jesslyn Chu Shi Ying", posterImg: "poster/short_film/19_Inherited_Jesslyn Chu Shi Ying.png" },
+            { id: "short_20", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/20_404 Career Not Found_Ang Kai Xuan.jpg" },
+            { id: "short_21", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/21_Stop The Ring_Leong Joel.png" },
+            { id: "short_22", category: "Short Film", title: "Stay! Apple", studentName: "Gu Yida", posterImg: "poster/short_film/22_Stay! Apple_Gu Yida.jpg" },
+            { id: "short_23", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/23_The Last Assignment_Cao Xianya.jpg" },
+            { id: "short_24", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/24_Sidelines_Shanelle Eve Edmund.png" },
+            { id: "short_25", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/25_The Choice of the New Era-Zhang Yifan.jpg" },
+
+            // 7. Documentary (30人)
+            { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png" },
+            { id: "doc_02", category: "Documentary", title: "Home Beyond Home", studentName: "Wang Xige", posterImg: "poster/documentary/2_Home Beyound Home_Wang Xige.png" },
+            { id: "doc_03", category: "Documentary", title: "Two bowls, One table", studentName: "Fu Yuru", posterImg: "poster/documentary/3_Two bowls,One table_Fu Yuru.png" },
+            { id: "doc_04", category: "Documentary", title: "The Cost Of Looking Successful", studentName: "Peng Yue", posterImg: "poster/documentary/4_The Cost Of Looking Successful_Peng Yue.png" },
+            { id: "doc_05", category: "Documentary", title: "Beyond the Margins", studentName: "Du Ziye", posterImg: "poster/documentary/5_Beyond the Margins_Du Ziye.jpg" },
+            { id: "doc_06", category: "Documentary", title: "Scrolling Away", studentName: "Zhou Xinyang", posterImg: "poster/documentary/6_Scrolling Away_zhou Xinyang.png" },
+            { id: "doc_07", category: "Documentary", title: "Wildbest Imported Pet Food Local Testimony", studentName: "Xie Shiya", posterImg: "poster/documentary/7_Wildbest Imported Pet Food Local Testimony_Xie Shiya.png" },
+            { id: "doc_08", category: "Documentary", title: "Borderless Home", studentName: "Wu Ao", posterImg: "poster/documentary/8_Borderless Home_Wu Ao.png" },
+            { id: "doc_09", category: "Documentary", title: "More Than Movement", studentName: "Bianca Aurelia", posterImg: "poster/documentary/9_More Than Movement_Bianca Aurelia.png" },
+            { id: "doc_10", category: "Documentary", title: "The Forgotten by the Algorithm", studentName: "Jia Meihua", posterImg: "poster/documentary/10_The Forgotten by the Algorithm_Jia Meihua.jpg" },
+            { id: "doc_11", category: "Documentary", title: "Food for Taste or for Social Media", studentName: "Zhang Jiqiang", posterImg: "poster/documentary/11_Food for Taste or for Social Media_Zhang Jiqiang.jpg" },
+            { id: "doc_12", category: "Documentary", title: "TRAPPED in the Scroll", studentName: "Guo Xuanyuan", posterImg: "poster/documentary/12_TRAPPED in the Scroll_Guo Xuanyuan.jpg" },
+            { id: "doc_13", category: "Documentary", title: "Three Years of Growth. Adventure. Freedom", studentName: "Du Yinuo", posterImg: "poster/documentary/13_Three Years of Growth. Adventure. Freedom_Du Yinuo.jpg" },
+            { id: "doc_14", category: "Documentary", title: "Almost Home The Lives Between Departure and Belonging", studentName: "Liu Haoming", posterImg: "poster/documentary/14_Almost Home The Lives Between Departure and Belonging_Liu Haoming.jpg" },
+            { id: "doc_15", category: "Documentary", title: "The Price Of A Trend", studentName: "Fion Lee Winyean", posterImg: "poster/documentary/15_The Price Of A Trend _Fion Lee Winyean.png" },
+            { id: "doc_16", category: "Documentary", title: "Scrolling Until Midnight", studentName: "Li Ziming", posterImg: "poster/documentary/16_Scrolling Until Midnight _Li Ziming.JPG" },
+            { id: "doc_17", category: "Documentary", title: "The Unseen Faces", studentName: "Ng Jay Rou", posterImg: "poster/documentary/17_The Unseen Faces_Ng Jay Rou.jpg" },
+            { id: "doc_18", category: "Documentary", title: "Far From Home", studentName: "Taro Iwakawa", posterImg: "poster/documentary/18_Far From Home_Taro Iwakawa.jpg" },
+            { id: "doc_19", category: "Documentary", title: "MOMENTS", studentName: "Chua Yi Wen", posterImg: "poster/documentary/19_MOMENTS_Chua Yi Wen.jpg" },
+            { id: "doc_20", category: "Documentary", title: "Beyond the Screen", studentName: "Wang Hua", posterImg: "poster/documentary/20_Beyond the Screen_Wang Hua.JPG" },
+            { id: "doc_21", category: "Documentary", title: "Seeds of Change", studentName: "Xu Xinyan", posterImg: "poster/documentary/21_Seeds of Change_Xu Xinyan.png" },
+            { id: "doc_22", category: "Documentary", title: "Behind the Smile", studentName: "Wang Shangqing", posterImg: "poster/documentary/22_Behind the Smile_Wang Shangqing.JPG" },
+            { id: "doc_23", category: "Documentary", title: "Nanyang Heritage Tradition and Renewal of Nyonya Fashion", studentName: "Liu Jinxiang", posterImg: "poster/documentary/23_Nanyang Heritage Tradition and Renewal of Nyonya Fashion_Liu Jinxiang.png" },
+            { id: "doc_24", category: "Documentary", title: "Double Life Actress And Tour Guide", studentName: "Qiu Qinqin", posterImg: "poster/documentary/24_Double Life Actress And Tour Guide_Qiu qinqin.PNG" },
+            { id: "doc_25", category: "Documentary", title: "Finding Home The Journey of international students in Kuala Lumpur", studentName: "Wang Xinran", posterImg: "poster/documentary/25_Finding Home The Journey of international students in Kuala Lumpur_Wang Xinran.png" },
+            { id: "doc_26", category: "Documentary", title: "What's Next", studentName: "Goh Won Hao", posterImg: "poster/documentary/26_What's Next _Goh Won Hao.png" },
+            { id: "doc_27", category: "Documentary", title: "Slow Down Refill", studentName: "Hao Xinyue", posterImg: "poster/documentary/27_Slow Down Refill_Hao xinyue.jpg" },
+            { id: "doc_28", category: "Documentary", title: "Giving a Voice to the Voiceless", studentName: "Huang Xindi", posterImg: "poster/documentary/28_Giving a Voice to the Voiceless_Huang Xindi.png" },
+            { id: "doc_29", category: "Documentary", title: "The Algorithm Decides Who You Are", studentName: "Li Zhuochen", posterImg: "poster/documentary/29_The Algorithm Decides Who You Are_ Li Zhuochen.jpg" },
+            { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg" }
+        ];
+
+        // ----------------------------------------------------
+        // 核心渲染与交互逻辑
+        // ----------------------------------------------------
+        function getCategoryColor(category) {
+            if(category === 'Documentary') return 'var(--red)';
+            if(category === 'Short Film') return 'var(--blue)';
+            if(category === 'The Marketing Lab') return 'var(--yellow)';
+            if(category === 'Corporate Videos & Brand Films') return 'var(--purple)';
+            if(category === 'Music Videos') return 'var(--cyan)';
+            if(category === 'Public Service Announcements (PSA)') return 'var(--green)';
+            if(category === 'Vertical Cinematic Video') return 'var(--brown)';
+            return 'var(--charcoal)';
+        }
+
+        function createCardHTML(student) {
+            return `
+            <div class="story-poster-card" data-category="${student.category}" onclick="goToDetailView('${student.id}')">
+                <img src="${student.posterImg}" class="poster-img" onerror="this.src='https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster'">
+                <div class="poster-info-overlay">
+                    <div class="overlay-title">${student.title}</div>
+                    <div class="overlay-creator">Created by ${student.studentName}</div>
+                </div>
+            </div>`;
+        }
+
+        function renderAllCards() {
+            let docHtml = ''; let shortHtml = ''; let marcommHtml = '';
+            let corpHtml = ''; let mvHtml = ''; let psaHtml = ''; let vertHtml = '';
+            let allHtml = '';
+
+            studentData.forEach(student => {
+                const card = createCardHTML(student);
+                allHtml += card;
+                if(student.category === 'Documentary') docHtml += card;
+                if(student.category === 'Short Film') shortHtml += card;
+                if(student.category === 'The Marketing Lab') marcommHtml += card;
+                if(student.category === 'Corporate Videos & Brand Films') corpHtml += card;
+                if(student.category === 'Music Videos') mvHtml += card;
+                if(student.category === 'Public Service Announcements (PSA)') psaHtml += card;
+                if(student.category === 'Vertical Cinematic Video') vertHtml += card;
+            });
+
+            const toggleBlock = (htmlData, trackId, blockId) => {
+                const track = document.getElementById(trackId);
+                const block = document.getElementById(blockId);
+                if (htmlData.trim() === '') {
+                    if(block) block.classList.add('empty-category');
+                } else {
+                    if(block) block.classList.remove('empty-category');
+                    if(track) track.innerHTML = htmlData;
+                }
+            };
+
+            toggleBlock(docHtml, 'home-doc-track', 'block-doc');
+            toggleBlock(shortHtml, 'home-short-track', 'block-short');
+            toggleBlock(marcommHtml, 'home-marcomm-track', 'block-marcomm');
+            toggleBlock(corpHtml, 'home-corp-track', 'block-corp');
+            toggleBlock(mvHtml, 'home-mv-track', 'block-mv');
+            toggleBlock(psaHtml, 'home-psa-track', 'block-psa');
+            toggleBlock(vertHtml, 'home-vert-track', 'block-vert');
+            
+            const mainGrid = document.getElementById('main-artworks-grid');
+            if(mainGrid) mainGrid.innerHTML = allHtml;
+
+            const detailBottomTrack = document.getElementById('student-artworks-track-bottom');
+            if(detailBottomTrack) detailBottomTrack.innerHTML = allHtml;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAllCards();
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+            }, { root: null, rootMargin: '0px', threshold: 0.15 });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        });
+
+        function goToDetailView(id) {
+            const student = studentData.find(s => s.id === id);
+            if(!student) return;
+
+            document.getElementById('dynamic_profile_title').innerText = student.title || "Untitled";
+            document.getElementById('dynamic_profile_comment').innerText = student.desc ? student.desc.substring(0, 50) + "..." : "Select a project from the gallery to view details.";
+            
+            document.getElementById('dyn-name').innerText = student.studentName || "";
+            document.getElementById('dyn-age').innerText = student.age || "";
+            document.getElementById('dyn-enroll').innerText = student.enrollSem || "";
+            document.getElementById('dyn-grad').innerText = student.gradSem || "";
+            document.getElementById('dyn-phone').innerText = student.phone || "";
+            document.getElementById('dyn-email').innerText = student.email || "";
+            document.getElementById('dyn-desc').innerText = student.desc || "More information coming soon...";
+            document.getElementById('dyn-prod-team').innerHTML = student.prodTeam || "";
+
+            document.getElementById('dynamic-profile-img').src = student.posterImg;
+            
+            const categoryBadge = document.getElementById('dynamic-category-badge');
+            categoryBadge.innerText = student.category;
+            
+            const color = getCategoryColor(student.category);
+            document.getElementById('dynamic-blob').style.background = color;
+            document.getElementById('dynamic-portrait-bg').style.background = color;
+
+            const thumbContainer = document.getElementById('dyn-thumbnails');
+            let thumbsHtml = '';
+            if (student.thumbnails && student.thumbnails.length > 0) {
+                student.thumbnails.forEach(thumb => {
+                    thumbsHtml += `<div class="thumb-box" onclick="openLightbox('${thumb}')"><img src="${thumb}" onerror="this.src='https://via.placeholder.com/200x200/e0e0e0/1a1a1a?text=Img'"></div>`;
+                });
+            }
+            thumbContainer.innerHTML = thumbsHtml;
+
+            document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
+            document.getElementById('page-stories').classList.add('active');
+            document.getElementById('stories_gallery_view').style.display = 'none';
+            document.getElementById('stories_detail_view').style.display = 'flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function switchPage(pageId, sectionId = null, categoryToFilter = null) {
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
             const targetPage = document.getElementById(pageId);
@@ -1001,251 +831,85 @@
             if (pageId === 'page-stories') {
                 document.getElementById('stories_gallery_view').style.display = 'flex';
                 document.getElementById('stories_detail_view').style.display = 'none';
-
-                // 确保滚动到顶部
                 window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                // 扩展逻辑：加载故事页后，自动触发对于类别标签的点击，以实现分类展示
                 if (categoryToFilter) {
                     let tabId;
                     switch(categoryToFilter) {
                         case 'Documentary': tabId = 'filter_tab_doc'; break;
                         case 'Short Film': tabId = 'filter_tab_short'; break;
                         case 'The Marketing Lab': tabId = 'filter_tab_mar'; break;
+                        case 'Corporate Videos & Brand Films': tabId = 'filter_tab_corp'; break;
+                        case 'Music Videos': tabId = 'filter_tab_mv'; break;
+                        case 'Public Service Announcements (PSA)': tabId = 'filter_tab_psa'; break;
+                        case 'Vertical Cinematic Video': tabId = 'filter_tab_vert'; break;
                         default: tabId = 'filter_tab_all';
                     }
-                    setTimeout(() => {
-                        const tabBtn = document.getElementById(tabId);
-                        if (tabBtn) {
-                            tabBtn.click(); // 触发对应过滤 tab 的点击事件
-                        }
-                    }, 50);
+                    setTimeout(() => { const tabBtn = document.getElementById(tabId); if (tabBtn) tabBtn.click(); }, 50);
                 } else {
-                    // 若无参数，默认点击 All
-                    setTimeout(() => {
-                        const tabAll = document.getElementById('filter_tab_all');
-                        if(tabAll) tabAll.click();
-                    }, 50);
+                    setTimeout(() => { const tabAll = document.getElementById('filter_tab_all'); if(tabAll) tabAll.click(); }, 50);
                 }
             } else {
                 if (sectionId) {
-                    setTimeout(() => {
-                        const targetSection = document.getElementById(sectionId);
-                        if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
+                    setTimeout(() => { const targetSection = document.getElementById(sectionId); if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' }); }, 100);
                 } else {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }
-            
             if(pageId === 'page-about') updateCoverflow();
         }
 
-        // --- 弹窗控制 ---
         function openPosterModal() { document.getElementById("posterModal").style.display = "flex"; }
         function closePosterModal() { document.getElementById("posterModal").style.display = "none"; }
-        
-        // --- Lightbox ---
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightboxModal').style.display = 'flex';
-        }
+        function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightboxModal').style.display = 'flex'; }
 
-        // --- 首屏轮播 ---
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.hero-slide');
-        const indicators = document.querySelectorAll('.indicator');
-        const slideColors = ['var(--charcoal)', 'var(--red)', 'var(--blue)', 'var(--yellow)', 'var(--green)'];
-
-        function showSlide(index) { 
-            slides.forEach((slide, i) => { slide.classList.remove('active'); if(i === index) slide.classList.add('active'); }); 
-            indicators.forEach((ind, i) => {
-                ind.classList.remove('active');
-                ind.style.removeProperty('--active-color');
-                if(i === index) {
-                    ind.classList.add('active');
-                    ind.style.setProperty('--active-color', slideColors[index]);
-                }
-            });
-        }
+        let currentSlide = 0; const slides = document.querySelectorAll('.hero-slide'); const indicators = document.querySelectorAll('.indicator'); const slideColors = ['var(--charcoal)', 'var(--red)', 'var(--blue)', 'var(--yellow)', 'var(--green)'];
+        function showSlide(index) { slides.forEach((slide, i) => { slide.classList.remove('active'); if(i === index) slide.classList.add('active'); }); indicators.forEach((ind, i) => { ind.classList.remove('active'); ind.style.removeProperty('--active-color'); if(i === index) { ind.classList.add('active'); ind.style.setProperty('--active-color', slideColors[index]); } }); }
         function nextSlide() { currentSlide = (currentSlide + 1) % slides.length; showSlide(currentSlide); }
         function prevSlide() { currentSlide = (currentSlide - 1 + slides.length) % slides.length; showSlide(currentSlide); }
-        function goToSlide(index) {
-            currentSlide = index;
-            showSlide(currentSlide);
-            clearInterval(autoSlide);
-            autoSlide = setInterval(nextSlide, 5000);
-        }
-        
+        function goToSlide(index) { currentSlide = index; showSlide(currentSlide); clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); }
         let autoSlide = setInterval(nextSlide, 5000);
         document.querySelector('.arrow-left').addEventListener('click', () => { clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); });
         document.querySelector('.arrow-right').addEventListener('click', () => { clearInterval(autoSlide); autoSlide = setInterval(nextSlide, 5000); });
 
-        // --- 倒计时 ---
-        // 核心修改：将目标日期改为 2026年8月27日
         const countDownDate = new Date("August 27, 2026 09:00:00").getTime();
-        
         setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-            
-            // 如果倒计时结束，显示 0
-            if (distance < 0) {
-                document.getElementById("t-days").innerHTML = "00";
-                document.getElementById("t-hours").innerHTML = "00";
-                document.getElementById("t-mins").innerHTML = "00";
-                document.getElementById("t-secs").innerHTML = "00";
-                return;
-            }
-            
+            const now = new Date().getTime(); const distance = countDownDate - now;
+            if (distance < 0) { document.getElementById("t-days").innerHTML = "00"; document.getElementById("t-hours").innerHTML = "00"; document.getElementById("t-mins").innerHTML = "00"; document.getElementById("t-secs").innerHTML = "00"; return; }
             document.getElementById("t-days").innerHTML = Math.floor(distance / (1000 * 60 * 60 * 24));
             document.getElementById("t-hours").innerHTML = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             document.getElementById("t-mins").innerHTML = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             document.getElementById("t-secs").innerHTML = Math.floor((distance % (1000 * 60)) / 1000);
         }, 1000);
 
-        // --- 滚动动画 ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-            }, { root: null, rootMargin: '0px', threshold: 0.15 });
-            document.querySelectorAll('.animate-on-scroll, .cyan-band').forEach(el => observer.observe(el));
-        });
-
-        // --- Meet The Team 3D Coverflow ---
-        const teamCards = Array.from(document.querySelectorAll('.coverflow-card'));
-        let currentTeam = 0;
-        let teamAutoPlay;
-
+        const teamCards = Array.from(document.querySelectorAll('.coverflow-card')); let currentTeam = 0; let teamAutoPlay;
         function updateCoverflow() {
-            const infoBox = document.getElementById('team-info-box');
-            if(!infoBox) return;
-            infoBox.style.opacity = 0;
+            const infoBox = document.getElementById('team-info-box'); if(!infoBox) return; infoBox.style.opacity = 0;
             teamCards.forEach((card, index) => {
                 card.classList.remove('card-active', 'card-prev-1', 'card-next-1', 'card-prev-2', 'card-next-2', 'card-hidden-left', 'card-hidden-right');
-                
-                let diff = (index - currentTeam + teamCards.length) % teamCards.length;
-                if (diff > teamCards.length / 2) diff -= teamCards.length;
-
-                if (diff === 0) {
-                    card.classList.add('card-active');
-                    setTimeout(() => {
-                        document.getElementById('info-team-name').innerHTML = card.dataset.name;
-                        document.getElementById('info-team-name').style.color = card.dataset.color;
-                        document.getElementById('info-team-leader').innerHTML = card.dataset.leader;
-                        
-                        // 核心修改：动态隐藏或显示 Member 标签及内容
-                        if (card.dataset.members) {
-                            document.getElementById('info-team-members').style.display = 'block';
-                            document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members;
-                        } else {
-                            document.getElementById('info-team-members').style.display = 'none';
-                        }
-                        
-                        card.style.setProperty('--active-color', card.dataset.color);
-                        infoBox.style.opacity = 1; 
-                    }, 150);
-                } else if (diff === -1) {
-                    card.classList.add('card-prev-1');
-                } else if (diff === 1) {
-                    card.classList.add('card-next-1');
-                } else if (diff === -2) {
-                    card.classList.add('card-prev-2');
-                } else if (diff === 2) {
-                    card.classList.add('card-next-2');
-                } else if (diff < 0) {
-                    card.classList.add('card-hidden-left');
-                } else {
-                    card.classList.add('card-hidden-right');
-                }
+                let diff = (index - currentTeam + teamCards.length) % teamCards.length; if (diff > teamCards.length / 2) diff -= teamCards.length;
+                if (diff === 0) { card.classList.add('card-active'); setTimeout(() => { document.getElementById('info-team-name').innerHTML = card.dataset.name; document.getElementById('info-team-name').style.color = card.dataset.color; document.getElementById('info-team-leader').innerHTML = card.dataset.leader; if (card.dataset.members) { document.getElementById('info-team-members').style.display = 'block'; document.getElementById('info-team-members').innerHTML = "<strong>Members:</strong> " + card.dataset.members; } else { document.getElementById('info-team-members').style.display = 'none'; } card.style.setProperty('--active-color', card.dataset.color); infoBox.style.opacity = 1; }, 150);
+                } else if (diff === -1) { card.classList.add('card-prev-1'); } else if (diff === 1) { card.classList.add('card-next-1'); } else if (diff === -2) { card.classList.add('card-prev-2'); } else if (diff === 2) { card.classList.add('card-next-2'); } else if (diff < 0) { card.classList.add('card-hidden-left'); } else { card.classList.add('card-hidden-right'); }
             });
         }
-        
         function nextTeamCard() { currentTeam = (currentTeam + 1) % teamCards.length; updateCoverflow(); }
-        
-        teamCards.forEach((card, index) => {
-            card.addEventListener('mouseenter', () => {
-                currentTeam = index;
-                updateCoverflow();
-            });
-            card.addEventListener('click', () => {
-                currentTeam = index;
-                updateCoverflow();
-            });
-        });
-
+        teamCards.forEach((card, index) => { card.addEventListener('mouseenter', () => { currentTeam = index; updateCoverflow(); }); card.addEventListener('click', () => { currentTeam = index; updateCoverflow(); }); });
         const teamTrack = document.getElementById('team-track');
-        if(teamTrack) {
-            teamAutoPlay = setInterval(nextTeamCard, 3500);
-            teamTrack.addEventListener('mouseenter', () => clearInterval(teamAutoPlay));
-            teamTrack.addEventListener('mouseleave', () => { teamAutoPlay = setInterval(nextTeamCard, 3500); });
-        }
+        if(teamTrack) { teamAutoPlay = setInterval(nextTeamCard, 3500); teamTrack.addEventListener('mouseenter', () => clearInterval(teamAutoPlay)); teamTrack.addEventListener('mouseleave', () => { teamAutoPlay = setInterval(nextTeamCard, 3500); }); }
         updateCoverflow();
 
-        // --- 首页横向滚动 ---
-        function scrollTrack(trackId, direction) {
-            const trackToScroll = document.getElementById(trackId);
-            if(trackToScroll) { const scrollAmount = trackToScroll.clientWidth * 0.75; trackToScroll.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' }); }
-        }
+        function scrollTrack(trackId, direction) { const trackToScroll = document.getElementById(trackId); if(trackToScroll) { const scrollAmount = trackToScroll.clientWidth * 0.75; trackToScroll.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' }); } }
 
-        // --- Student Artworks 分类标签筛选功能 ---
         function filterArtworks(category, tabBtn) {
             const parentSection = tabBtn.closest('.portfolio-gallery-section');
             parentSection.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
             tabBtn.classList.add('active');
-
-            const grid = parentSection.querySelector('.portfolio-works-grid');
-            if (!grid) return;
-            
+            const grid = parentSection.querySelector('.portfolio-works-grid'); if (!grid) return;
             const cards = grid.querySelectorAll('.story-poster-card');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+            cards.forEach(card => { if (category === 'all' || card.getAttribute('data-category') === category) { card.style.display = 'block'; } else { card.style.display = 'none'; } });
         }
 
-        // --- 核心：点击海报统一跳转到个人专页详情，并动态渲染装饰相框背景色 ---
-        function goToDetailView(title, comment, imgSrc, studentName, age, enrollSem, gradSem, phone, email, category, color, descText, prodTeamHtml) {
-            document.getElementById('dynamic_profile_title').innerText = title;
-            document.getElementById('dynamic_profile_comment').innerText = comment;
-            
-            document.getElementById('dyn-name').innerText = studentName;
-            document.getElementById('dyn-age').innerText = age;
-            document.getElementById('dyn-enroll').innerText = enrollSem;
-            document.getElementById('dyn-grad').innerText = gradSem;
-            document.getElementById('dyn-phone').innerText = phone;
-            document.getElementById('dyn-email').innerText = email;
-            
-            const catBadge = document.getElementById('dynamic-category-badge');
-            catBadge.innerText = category;
-            document.getElementById('dynamic-blob').style.background = color;
-            document.getElementById('dyn-desc').innerText = descText;
-            document.getElementById('dyn-prod-team').innerHTML = prodTeamHtml;
-
-            document.getElementById('dynamic-profile-img').src = imgSrc;
-            document.getElementById('dynamic-portrait-bg').style.background = color;
-
-            document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
-            document.getElementById('page-stories').classList.add('active');
-
-            document.getElementById('stories_gallery_view').style.display = 'none';
-            document.getElementById('stories_detail_view').style.display = 'flex';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function viewProfile(t, c, img, n, a, e, g, p, email, cat, col, desc, prod) {
-            goToDetailView(t, c, img, n, a, e, g, p, email, cat, col, desc, prod);
-        }
-
-        function backToStoriesGallery() {
-            document.getElementById('stories_detail_view').style.display = 'none';
-            document.getElementById('stories_gallery_view').style.display = 'flex';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function backToStoriesGallery() { document.getElementById('stories_detail_view').style.display = 'none'; document.getElementById('stories_gallery_view').style.display = 'flex'; window.scrollTo({ top: 0, behavior: 'smooth' }); }
     </script>
 </body>
 </html>
