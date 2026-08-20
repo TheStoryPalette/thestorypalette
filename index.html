@@ -622,7 +622,7 @@
 
     <script>
         // ----------------------------------------------------
-        // 数据库 (共 66 位同学)
+        // 数据库 (共 66 位同学，已更新 Documentary 的 31 人名单)
         // ----------------------------------------------------
         const studentData = [
             // 1. Corporate Videos & Brand Films
@@ -646,7 +646,7 @@
             { id: "marcomm_06", category: "The Marketing Lab", title: "Korean Dessert & Coffee", studentName: "Aw Che Wei", posterImg: "poster/marcomm/6_Korean Dessert & Coffee_Aw Che Wei.png" },
             { id: "marcomm_07", category: "The Marketing Lab", title: "Nice 2 Meet You Flower Shop", studentName: "Koh Wen Xuan", posterImg: "poster/marcomm/7_Nice 2 Meet You Flower Shop_Koh Wen Xuan.png" },
 
-            // 6. Short Film (25人)
+            // 6. Short Film (24人)
             { id: "short_01", category: "Short Film", title: "New Life of Leftover Food", studentName: "Pucuoyongcuo", posterImg: "poster/short_film/1_New Life of Leftover Food_Pucuoyongcuo.jpg" },
             { id: "short_02", category: "Short Film", title: "The Forgotten Temperature", studentName: "TangZhenYao", posterImg: "poster/short_film/2_The Forgotten Temperature_TangZhenYao.png" },
             { id: "short_03", category: "Short Film", title: "Light of Broken Wings", studentName: "Zhang Ruo Di", posterImg: "poster/short_film/3_Light of Broken Wings_Zhang Ruo Di.jpg" },
@@ -663,17 +663,16 @@
             { id: "short_14", category: "Short Film", title: "Beyond the Classroom The Side Hustle Generation", studentName: "Zhang Yaxin", posterImg: "poster/short_film/14_Beyond the Classroom The Side Hustle Generation_Zhang Yaxin.png" },
             { id: "short_15", category: "Short Film", title: "Everything is Machable", studentName: "Shen Yan", posterImg: "poster/short_film/15_Everything is Machable_Shen Yan.png" },
             { id: "short_16", category: "Short Film", title: "The Quite Ones", studentName: "Guo Jijie", posterImg: "poster/short_film/16_The Quite Ones_Guo Jijie.png" },
-            { id: "short_17", category: "Short Film", title: "I Once Had a Home", studentName: "Sun Wenye", posterImg: "poster/short_film/17_I Once Had a Home_Sun Wenye.png" },
-            { id: "short_18", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/18_The Distance Between_Liang Wai Onn.png" },
-            { id: "short_19", category: "Short Film", title: "Inherited", studentName: "Jesslyn Chu Shi Ying", posterImg: "poster/short_film/19_Inherited_Jesslyn Chu Shi Ying.png" },
-            { id: "short_20", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/20_404 Career Not Found_Ang Kai Xuan.jpg" },
-            { id: "short_21", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/21_Stop The Ring_Leong Joel.png" },
-            { id: "short_22", category: "Short Film", title: "Stay! Apple", studentName: "Gu Yida", posterImg: "poster/short_film/22_Stay! Apple_Gu Yida.jpg" },
-            { id: "short_23", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/23_The Last Assignment_Cao Xianya.jpg" },
-            { id: "short_24", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/24_Sidelines_Shanelle Eve Edmund.png" },
-            { id: "short_25", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/25_The Choice of the New Era-Zhang Yifan.jpg" },
+            { id: "short_17", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/17_The Distance Between_Liang Wai Onn.png" },
+            { id: "short_18", category: "Short Film", title: "Inherited", studentName: "Jesslyn Chu Shi Ying", posterImg: "poster/short_film/18_Inherited_Jesslyn Chu Shi Ying.png" },
+            { id: "short_19", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/19_404 Career Not Found_Ang Kai Xuan.jpg" },
+            { id: "short_20", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/20_Stop The Ring_Leong Joel.png" },
+            { id: "short_21", category: "Short Film", title: "Stay! Apple", studentName: "Gu Yida", posterImg: "poster/short_film/21_Stay! Apple_Gu Yida.jpg" },
+            { id: "short_22", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/22_The Last Assignment_Cao Xianya.jpg" },
+            { id: "short_23", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/23_Sidelines_Shanelle Eve Edmund.png" },
+            { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg" },
 
-            // 7. Documentary (30人)
+            // 8. Documentary (更新为 31人)
             { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png" },
             { id: "doc_02", category: "Documentary", title: "Home Beyond Home", studentName: "Wang Xige", posterImg: "poster/documentary/2_Home Beyound Home_Wang Xige.png" },
             { id: "doc_03", category: "Documentary", title: "Two bowls, One table", studentName: "Fu Yuru", posterImg: "poster/documentary/3_Two bowls,One table_Fu Yuru.png" },
@@ -703,7 +702,8 @@
             { id: "doc_27", category: "Documentary", title: "Slow Down Refill", studentName: "Hao Xinyue", posterImg: "poster/documentary/27_Slow Down Refill_Hao xinyue.jpg" },
             { id: "doc_28", category: "Documentary", title: "Giving a Voice to the Voiceless", studentName: "Huang Xindi", posterImg: "poster/documentary/28_Giving a Voice to the Voiceless_Huang Xindi.png" },
             { id: "doc_29", category: "Documentary", title: "The Algorithm Decides Who You Are", studentName: "Li Zhuochen", posterImg: "poster/documentary/29_The Algorithm Decides Who You Are_ Li Zhuochen.jpg" },
-            { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg" }
+            { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg" },
+            { id: "doc_31", category: "Documentary", title: "I Once Had a Home", studentName: "SunWenye", posterImg: "poster/documentary/31_I Once Had a Home_SunWenye.png" }
         ];
 
         // ----------------------------------------------------
