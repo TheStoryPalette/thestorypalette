@@ -62,14 +62,12 @@
         .btn-add-nav { padding: 8px 20px; background: #fff; color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; position: relative; z-index: 1; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; }
         .btn-add-nav:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
 
-        /* 弹窗海报 & Lightbox */
-        .poster-modal, .lightbox-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
+        /* Lightbox (详情页所需，海报弹窗已删除) */
+        .lightbox-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-        .modal-content { position: relative; max-width: 90%; max-height: 90vh; text-align: center; }
-        .modal-content img, .lightbox-modal img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
-        .close-modal, .lightbox-close { position: absolute; font-size: 3rem; color: #fff; cursor: pointer; transition: color 0.3s ease; }
-        .close-modal { top: -20px; right: -40px; } .lightbox-close { top: 20px; right: 30px; font-size: 50px; z-index: 10000; }
-        .close-modal:hover, .lightbox-close:hover { color: var(--red); }
+        .lightbox-modal img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
+        .lightbox-close { position: absolute; font-size: 50px; color: #fff; cursor: pointer; transition: color 0.3s ease; top: 20px; right: 30px; z-index: 10000; }
+        .lightbox-close:hover { color: var(--red); }
 
         /* 独立分页容器 */
         .spa-page { display: none; width: 100vw; min-height: 100vh; flex-direction: column; align-items: center; opacity: 0; animation: fadeInPage 0.5s ease forwards; position: relative; z-index: 10; }
@@ -109,7 +107,13 @@
         .timer-card { background: #fff; border-radius: 20px; box-shadow: 0 10px 25px rgba(26,26,26,0.06); border: 2px solid rgba(26,26,26,0.05); padding: clamp(15px, 2vh, 25px); width: clamp(110px, 14vw, 150px); display: flex; flex-direction: column; align-items: center; }
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
-        .event-info { display: flex; flex-direction: column; gap: clamp(20px, 3vh, 35px); align-items: center; margin-top: clamp(30px, 5vh, 50px); width: 100%; max-width: 600px; text-align: center; }
+        
+        /* 中间插入的海报容器 */
+        .event-poster-wrapper { width: 100%; max-width: clamp(260px, 40vw, 380px); margin: 10px auto 30px auto; border: 4px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease; }
+        .event-poster-wrapper:hover { transform: translateY(-5px); box-shadow: 12px 12px 0 var(--charcoal); }
+        .event-poster-wrapper img { width: 100%; height: auto; display: block; object-fit: cover; }
+        
+        .event-info { display: flex; flex-direction: column; gap: clamp(20px, 3vh, 35px); align-items: center; margin-top: clamp(10px, 3vh, 30px); width: 100%; max-width: 600px; text-align: center; }
         .event-info-item { display: flex; flex-direction: column; gap: 8px; align-items: center; width: 100%; }
         .event-info-label { font-family: var(--font-title); font-size: clamp(1.1rem, 1.5vw, 1.35rem); color: rgba(26,26,26,0.7); letter-spacing: 1px; }
         .event-info-value { font-family: var(--font-sub); font-size: clamp(1.2rem, 1.8vw, 1.5rem); color: var(--charcoal); line-height: 1.6; }
@@ -297,16 +301,11 @@
             <li><a class="nav-link" onclick="switchPage('page-exhibition')">Exhibition</a></li>
             <li><a class="nav-link" onclick="switchPage('page-contact')">Contact</a></li>
         </ul>
-        <button class="btn-add-nav" onclick="openPosterModal()">Join Us Now</button>
+        <!-- 修改1：点击直接跳转 Google Form -->
+        <button class="btn-add-nav" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfA5vLCAFMe6pNojW1Cq9B_drUqJcULALxRYCjOfMEtfVEd9A/viewform', '_blank')">Join Us Now</button>
     </nav>
 
-    <!-- 弹窗 -->
-    <div id="posterModal" class="poster-modal" onclick="closePosterModal()">
-        <div class="modal-content" onclick="event.stopPropagation();">
-            <div class="close-modal" onclick="closePosterModal()">&times;</div>
-            <img src="poster.png" alt="Event Poster" onerror="this.src='https://via.placeholder.com/800x1200.png?text=poster.png'">
-        </div>
-    </div>
+    <!-- 详情页的 Lightbox 弹窗 -->
     <div id="lightboxModal" class="lightbox-modal" onclick="this.style.display='none'">
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="">
@@ -364,6 +363,12 @@
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--yellow);"><span id="t-mins">00</span></div><div class="timer-label">MINUTES</div></div><div class="time-divider">:</div>
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
+                    
+                    <!-- 修改2：海报移动到了这里 -->
+                    <div class="event-poster-wrapper animate-on-scroll delay-2">
+                        <img src="poster.png" alt="Exhibition Poster" onerror="this.src='https://via.placeholder.com/600x850.png?text=Event+Poster'">
+                    </div>
+
                     <div class="event-info">
                         <div class="event-info-item"><div class="event-info-label">DATE</div><div class="event-info-value">27 August 2026<br>(Thursday)</div></div>
                         <div class="event-info-item"><div class="event-info-label">VENUE</div><div class="event-info-value">Level 8, Block G<br>UCSI University Kuala Lumpur Campus<br>UCSI Heights, 1, Jln UCSI<br>Taman Connaught, 56000<br>Federal Territory of Kuala Lumpur</div></div>
@@ -721,7 +726,7 @@
             return 'var(--charcoal)';
         }
 
-        /* 移除了 onClick 跳转功能，只保留卡片悬停效果 */
+        /* 去掉了 onclick 跳转功能，只保留悬停效果 */
         function createCardHTML(student) {
             return `
             <div class="story-poster-card" data-category="${student.category}">
@@ -862,8 +867,6 @@
             if(pageId === 'page-about') updateCoverflow();
         }
 
-        function openPosterModal() { document.getElementById("posterModal").style.display = "flex"; }
-        function closePosterModal() { document.getElementById("posterModal").style.display = "none"; }
         function openLightbox(src) { document.getElementById('lightbox-img').src = src; document.getElementById('lightboxModal').style.display = 'flex'; }
 
         let currentSlide = 0; const slides = document.querySelectorAll('.hero-slide'); const indicators = document.querySelectorAll('.indicator'); const slideColors = ['var(--charcoal)', 'var(--red)', 'var(--blue)', 'var(--yellow)', 'var(--green)'];
