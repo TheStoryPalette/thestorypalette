@@ -144,7 +144,7 @@
         .carousel-track-horiz { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 10px 30px 10px; width: 100%; scrollbar-width: none; background: transparent; transition: all 0.3s ease; }
         .carousel-track-horiz::-webkit-scrollbar { display: none; }
 
-        /* 海报卡片样式 (去掉了跳转功能，但保留了悬停效果) */
+        /* 海报卡片样式 */
         .story-poster-card { flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; background: #fff; border: 3px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; display: block; }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
         .poster-img { width: 100%; height: 100%; object-fit: fill; background: #e0e0e0; transition: transform 0.4s ease; }
@@ -301,7 +301,6 @@
             <li><a class="nav-link" onclick="switchPage('page-exhibition')">Exhibition</a></li>
             <li><a class="nav-link" onclick="switchPage('page-contact')">Contact</a></li>
         </ul>
-        <!-- 修改1：点击直接跳转 Google Form -->
         <button class="btn-add-nav" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSfA5vLCAFMe6pNojW1Cq9B_drUqJcULALxRYCjOfMEtfVEd9A/viewform', '_blank')">Join Us Now</button>
     </nav>
 
@@ -347,7 +346,7 @@
                 </div>
             </section>
 
-            <!-- 倒计时 -->
+            <!-- 倒计时与海报区 -->
             <section class="section" id="sec-1">
                 <div class="countdown-logo-wrap animate-on-scroll">
                     <img src="logo.png" alt="Logo" class="hero-logo-animated" onerror="this.src='logo.jpg'">
@@ -364,7 +363,6 @@
                         <div class="timer-card"><div class="timer-circle" style="--ring-color: var(--green);"><span id="t-secs">00</span></div><div class="timer-label">SECONDS</div></div>
                     </div>
                     
-                    <!-- 修改2：海报移动到了这里 -->
                     <div class="event-poster-wrapper animate-on-scroll delay-2">
                         <img src="poster.png" alt="Exhibition Poster" onerror="this.src='https://via.placeholder.com/600x850.png?text=Event+Poster'">
                     </div>
@@ -392,37 +390,49 @@
                 </div>
             </section>
 
-            <!-- 首页瀑布流画廊 (自动隐藏空分类) -->
+            <!-- 首页瀑布流画廊 -->
             <section class="section stories-showcase-section" id="sec-stories-gallery">
                 <div class="global-stories-header"><h2 class="global-stories-title">The Stories</h2></div>
 
+                <!-- Documentary -->
                 <div class="category-block animate-on-scroll" id="block-doc">
                     <div class="category-header" style="border-bottom: 4px solid var(--red);"><h3 class="category-title" style="border:none;">Documentary</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Documentary')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-doc-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-doc-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-doc-track', 1)">&gt;</button></div>
                 </div>
+                <!-- Short Film -->
                 <div class="category-block animate-on-scroll delay-1" id="block-short">
                     <div class="category-header" style="border-bottom: 4px solid var(--blue);"><h3 class="category-title" style="border:none;">Short Film</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Short Film')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-short-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-short-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-short-track', 1)">&gt;</button></div>
                 </div>
+                <!-- The Marketing Lab -->
                 <div class="category-block animate-on-scroll delay-2" id="block-marcomm">
                     <div class="category-header" style="border-bottom: 4px solid var(--yellow);"><h3 class="category-title" style="border:none;">The Marketing Lab</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'The Marketing Lab')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-marcomm-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-marcomm-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-marcomm-track', 1)">&gt;</button></div>
                 </div>
+                <!-- Corporate Videos -->
                 <div class="category-block animate-on-scroll delay-1" id="block-corp">
                     <div class="category-header" style="border-bottom: 4px solid var(--purple);"><h3 class="category-title" style="border:none;">Corporate Videos & Brand Films</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Corporate Videos & Brand Films')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-corp-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-corp-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-corp-track', 1)">&gt;</button></div>
                 </div>
+                <!-- Music Videos -->
                 <div class="category-block animate-on-scroll delay-1" id="block-mv">
                     <div class="category-header" style="border-bottom: 4px solid var(--cyan);"><h3 class="category-title" style="border:none;">Music Videos</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Music Videos')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-mv-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-mv-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-mv-track', 1)">&gt;</button></div>
                 </div>
+                <!-- PSA -->
                 <div class="category-block animate-on-scroll delay-1" id="block-psa">
                     <div class="category-header" style="border-bottom: 4px solid var(--green);"><h3 class="category-title" style="border:none;">Public Service Announcements (PSA)</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Public Service Announcements (PSA)')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-psa-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-psa-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-psa-track', 1)">&gt;</button></div>
                 </div>
+                <!-- Vertical Video -->
                 <div class="category-block animate-on-scroll delay-1" id="block-vert">
                     <div class="category-header" style="border-bottom: 4px solid var(--brown);"><h3 class="category-title" style="border:none;">Vertical Cinematic Video</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'Vertical Cinematic Video')">View All</a></div>
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-vert-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-vert-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-vert-track', 1)">&gt;</button></div>
+                </div>
+                <!-- News & Media -->
+                <div class="category-block animate-on-scroll delay-1" id="block-news">
+                    <div class="category-header" style="border-bottom: 4px solid var(--gray);"><h3 class="category-title" style="border:none;">News & Media</h3><a class="category-view-all" onclick="switchPage('page-stories', null, 'News & Media')">View All</a></div>
+                    <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-news-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-news-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-news-track', 1)">&gt;</button></div>
                 </div>
             </section>
             
@@ -503,6 +513,7 @@
                         <button class="filter-tab" id="filter_tab_mv" onclick="filterArtworks('Music Videos', this)">Music Videos</button>
                         <button class="filter-tab" id="filter_tab_psa" onclick="filterArtworks('Public Service Announcements (PSA)', this)">Public Service Announcements (PSA)</button>
                         <button class="filter-tab" id="filter_tab_vert" onclick="filterArtworks('Vertical Cinematic Video', this)">Vertical Cinematic Video</button>
+                        <button class="filter-tab" id="filter_tab_news" onclick="filterArtworks('News & Media', this)">News & Media</button>
                     </div>
                     <div class="portfolio-works-grid" id="main-artworks-grid"></div>
                 </section>
@@ -566,6 +577,7 @@
                         <button class="filter-tab" onclick="filterArtworks('Short Film', this)">Short Film</button>
                         <button class="filter-tab" onclick="filterArtworks('The Marketing Lab', this)">The Marketing Lab</button>
                         <button class="filter-tab" onclick="filterArtworks('Corporate Videos & Brand Films', this)">Corporate Videos</button>
+                        <button class="filter-tab" onclick="filterArtworks('News & Media', this)">News & Media</button>
                     </div>
                     <div class="carousel-wrapper-horiz">
                         <button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('student-artworks-track-bottom', -1)">&lt;</button>
@@ -608,108 +620,99 @@
             </section>
         </div>
 
-        <!-- 页面 5: CONTACT -->
-        <div id="page-contact" class="spa-page">
-            <section class="section contact-footer-section" style="min-height: 80vh;">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
-        </div>
-
         <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
 
     </div>
 
     <script>
         // ----------------------------------------------------
-        // 数据库 (共 66 位同学)
+        // 数据库 (新增第 8 分类: News & Media，并嵌入了所有已提供的视频链接)
         // ----------------------------------------------------
         const studentData = [
-            // 1. Corporate Videos & Brand Films
-            { id: "corp_01", category: "Corporate Videos & Brand Films", title: "Bridging Cultures Through Community Engagement", studentName: "Liu Yichang", posterImg: "poster/Corporate Videos & Brand Films/1_Bridging_Cultures_Through Community_ Engagement_Liu Yichang.png" },
-            
-            // 2. Music Videos
-            { id: "mv_01", category: "Music Videos", title: "Becoming an Interesting Adult", studentName: "Sieo Wan Kee", posterImg: "poster/Music Videos/1_Becoming_an Interesting_Adult_Sieo Wan Kee.jpg" },
-            
-            // 3. Public Service Announcements (PSA)
-            { id: "psa_01", category: "Public Service Announcements (PSA)", title: "The Last Choice", studentName: "Zhang Zhengang", posterImg: "poster/Public Service Announcements (PSA)/1_The Last Choice_Zhang Zhengang.jpg" },
-            
-            // 4. Vertical Cinematic Video
-            { id: "vert_01", category: "Vertical Cinematic Video", title: "In Plain Sight", studentName: "Queency Kezia", posterImg: "poster/Vertical Cinematic Video/1_In Plain_Sight_Queency Kezia.png" },
-            
-            // 5. The Marketing Lab (7人)
-            { id: "marcomm_01", category: "The Marketing Lab", title: "Britannia Language Centre", studentName: "Sadeim Al zeyani", posterImg: "poster/marcomm/1_Britannia Language Centre_Sadeim Al zeyani.png" },
-            { id: "marcomm_02", category: "The Marketing Lab", title: "Pawmised Land", studentName: "Low Vicky", posterImg: "poster/marcomm/2_Pawmised Land_Low Vicky.png" },
-            { id: "marcomm_03", category: "The Marketing Lab", title: "Magnify Music & Art Centre", studentName: "Keh Yao Hui", posterImg: "poster/marcomm/3_Magnify Music & Art Centre_Keh Yao Hui.jpg" },
-            { id: "marcomm_04", category: "The Marketing Lab", title: "Eyeconlens", studentName: "Ng Zi Hui", posterImg: "poster/marcomm/4_Eyeconlens_Ng Zi Hui.jpg" },
-            { id: "marcomm_05", category: "The Marketing Lab", title: "Mega Hygiene", studentName: "Tee Ching Yee", posterImg: "poster/marcomm/5_Mega Hygiene_Tee Ching Yee.png" },
-            { id: "marcomm_06", category: "The Marketing Lab", title: "Korean Dessert & Coffee", studentName: "Aw Che Wei", posterImg: "poster/marcomm/6_Korean Dessert & Coffee_Aw Che Wei.png" },
-            { id: "marcomm_07", category: "The Marketing Lab", title: "Nice 2 Meet You Flower Shop", studentName: "Koh Wen Xuan", posterImg: "poster/marcomm/7_Nice 2 Meet You Flower Shop_Koh Wen Xuan.png" },
 
-            // 6. Short Film (24人)
-            { id: "short_01", category: "Short Film", title: "New Life of Leftover Food", studentName: "Pucuoyongcuo", posterImg: "poster/short_film/1_New Life of Leftover Food_Pucuoyongcuo.jpg" },
-            { id: "short_02", category: "Short Film", title: "The Forgotten Temperature", studentName: "TangZhenYao", posterImg: "poster/short_film/2_The Forgotten Temperature_TangZhenYao.png" },
-            { id: "short_03", category: "Short Film", title: "Light of Broken Wings", studentName: "Zhang Ruo Di", posterImg: "poster/short_film/3_Light of Broken Wings_Zhang Ruo Di.jpg" },
-            { id: "short_04", category: "Short Film", title: "Swipe Right", studentName: "SaamiyaChandni", posterImg: "poster/short_film/4_Swipe Right_SaamiyaChandni.jpg" },
-            { id: "short_05", category: "Short Film", title: "Vlog Nightmare", studentName: "Du Zhuoyi", posterImg: "poster/short_film/5_Vlog Nightmare_Du Zhuoyi.png" },
-            { id: "short_06", category: "Short Film", title: "Film Graduates Real Life in the Industry", studentName: "Zhang Jiahe", posterImg: "poster/short_film/6_Film Graduates Real Life in the Industry_Zhang Jiahe.jpg" },
-            { id: "short_07", category: "Short Film", title: "Restart", studentName: "Huang Keqiao", posterImg: "poster/short_film/7_Restart_Huang Keqiao.jpg" },
-            { id: "short_08", category: "Short Film", title: "Natural Light by the Window", studentName: "Song Qian", posterImg: "poster/short_film/8_Natural Light by the Window _Song Qian.jpg" },
-            { id: "short_09", category: "Short Film", title: "For You", studentName: "Li Shibo", posterImg: "poster/short_film/9_For You_Li Shibo.png" },
-            { id: "short_10", category: "Short Film", title: "Offline", studentName: "Yeoh Wen Qi", posterImg: "poster/short_film/10_Offline_Yeoh Wen Qi.jpg" },
-            { id: "short_11", category: "Short Film", title: "FitQuest", studentName: "Darren Tan Di Xing", posterImg: "poster/short_film/11_FitQuest_Darren Tan Di Xing.png" },
-            { id: "short_12", category: "Short Film", title: "OFFLINE", studentName: "Tan Chia Hong", posterImg: "poster/short_film/12_OFFLINE_Tan Chia Hong.jpg" },
-            { id: "short_13", category: "Short Film", title: "Protecting Stray Animals", studentName: "Wang HeXingQing", posterImg: "poster/short_film/13_Protecting Stray Animals_Wang HeXingQing.jpg" },
-            { id: "short_14", category: "Short Film", title: "Beyond the Classroom The Side Hustle Generation", studentName: "Zhang Yaxin", posterImg: "poster/short_film/14_Beyond the Classroom The Side Hustle Generation_Zhang Yaxin.png" },
-            { id: "short_15", category: "Short Film", title: "Everything is Machable", studentName: "Shen Yan", posterImg: "poster/short_film/15_Everything is Machable_Shen Yan.png" },
-            { id: "short_16", category: "Short Film", title: "The Quite Ones", studentName: "Guo Jijie", posterImg: "poster/short_film/16_The Quite Ones_Guo Jijie.png" },
+            // Corporate Videos & Brand Films
+            { id: "corp_01", category: "Corporate Videos & Brand Films", title: "Bridging Cultures Through Community Engagement", studentName: "Liu Yichang", posterImg: "poster/Corporate Videos & Brand Films/1_Bridging_Cultures_Through Community_ Engagement_Liu Yichang.png", videoUrl: "https://drive.google.com/file/d/1css-aBhfMVdMOtmNWPkFsdoxJExjJyJ-/view?usp=drive_link" },
+
+            // Music Videos
+            { id: "mv_01", category: "Music Videos", title: "Becoming an Interesting Adult", studentName: "Sieo Wan Kee", posterImg: "poster/Music Videos/1_Becoming_an Interesting_Adult_Sieo Wan Kee.jpg" },
+
+            // Public Service Announcements (PSA)
+            { id: "psa_01", category: "Public Service Announcements (PSA)", title: "The Last Choice", studentName: "Zhang Zhengang", posterImg: "poster/Public Service Announcements (PSA)/1_The Last Choice_Zhang Zhengang.jpg", videoUrl: "https://drive.google.com/file/d/1PMSYJUTqQm9jDoCSetgn9fMYcFqrWQNu/view?usp=drive_link" },
+
+            // Vertical Cinematic Video
+            { id: "vert_01", category: "Vertical Cinematic Video", title: "In Plain Sight", studentName: "Queency Kezia", posterImg: "poster/Vertical Cinematic Video/1_In Plain_Sight_Queency Kezia.png", videoUrl: "https://drive.google.com/file/d/1ssClQBArlwALtWszbLZac8TMGanoVq3X/view?usp=drive_link" },
+
+            // The Marketing Lab
+            { id: "marcomm_01", category: "The Marketing Lab", title: "Britannia Language Centre", studentName: "Sadeim Al zeyani", posterImg: "poster/marcomm/1_Britannia Language Centre_Sadeim Al zeyani.png", videoUrl: "https://drive.google.com/file/d/1-V-WV2UWZKDeEjnhTGsPx9mLX3LTbUNZ/view?usp=drive_link" },
+            { id: "marcomm_02", category: "The Marketing Lab", title: "Pawmised Land", studentName: "Low Vicky", posterImg: "poster/marcomm/2_Pawmised Land_Low Vicky.png", videoUrl: "https://drive.google.com/file/d/1EO6PoYCvRfN1HT9R-MviIV5JuWz6MhJg/view?usp=drive_link" },
+            { id: "marcomm_03", category: "The Marketing Lab", title: "Magnify Music & Art Centre", studentName: "Keh Yao Hui", posterImg: "poster/marcomm/3_Magnify Music & Art Centre_Keh Yao Hui.jpg" },
+            { id: "marcomm_04", category: "The Marketing Lab", title: "Eyeconlens", studentName: "Ng Zi Hui", posterImg: "poster/marcomm/4_Eyeconlens_Ng Zi Hui.jpg", videoUrl: "https://drive.google.com/file/d/1kpMDjFKRBe7DFwKn_MQZlnpvoyyUiLm3/view?usp=drive_link" },
+            { id: "marcomm_05", category: "The Marketing Lab", title: "Mega Hygiene", studentName: "Tee Ching Yee", posterImg: "poster/marcomm/5_Mega Hygiene_Tee Ching Yee.png", videoUrl: "https://drive.google.com/file/d/1eQxv6GC9kwQd1R4_DcDddfDKTVuLPcfo/view?usp=drive_link" },
+            { id: "marcomm_06", category: "The Marketing Lab", title: "Korean Dessert & Coffee", studentName: "Aw Che Wei", posterImg: "poster/marcomm/6_Korean Dessert & Coffee_Aw Che Wei.png", videoUrl: "https://drive.google.com/file/d/1A8ut-0An0tq1imY0t5MBl6mhNoJmy2B8/view?usp=drive_link" },
+            { id: "marcomm_07", category: "The Marketing Lab", title: "Nice 2 Meet You Flower Shop", studentName: "Koh Wen Xuan", posterImg: "poster/marcomm/7_Nice 2 Meet You Flower Shop_Koh Wen Xuan.png", videoUrl: "https://drive.google.com/file/d/19q_DyEMsKvuA6DQhZ9aksjw_dhqbVs49/view?usp=drive_link" },
+
+            // Short Film
+            { id: "short_01", category: "Short Film", title: "New Life of Leftover Food", studentName: "Pucuoyongcuo", posterImg: "poster/short_film/1_New Life of Leftover Food_Pucuoyongcuo.jpg", videoUrl: "https://drive.google.com/file/d/1_HLsE326wFlawqxwhwM2ruqtIrO4-M1_/view?usp=drive_link" },
+            { id: "short_02", category: "Short Film", title: "The Forgotten Temperature", studentName: "TangZhenYao", posterImg: "poster/short_film/2_The Forgotten Temperature_TangZhenYao.png", videoUrl: "https://drive.google.com/file/d/1Y30CvRu9700tFB9GtVYeyTDkXL6diX9V/view?usp=drive_link" },
+            { id: "short_03", category: "Short Film", title: "Light of Broken Wings", studentName: "Zhang Ruo Di", posterImg: "poster/short_film/3_Light of Broken Wings_Zhang Ruo Di.jpg", videoUrl: "https://drive.google.com/file/d/13Xg2ZIGkMTVDjzmeOQsAJvaW_GtFZUbn/view?usp=drive_link" },
+            { id: "short_04", category: "Short Film", title: "Swipe Right", studentName: "SaamiyaChandni", posterImg: "poster/short_film/4_Swipe Right_SaamiyaChandni.jpg", videoUrl: "https://drive.google.com/file/d/1eycq0UuygbXHWgApcdnr1eND9-1BkUkD/view?usp=drive_link" },
+            { id: "short_05", category: "Short Film", title: "Vlog Nightmare", studentName: "Du Zhuoyi", posterImg: "poster/short_film/5_Vlog Nightmare_Du Zhuoyi.png", videoUrl: "https://drive.google.com/file/d/1KbSyOZPCivoVX1pMqSw_bLMt9Eq-l1-J/view?usp=drive_link" },
+            { id: "short_06", category: "Short Film", title: "Film Graduates Real Life in the Industry", studentName: "Zhang Jiahe", posterImg: "poster/short_film/6_Film Graduates Real Life in the Industry_Zhang Jiahe.jpg", videoUrl: "https://drive.google.com/file/d/1oJ-ldQP1PMHDzTpHivggTh7hbCQxM7MZ/view?usp=drive_link" },
+            { id: "short_07", category: "Short Film", title: "Restart", studentName: "Huang Keqiao", posterImg: "poster/short_film/7_Restart_Huang Keqiao.jpg", videoUrl: "https://drive.google.com/file/d/19hJx2h1KEKIYYCFpJ6Wyt5ZECBV7EgXm/view?usp=drive_link" },
+            { id: "short_08", category: "Short Film", title: "Natural Light by the Window", studentName: "Song Qian", posterImg: "poster/short_film/8_Natural Light by the Window _Song Qian.jpg", videoUrl: "https://drive.google.com/file/d/1eyPZ1GizdFD66kdNgp-TubVDor1ZOzUl/view?usp=drive_link" },
+            { id: "short_09", category: "Short Film", title: "For You", studentName: "Li Shibo", posterImg: "poster/short_film/9_For You_Li Shibo.png", videoUrl: "https://drive.google.com/file/d/1f6ve99MJ5JKaFArngipX_d7FIH1wvMEI/view?usp=drive_link" },
+            { id: "short_10", category: "Short Film", title: "Offline", studentName: "Yeoh Wen Qi", posterImg: "poster/short_film/10_Offline_Yeoh Wen Qi.jpg", videoUrl: "https://drive.google.com/file/d/1myZdQE300mEVOlmIf_1UZUDePSXpJD24/view?usp=drive_link" },
+            { id: "short_11", category: "Short Film", title: "FitQuest", studentName: "Darren Tan Di Xing", posterImg: "poster/short_film/11_FitQuest_Darren Tan Di Xing.png", videoUrl: "https://drive.google.com/file/d/1pa31Kz-Z9mKVeAETKahec2IM3G-JeFZ-/view?usp=drive_link" },
+            { id: "short_12", category: "Short Film", title: "OFFLINE", studentName: "Tan Chia Hong", posterImg: "poster/short_film/12_OFFLINE_Tan Chia Hong.jpg", videoUrl: "https://drive.google.com/file/d/1Hb6oQxEpx1k6uPpJ737mIhdPiu9-nDu7/view?usp=drive_link" },
+            { id: "short_13", category: "Short Film", title: "Protecting Stray Animals", studentName: "Wang HeXingQing", posterImg: "poster/short_film/13_Protecting Stray Animals_Wang HeXingQing.jpg", videoUrl: "https://drive.google.com/file/d/1IiHdBF-K7MtmQrxnWr0YYvsnQQiK52vP/view?usp=drive_link" },
+            { id: "short_14", category: "Short Film", title: "Beyond the Classroom The Side Hustle Generation", studentName: "Zhang Yaxin", posterImg: "poster/short_film/14_Beyond the Classroom The Side Hustle Generation_Zhang Yaxin.png", videoUrl: "https://drive.google.com/file/d/1BsQDWkzbsb7nPt59H6FofUkc2QFH04Ua/view?usp=drive_link" },
+            { id: "short_15", category: "Short Film", title: "Everything is Machable", studentName: "Shen Yan", posterImg: "poster/short_film/15_Everything is Machable_Shen Yan.png", videoUrl: "https://drive.google.com/file/d/1sGJQIXwGv4WxybnrB0wyK873Z3yqMfw2/view?usp=drive_link" },
+            { id: "short_16", category: "Short Film", title: "The Quite Ones", studentName: "Guo Jijie", posterImg: "poster/short_film/16_The Quite Ones_Guo Jijie.png", videoUrl: "https://drive.google.com/file/d/1PvmucEKDwUwNbCnoz6naBmBHZm9TiY3K/view?usp=drive_link" },
             { id: "short_17", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/17_The Distance Between_Liang Wai Onn.png" },
             { id: "short_18", category: "Short Film", title: "Inherited", studentName: "Jesslyn Chu Shi Ying", posterImg: "poster/short_film/18_Inherited_Jesslyn Chu Shi Ying.png" },
-            { id: "short_19", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/19_404 Career Not Found_Ang Kai Xuan.jpg" },
-            { id: "short_20", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/20_Stop The Ring_Leong Joel.png" },
+            { id: "short_19", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/19_404 Career Not Found_Ang Kai Xuan.jpg", videoUrl: "https://drive.google.com/file/d/1QG5BDIyAgu326ZtcAHwA00WJgUt-J6bt/view?usp=drive_link" },
+            { id: "short_20", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/20_Stop The Ring_Leong Joel.png", videoUrl: "https://drive.google.com/file/d/1UwDLi57V1jAAyk7viNQ4yQS87ylHpeg4/view?usp=drive_link" },
             { id: "short_21", category: "Short Film", title: "Stay! Apple", studentName: "Gu Yida", posterImg: "poster/short_film/21_Stay! Apple_Gu Yida.jpg" },
-            { id: "short_22", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/22_The Last Assignment_Cao Xianya.jpg" },
-            { id: "short_23", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/23_Sidelines_Shanelle Eve Edmund.png" },
-            { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg" },
+            { id: "short_22", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/22_The Last Assignment_Cao Xianya.jpg", videoUrl: "https://drive.google.com/file/d/1LZWzwrQvJFk4KYYeRHOJ9GqRWAfUnJBV/view?usp=drive_link" },
+            { id: "short_23", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/23_Sidelines_Shanelle Eve Edmund.png", videoUrl: "https://drive.google.com/file/d/1Zyfac9xC3oXUhmxq9gC95gWsNz0og3vT/view?usp=drive_link" },
+            { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg", videoUrl: "https://drive.google.com/file/d/1zuQhLCscdEbxKvtwOVueyttYtDCG2O_J/view?usp=drive_link" },
 
-            // 7. Documentary (31人)
-            { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png" },
-            { id: "doc_02", category: "Documentary", title: "Home Beyond Home", studentName: "Wang Xige", posterImg: "poster/documentary/2_Home Beyound Home_Wang Xige.png" },
-            { id: "doc_03", category: "Documentary", title: "Two bowls, One table", studentName: "Fu Yuru", posterImg: "poster/documentary/3_Two bowls,One table_Fu Yuru.png" },
-            { id: "doc_04", category: "Documentary", title: "The Cost Of Looking Successful", studentName: "Peng Yue", posterImg: "poster/documentary/4_The Cost Of Looking Successful_Peng Yue.png" },
-            { id: "doc_05", category: "Documentary", title: "Beyond the Margins", studentName: "Du Ziye", posterImg: "poster/documentary/5_Beyond the Margins_Du Ziye.jpg" },
-            { id: "doc_06", category: "Documentary", title: "Scrolling Away", studentName: "Zhou Xinyang", posterImg: "poster/documentary/6_Scrolling Away_zhou Xinyang.png" },
-            { id: "doc_07", category: "Documentary", title: "Wildbest Imported Pet Food Local Testimony", studentName: "Xie Shiya", posterImg: "poster/documentary/7_Wildbest Imported Pet Food Local Testimony_Xie Shiya.png" },
-            { id: "doc_08", category: "Documentary", title: "Borderless Home", studentName: "Wu Ao", posterImg: "poster/documentary/8_Borderless Home_Wu Ao.png" },
-            { id: "doc_09", category: "Documentary", title: "More Than Movement", studentName: "Bianca Aurelia", posterImg: "poster/documentary/9_More Than Movement_Bianca Aurelia.png" },
-            { id: "doc_10", category: "Documentary", title: "The Forgotten by the Algorithm", studentName: "Jia Meihua", posterImg: "poster/documentary/10_The Forgotten by the Algorithm_Jia Meihua.jpg" },
-            { id: "doc_11", category: "Documentary", title: "Food for Taste or for Social Media", studentName: "Zhang Jiqiang", posterImg: "poster/documentary/11_Food for Taste or for Social Media_Zhang Jiqiang.jpg" },
-            { id: "doc_12", category: "Documentary", title: "TRAPPED in the Scroll", studentName: "Guo Xuanyuan", posterImg: "poster/documentary/12_TRAPPED in the Scroll_Guo Xuanyuan.jpg" },
-            { id: "doc_13", category: "Documentary", title: "Three Years of Growth. Adventure. Freedom", studentName: "Du Yinuo", posterImg: "poster/documentary/13_Three Years of Growth. Adventure. Freedom_Du Yinuo.jpg" },
-            { id: "doc_14", category: "Documentary", title: "Almost Home The Lives Between Departure and Belonging", studentName: "Liu Haoming", posterImg: "poster/documentary/14_Almost Home The Lives Between Departure and Belonging_Liu Haoming.jpg" },
-            { id: "doc_15", category: "Documentary", title: "The Price Of A Trend", studentName: "Fion Lee Winyean", posterImg: "poster/documentary/15_The Price Of A Trend _Fion Lee Winyean.png" },
-            { id: "doc_16", category: "Documentary", title: "Scrolling Until Midnight", studentName: "Li Ziming", posterImg: "poster/documentary/16_Scrolling Until Midnight _Li Ziming.JPG" },
-            { id: "doc_17", category: "Documentary", title: "The Unseen Faces", studentName: "Ng Jay Rou", posterImg: "poster/documentary/17_The Unseen Faces_Ng Jay Rou.jpg" },
-            { id: "doc_18", category: "Documentary", title: "Far From Home", studentName: "Taro Iwakawa", posterImg: "poster/documentary/18_Far From Home_Taro Iwakawa.jpg" },
-            { id: "doc_19", category: "Documentary", title: "MOMENTS", studentName: "Chua Yi Wen", posterImg: "poster/documentary/19_MOMENTS_Chua Yi Wen.jpg" },
-            { id: "doc_20", category: "Documentary", title: "Beyond the Screen", studentName: "Wang Hua", posterImg: "poster/documentary/20_Beyond the Screen_Wang Hua.JPG" },
-            { id: "doc_21", category: "Documentary", title: "Seeds of Change", studentName: "Xu Xinyan", posterImg: "poster/documentary/21_Seeds of Change_Xu Xinyan.png" },
-            { id: "doc_22", category: "Documentary", title: "Behind the Smile", studentName: "Wang Shangqing", posterImg: "poster/documentary/22_Behind the Smile_Wang Shangqing.JPG" },
-            { id: "doc_23", category: "Documentary", title: "Nanyang Heritage Tradition and Renewal of Nyonya Fashion", studentName: "Liu Jinxiang", posterImg: "poster/documentary/23_Nanyang Heritage Tradition and Renewal of Nyonya Fashion_Liu Jinxiang.png" },
-            { id: "doc_24", category: "Documentary", title: "Double Life Actress And Tour Guide", studentName: "Qiu Qinqin", posterImg: "poster/documentary/24_Double Life Actress And Tour Guide_Qiu qinqin.PNG" },
-            { id: "doc_25", category: "Documentary", title: "Finding Home The Journey of international students in Kuala Lumpur", studentName: "Wang Xinran", posterImg: "poster/documentary/25_Finding Home The Journey of international students in Kuala Lumpur_Wang Xinran.png" },
-            { id: "doc_26", category: "Documentary", title: "What's Next", studentName: "Goh Won Hao", posterImg: "poster/documentary/26_What's Next _Goh Won Hao.png" },
-            { id: "doc_27", category: "Documentary", title: "Slow Down Refill", studentName: "Hao Xinyue", posterImg: "poster/documentary/27_Slow Down Refill_Hao xinyue.jpg" },
-            { id: "doc_28", category: "Documentary", title: "Giving a Voice to the Voiceless", studentName: "Huang Xindi", posterImg: "poster/documentary/28_Giving a Voice to the Voiceless_Huang Xindi.png" },
-            { id: "doc_29", category: "Documentary", title: "The Algorithm Decides Who You Are", studentName: "Li Zhuochen", posterImg: "poster/documentary/29_The Algorithm Decides Who You Are_ Li Zhuochen.jpg" },
-            { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg" },
-            { id: "doc_31", category: "Documentary", title: "I Once Had a Home", studentName: "SunWenye", posterImg: "poster/documentary/31_I Once Had a Home_SunWenye.png" }
+            // Documentary
+            { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png", videoUrl: "https://drive.google.com/file/d/1rWHl3sgf3QM5PohSsU3rQg1VGOYjL58k/view?usp=drive_link" },
+            { id: "doc_02", category: "Documentary", title: "Home Beyond Home", studentName: "Wang Xige", posterImg: "poster/documentary/2_Home Beyound Home_Wang Xige.png", videoUrl: "https://drive.google.com/file/d/13CEprbXfoW8CgxyNjE2xna54oK-ZvCx8/view?usp=drive_link" },
+            { id: "doc_03", category: "Documentary", title: "Two bowls, One table", studentName: "Fu Yuru", posterImg: "poster/documentary/3_Two bowls,One table_Fu Yuru.png", videoUrl: "https://drive.google.com/file/d/1TLXEKfXtoGXH_j2RUOkQb_gW0tS3boMZ/view?usp=drive_link" },
+            { id: "doc_04", category: "Documentary", title: "The Cost Of Looking Successful", studentName: "Peng Yue", posterImg: "poster/documentary/4_The Cost Of Looking Successful_Peng Yue.png", videoUrl: "https://drive.google.com/file/d/1xqpxO4jAWWuMG6xPPsDotQPrmn81Qmvt/view?usp=drive_link" },
+            { id: "doc_05", category: "Documentary", title: "Beyond the Margins", studentName: "Du Ziye", posterImg: "poster/documentary/5_Beyond the Margins_Du Ziye.jpg", videoUrl: "https://drive.google.com/file/d/1hLENAwFrr8HGlE3S_G5_d1G2n6x1-FO3/view?usp=drive_link" },
+            { id: "doc_06", category: "Documentary", title: "Scrolling Away", studentName: "Zhou Xinyang", posterImg: "poster/documentary/6_Scrolling Away_zhou Xinyang.png", videoUrl: "https://drive.google.com/file/d/1psFXoReUI9t4oFN2hQ9C29qFWsDjSDC8/view?usp=drive_link" },
+            { id: "doc_07", category: "Documentary", title: "Wildbest Imported Pet Food Local Testimony", studentName: "Xie Shiya", posterImg: "poster/documentary/7_Wildbest Imported Pet Food Local Testimony_Xie Shiya.png", videoUrl: "https://drive.google.com/file/d/19QpYwABWxzkdtxOHLm4K-LyrlkxZHByz/view?usp=drive_link" },
+            { id: "doc_08", category: "Documentary", title: "Borderless Home", studentName: "Wu Ao", posterImg: "poster/documentary/8_Borderless Home_Wu Ao.png", videoUrl: "https://drive.google.com/file/d/16LXmYQJUu740URtSSMH5qpn3OBXgdCLI/view?usp=drive_link" },
+            { id: "doc_09", category: "Documentary", title: "More Than Movement", studentName: "Bianca Aurelia", posterImg: "poster/documentary/9_More Than Movement_Bianca Aurelia.png", videoUrl: "https://drive.google.com/file/d/1Biiye5KGwBLaovpB7-ZTa_NPBEyxJTSR/view?usp=drive_link" },
+            { id: "doc_10", category: "Documentary", title: "The Forgotten by the Algorithm", studentName: "Jia Meihua", posterImg: "poster/documentary/10_The Forgotten by the Algorithm_Jia Meihua.jpg", videoUrl: "https://drive.google.com/file/d/1SGhIyHqlctZl78NaW5mCpPekrulnKb1l/view?usp=drive_link" },
+            { id: "doc_11", category: "Documentary", title: "Food for Taste or for Social Media", studentName: "Zhang Jiqiang", posterImg: "poster/documentary/11_Food for Taste or for Social Media_Zhang Jiqiang.jpg", videoUrl: "https://drive.google.com/file/d/1HS4hRhb3O-7i0t1_VhY-S6dr8eAm87e7/view?usp=drive_link" },
+            { id: "doc_12", category: "Documentary", title: "TRAPPED in the Scroll", studentName: "Guo Xuanyuan", posterImg: "poster/documentary/12_TRAPPED in the Scroll_Guo Xuanyuan.jpg", videoUrl: "https://drive.google.com/file/d/1ENRPe72L5oNZSKzkdoaEfybWYZvqpbL_/view?usp=drive_link" },
+            { id: "doc_13", category: "Documentary", title: "Three Years of Growth. Adventure. Freedom", studentName: "Du Yinuo", posterImg: "poster/documentary/13_Three Years of Growth. Adventure. Freedom_Du Yinuo.jpg", videoUrl: "https://drive.google.com/file/d/1h93mgsqTohuVYfhbJ7BErw--0dJG4jWk/view?usp=drive_link" },
+            { id: "doc_14", category: "Documentary", title: "Almost Home The Lives Between Departure and Belonging", studentName: "Liu Haoming", posterImg: "poster/documentary/14_Almost Home The Lives Between Departure and Belonging_Liu Haoming.jpg", videoUrl: "https://drive.google.com/file/d/1_HBcmNjyuMLzj8M1_aEkVJnUl4ssanVj/view?usp=drive_link" },
+            { id: "doc_15", category: "Documentary", title: "The Price Of A Trend", studentName: "Fion Lee Winyean", posterImg: "poster/documentary/15_The Price Of A Trend _Fion Lee Winyean.png", videoUrl: "https://drive.google.com/file/d/1QwFKwf_REO7gzEqQ510U0hANo7FSdsEJ/view?usp=drive_link" },
+            { id: "doc_16", category: "Documentary", title: "Scrolling Until Midnight", studentName: "Li Ziming", posterImg: "poster/documentary/16_Scrolling Until Midnight _Li Ziming.JPG", videoUrl: "https://drive.google.com/file/d/1KEpC0Veac36_7hwedkLqaPQ-ElwowO4A/view?usp=drive_link" },
+            { id: "doc_17", category: "Documentary", title: "The Unseen Faces", studentName: "Ng Jay Rou", posterImg: "poster/documentary/17_The Unseen Faces_Ng Jay Rou.jpg", videoUrl: "https://drive.google.com/file/d/1dtIG2izCowgQ_S29NGeloCjP2gJsmwqU/view?usp=drive_link" },
+            { id: "doc_18", category: "Documentary", title: "Far From Home", studentName: "Taro Iwakawa", posterImg: "poster/documentary/18_Far From Home_Taro Iwakawa.jpg", videoUrl: "https://drive.google.com/file/d/1M2GICCuzWOnXVYxVP4XCIR_q5PRTOSY8/view?usp=drive_link" },
+            { id: "doc_19", category: "Documentary", title: "MOMENTS", studentName: "Chua Yi Wen", posterImg: "poster/documentary/19_MOMENTS_Chua Yi Wen.jpg", videoUrl: "https://drive.google.com/file/d/1XRYl0s_kEW4rbh-TGqdwgbaWe-5359CS/view?usp=drive_link" },
+            { id: "doc_20", category: "Documentary", title: "Beyond the Screen", studentName: "Wang Hua", posterImg: "poster/documentary/20_Beyond the Screen_Wang Hua.JPG", videoUrl: "https://drive.google.com/file/d/13CEprbXfoW8CgxyNjE2xna54oK-ZvCx8/view?usp=drive_link" },
+            { id: "doc_21", category: "Documentary", title: "Seeds of Change", studentName: "Xu Xinyan", posterImg: "poster/documentary/21_Seeds of Change_Xu Xinyan.png", videoUrl: "https://drive.google.com/file/d/1HPMjMu-nS5AIspRNiZ3rF7usRAXdL05d/view?usp=drive_link" },
+            { id: "doc_22", category: "Documentary", title: "Behind the Smile", studentName: "Wang Shangqing", posterImg: "poster/documentary/22_Behind the Smile_Wang Shangqing.JPG", videoUrl: "https://drive.google.com/file/d/1fWYCDQzgXMhVXtUPci6JfAslcUaMEwHU/view?usp=drive_link" },
+            { id: "doc_23", category: "Documentary", title: "Nanyang Heritage Tradition and Renewal of Nyonya Fashion", studentName: "Liu Jinxiang", posterImg: "poster/documentary/23_Nanyang Heritage Tradition and Renewal of Nyonya Fashion_Liu Jinxiang.png", videoUrl: "https://drive.google.com/file/d/1ZmIvciOyNAeDJuQR55ktT0u5BXpF8tAn/view?usp=drive_link" },
+            { id: "doc_24", category: "Documentary", title: "Double Life Actress And Tour Guide", studentName: "Qiu Qinqin", posterImg: "poster/documentary/24_Double Life Actress And Tour Guide_Qiu qinqin.PNG", videoUrl: "https://drive.google.com/file/d/15Q25Q7Hij95z_j2nZGcQRP0tEhF-a4oo/view?usp=drive_link" },
+            { id: "doc_25", category: "Documentary", title: "Finding Home The Journey of international students in Kuala Lumpur", studentName: "Wang Xinran", posterImg: "poster/documentary/25_Finding Home The Journey of international students in Kuala Lumpur_Wang Xinran.png", videoUrl: "https://drive.google.com/file/d/1wURSzZimZNoRVgfSN5a1gechz-WJ9LoY/view?usp=drive_link" },
+            { id: "doc_26", category: "Documentary", title: "What's Next", studentName: "Goh Won Hao", posterImg: "poster/documentary/26_What's Next _Goh Won Hao.png", videoUrl: "https://drive.google.com/file/d/1D8XupjPC2ixrxEjkc6EyJ52JCy5envY3/view?usp=drive_link" },
+            { id: "doc_27", category: "Documentary", title: "Slow Down Refill", studentName: "Hao Xinyue", posterImg: "poster/documentary/27_Slow Down Refill_Hao xinyue.jpg", videoUrl: "https://drive.google.com/file/d/13DefZg--yKtOjthS18Xb8KyN1K0UNXc9/view?usp=drive_link" },
+            { id: "doc_28", category: "Documentary", title: "Giving a Voice to the Voiceless", studentName: "Huang Xindi", posterImg: "poster/documentary/28_Giving a Voice to the Voiceless_Huang Xindi.png", videoUrl: "https://drive.google.com/file/d/1kIkr9RQmV3GhtzR1zi81hnIzfwQKDKLf/view?usp=drive_link" },
+            { id: "doc_29", category: "Documentary", title: "The Algorithm Decides Who You Are", studentName: "Li Zhuochen", posterImg: "poster/documentary/29_The Algorithm Decides Who You Are_ Li Zhuochen.jpg", videoUrl: "https://drive.google.com/file/d/1nxlzhQEExAMppOARvqQBFvRA-x6Po6Zo/view?usp=drive_link" },
+            { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg", videoUrl: "https://drive.google.com/file/d/1KKFCHQzwgHaoytCNI8uXMNYxUlLPMHMc/view?usp=drive_link" },
+            { id: "doc_31", category: "Documentary", title: "I Once Had a Home", studentName: "SunWenye", posterImg: "poster/documentary/31_I Once Had a Home_SunWenye.png" },
+
+            // News & Media
+            { id: "news_01", category: "News & Media", title: "News Project", studentName: "Li Xiaonan", posterImg: "poster/News&Media/Li Xiaonan_1002372302.pdf", videoUrl: "https://drive.google.com/file/d/1BnwyTNd8c-CR5NBdaJEVSrzDZu5OmXHo/view?usp=drive_link" },
+            { id: "news_02", category: "News & Media", title: "News Project", studentName: "Li Zhenda", posterImg: "poster/News&Media/Li Zhenda_1002370939.pdf", videoUrl: "https://drive.google.com/file/d/1sPv2kANvOaOYKAk3I-JBlvIK-ZuSIdKe/view?usp=drive_link" }
         ];
 
         // ----------------------------------------------------
@@ -723,18 +726,31 @@
             if(category === 'Music Videos') return 'var(--cyan)';
             if(category === 'Public Service Announcements (PSA)') return 'var(--green)';
             if(category === 'Vertical Cinematic Video') return 'var(--brown)';
+            if(category === 'News & Media') return 'var(--gray)';
             return 'var(--charcoal)';
         }
 
-<<<<<<< HEAD
-        /* 移除了 onClick 跳转功能，只保留卡片悬停效果 */
-=======
-        /* 去掉了 onclick 跳转功能，只保留悬停效果 */
->>>>>>> afd71ec51d26c65835fd4db5b10870f5dd2bc22d
+        /* 
+           智能判断功能：
+           1. 如果有 videoUrl（视频链接），点击海报直接在新标签页打开视频！
+           2. 如果是 PDF，会显示专属 PDF 占位图，点击也在新标签页打开 PDF 或视频。
+           3. 如果该同学表格里还没交视频链接，点击海报则无反应，不会报错。
+        */
         function createCardHTML(student) {
+            const isPdf = student.posterImg.toLowerCase().endsWith('.pdf');
+            const imgSrc = isPdf ? 'https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=PDF+Document' : student.posterImg;
+            
+            // 如果有配对应的视频或者文件链接，就允许点击打开
+            let clickEvent = '';
+            if (isPdf) {
+                clickEvent = `onclick="window.open('${student.posterImg}', '_blank')"`;
+            } else if (student.videoUrl) {
+                clickEvent = `onclick="window.open('${student.videoUrl}', '_blank')"`;
+            }
+
             return `
-            <div class="story-poster-card" data-category="${student.category}">
-                <img src="${student.posterImg}" class="poster-img" onerror="this.src='https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster'">
+            <div class="story-poster-card" data-category="${student.category}" ${clickEvent}>
+                <img src="${imgSrc}" class="poster-img" onerror="this.src='https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster'">
                 <div class="poster-info-overlay">
                     <div class="overlay-title">${student.title}</div>
                     <div class="overlay-creator">Created by ${student.studentName}</div>
@@ -745,7 +761,7 @@
         function renderAllCards() {
             let docHtml = ''; let shortHtml = ''; let marcommHtml = '';
             let corpHtml = ''; let mvHtml = ''; let psaHtml = ''; let vertHtml = '';
-            let allHtml = '';
+            let newsHtml = ''; let allHtml = '';
 
             studentData.forEach(student => {
                 const card = createCardHTML(student);
@@ -757,6 +773,7 @@
                 if(student.category === 'Music Videos') mvHtml += card;
                 if(student.category === 'Public Service Announcements (PSA)') psaHtml += card;
                 if(student.category === 'Vertical Cinematic Video') vertHtml += card;
+                if(student.category === 'News & Media') newsHtml += card;
             });
 
             const toggleBlock = (htmlData, trackId, blockId) => {
@@ -777,6 +794,7 @@
             toggleBlock(mvHtml, 'home-mv-track', 'block-mv');
             toggleBlock(psaHtml, 'home-psa-track', 'block-psa');
             toggleBlock(vertHtml, 'home-vert-track', 'block-vert');
+            toggleBlock(newsHtml, 'home-news-track', 'block-news');
             
             const mainGrid = document.getElementById('main-artworks-grid');
             if(mainGrid) mainGrid.innerHTML = allHtml;
@@ -793,7 +811,6 @@
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         });
 
-        /* 详情页数据填充功能暂时保留在代码中，以后要用可以直接开启 */
         function goToDetailView(id) {
             const student = studentData.find(s => s.id === id);
             if(!student) return;
@@ -855,6 +872,7 @@
                         case 'Music Videos': tabId = 'filter_tab_mv'; break;
                         case 'Public Service Announcements (PSA)': tabId = 'filter_tab_psa'; break;
                         case 'Vertical Cinematic Video': tabId = 'filter_tab_vert'; break;
+                        case 'News & Media': tabId = 'filter_tab_news'; break;
                         default: tabId = 'filter_tab_all';
                     }
                     setTimeout(() => { const tabBtn = document.getElementById(tabId); if (tabBtn) tabBtn.click(); }, 50);
