@@ -62,7 +62,7 @@
         .btn-add-nav { padding: 8px 20px; background: #fff; color: var(--charcoal); font-family: var(--font-title); font-size: 1.1rem; border: 2px solid var(--charcoal); cursor: pointer; position: relative; z-index: 1; box-shadow: 4px 4px 0 var(--charcoal); transition: all 0.2s ease; }
         .btn-add-nav:hover { background: var(--yellow); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--charcoal); }
 
-        /* Lightbox (详情页所需，海报弹窗已删除) */
+        /* Lightbox */
         .lightbox-modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100vw; height: 100vh; background-color: rgba(0,0,0,0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
         .lightbox-modal img { max-width: 100%; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-radius: 8px;}
@@ -108,7 +108,6 @@
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
         
-        /* 中间插入的海报容器 */
         .event-poster-wrapper { width: 100%; max-width: clamp(260px, 40vw, 380px); margin: 10px auto 30px auto; border: 4px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease; }
         .event-poster-wrapper:hover { transform: translateY(-5px); box-shadow: 12px 12px 0 var(--charcoal); }
         .event-poster-wrapper img { width: 100%; height: auto; display: block; object-fit: cover; }
@@ -435,17 +434,6 @@
                     <div class="carousel-wrapper-horiz"><button class="track-arrow-horiz track-arrow-left" onclick="scrollTrack('home-news-track', -1)">&lt;</button><div class="carousel-track-horiz" id="home-news-track"></div><button class="track-arrow-horiz track-arrow-right" onclick="scrollTrack('home-news-track', 1)">&gt;</button></div>
                 </div>
             </section>
-            
-            <section class="shared-contact-section">
-                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
-                <div class="social-circles-container animate-on-scroll delay-1">
-                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
-                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
-                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
-                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
-                </div>
-            </section>
         </div>
 
         <!-- 页面 2: ABOUT US -->
@@ -497,7 +485,7 @@
             </section>
         </div>
 
-        <!-- 页面 3: THE STORIES (包含大厅与详情页) -->
+        <!-- 页面 3: THE STORIES (包含大厅与个人详情页) -->
         <div id="page-stories" class="spa-page">
             
             <!-- 大厅 -->
@@ -509,10 +497,10 @@
                         <button class="filter-tab" id="filter_tab_doc" onclick="filterArtworks('Documentary', this)">Documentary</button>
                         <button class="filter-tab" id="filter_tab_short" onclick="filterArtworks('Short Film', this)">Short Film</button>
                         <button class="filter-tab" id="filter_tab_mar" onclick="filterArtworks('The Marketing Lab', this)">The Marketing Lab</button>
-                        <button class="filter-tab" id="filter_tab_corp" onclick="filterArtworks('Corporate Videos & Brand Films', this)">Corporate Videos & Brand Films</button>
+                        <button class="filter-tab" id="filter_tab_corp" onclick="filterArtworks('Corporate Videos & Brand Films', this)">Corporate Videos</button>
                         <button class="filter-tab" id="filter_tab_mv" onclick="filterArtworks('Music Videos', this)">Music Videos</button>
-                        <button class="filter-tab" id="filter_tab_psa" onclick="filterArtworks('Public Service Announcements (PSA)', this)">Public Service Announcements (PSA)</button>
-                        <button class="filter-tab" id="filter_tab_vert" onclick="filterArtworks('Vertical Cinematic Video', this)">Vertical Cinematic Video</button>
+                        <button class="filter-tab" id="filter_tab_psa" onclick="filterArtworks('Public Service Announcements (PSA)', this)">PSA</button>
+                        <button class="filter-tab" id="filter_tab_vert" onclick="filterArtworks('Vertical Cinematic Video', this)">Vertical Video</button>
                         <button class="filter-tab" id="filter_tab_news" onclick="filterArtworks('News & Media', this)">News & Media</button>
                     </div>
                     <div class="portfolio-works-grid" id="main-artworks-grid"></div>
@@ -529,7 +517,7 @@
                 </section>
             </div>
 
-            <!-- 个人详情页 -->
+            <!-- 个人详情页 (已经修复，放回 The Stories 页面内部) -->
             <div id="stories_detail_view" style="width: 100%; display: none; flex-direction: column; align-items: center;">
                 <section class="section student-profile-section">
                     <div class="back-btn-wrapper"><button onclick="backToStoriesGallery()" class="back-btn">&larr; Back to All Artworks</button></div>
@@ -560,7 +548,8 @@
                             </div>
                         </div>
                         <div class="portfolio-media-col">
-                            <div class="main-video-player" id="dyn-video"><div class="youtube-btn-mock"></div></div>
+                            <!-- 播放器按钮，点击即可看视频或PDF -->
+                            <div class="main-video-player" id="dyn-video" title="Click to view Project"><div class="youtube-btn-mock"></div></div>
                             <div class="thumbnail-row" id="dyn-thumbnails"></div>
                             <div class="description-box">
                                 <div class="desc-label">Description:</div><p class="desc-body" id="dyn-desc"></p>
@@ -596,7 +585,8 @@
                     </div>
                 </section>
             </div>
-        </div>
+            
+        </div> <!-- /page-stories 结束 -->
 
         <!-- 页面 4: EXHIBITION -->
         <div id="page-exhibition" class="spa-page">
@@ -620,16 +610,29 @@
             </section>
         </div>
 
+        <!-- 页面 5: CONTACT -->
+        <div id="page-contact" class="spa-page">
+            <section class="section contact-footer-section" style="min-height: 80vh;">
+                <h2 class="contact-title animate-on-scroll">Contact Information</h2>
+                <div class="social-circles-container animate-on-scroll delay-1">
+                    <a href="https://www.instagram.com/thestorypalette_2026" target="_blank" class="social-circle-btn" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                    <a href="https://www.threads.com/@thestorypalette_2026" target="_blank" class="social-circle-btn" title="Threads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10c0 1.5-.5 3-2 3s-2-1.5-2-3c0-3.314-2.686-6-6-6s-6 2.686-6 6 2.686 6 6 6c1.336 0 2.56-.43 3.55-1.15"></path></svg></a>
+                    <a href="https://www.youtube.com/@TheStoryPalette-o9i" target="_blank" class="social-circle-btn" title="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></a>
+                    <a href="https://www.tiktok.com/@the.story.palette" target="_blank" class="social-circle-btn" title="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path><path d="M13 16V4a5 5 0 0 0 5 5"></path></svg></a>
+                    <a href="https://xhslink.cn/m/4AruRbN4qQZ" target="_blank" class="social-circle-btn" title="Rednote"><span>RED</span></a>
+                </div>
+            </section>
+        </div>
+
         <footer class="footer-canvas">Different stories. Different colours. One collective palette.</footer>
 
     </div>
 
     <script>
         // ----------------------------------------------------
-        // 数据库 (新增第 8 分类: News & Media，并嵌入了所有已提供的视频链接)
+        // 数据库 (全部链接已嵌入)
         // ----------------------------------------------------
         const studentData = [
-
             // Corporate Videos & Brand Films
             { id: "corp_01", category: "Corporate Videos & Brand Films", title: "Bridging Cultures Through Community Engagement", studentName: "Liu Yichang", posterImg: "poster/Corporate Videos & Brand Films/1_Bridging_Cultures_Through Community_ Engagement_Liu Yichang.png", videoUrl: "https://drive.google.com/file/d/1css-aBhfMVdMOtmNWPkFsdoxJExjJyJ-/view?usp=drive_link" },
 
@@ -730,26 +733,13 @@
             return 'var(--charcoal)';
         }
 
-        /* 
-           智能判断功能：
-           1. 如果有 videoUrl（视频链接），点击海报直接在新标签页打开视频！
-           2. 如果是 PDF，会显示专属 PDF 占位图，点击也在新标签页打开 PDF 或视频。
-           3. 如果该同学表格里还没交视频链接，点击海报则无反应，不会报错。
-        */
+        /* 生成海报卡片，点击事件 goToDetailView 触发进入个人专页 */
         function createCardHTML(student) {
             const isPdf = student.posterImg.toLowerCase().endsWith('.pdf');
             const imgSrc = isPdf ? 'https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=PDF+Document' : student.posterImg;
-            
-            // 如果有配对应的视频或者文件链接，就允许点击打开
-            let clickEvent = '';
-            if (isPdf) {
-                clickEvent = `onclick="window.open('${student.posterImg}', '_blank')"`;
-            } else if (student.videoUrl) {
-                clickEvent = `onclick="window.open('${student.videoUrl}', '_blank')"`;
-            }
 
             return `
-            <div class="story-poster-card" data-category="${student.category}" ${clickEvent}>
+            <div class="story-poster-card" data-category="${student.category}" onclick="goToDetailView('${student.id}')">
                 <img src="${imgSrc}" class="poster-img" onerror="this.src='https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster'">
                 <div class="poster-info-overlay">
                     <div class="overlay-title">${student.title}</div>
@@ -811,31 +801,56 @@
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         });
 
+        /* 点击海报进入详情页的逻辑 */
         function goToDetailView(id) {
             const student = studentData.find(s => s.id === id);
             if(!student) return;
 
+            // 1. 填充文本信息
             document.getElementById('dynamic_profile_title').innerText = student.title || "Untitled";
-            document.getElementById('dynamic_profile_comment').innerText = student.desc ? student.desc.substring(0, 50) + "..." : "Select a project from the gallery to view details.";
+            document.getElementById('dynamic_profile_comment').innerText = student.desc ? student.desc.substring(0, 50) + "..." : "Select a project to view.";
             
             document.getElementById('dyn-name').innerText = student.studentName || "";
-            document.getElementById('dyn-age').innerText = student.age || "";
-            document.getElementById('dyn-enroll').innerText = student.enrollSem || "";
-            document.getElementById('dyn-grad').innerText = student.gradSem || "";
-            document.getElementById('dyn-phone').innerText = student.phone || "";
-            document.getElementById('dyn-email').innerText = student.email || "";
+            document.getElementById('dyn-age').innerText = student.age || "N/A";
+            document.getElementById('dyn-enroll').innerText = student.enrollSem || "N/A";
+            document.getElementById('dyn-grad').innerText = student.gradSem || "N/A";
+            document.getElementById('dyn-phone').innerText = student.phone || "N/A";
+            document.getElementById('dyn-email').innerText = student.email || "N/A";
             document.getElementById('dyn-desc').innerText = student.desc || "More information coming soon...";
-            document.getElementById('dyn-prod-team').innerHTML = student.prodTeam || "";
+            document.getElementById('dyn-prod-team').innerHTML = student.prodTeam || "N/A";
 
-            document.getElementById('dynamic-profile-img').src = student.posterImg;
+            // 2. 处理海报
+            const isPdf = student.posterImg.toLowerCase().endsWith('.pdf');
+            const imgSrc = isPdf ? 'https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=PDF+Document' : student.posterImg;
+            document.getElementById('dynamic-profile-img').src = imgSrc;
             
+            // 3. 处理颜色
             const categoryBadge = document.getElementById('dynamic-category-badge');
             categoryBadge.innerText = student.category;
-            
             const color = getCategoryColor(student.category);
             document.getElementById('dynamic-blob').style.background = color;
             document.getElementById('dynamic-portrait-bg').style.background = color;
 
+            // 4. 为黑色的 YouTube 播放器按钮绑定点击跳转逻辑！
+            const videoPlayer = document.getElementById('dyn-video');
+            if (student.videoUrl) {
+                // 如果有提供云盘链接，点击播放器新标签打开
+                videoPlayer.onclick = function() { window.open(student.videoUrl, '_blank'); };
+                videoPlayer.style.opacity = '1';
+                videoPlayer.style.cursor = 'pointer';
+            } else if (isPdf) {
+                // 如果是 PDF 且没有外链，点击播放器打开这个本地 PDF 文件
+                videoPlayer.onclick = function() { window.open(student.posterImg, '_blank'); };
+                videoPlayer.style.opacity = '1';
+                videoPlayer.style.cursor = 'pointer';
+            } else {
+                // 如果啥也没有，变灰不可点击
+                videoPlayer.onclick = function() { alert('Project link coming soon!'); };
+                videoPlayer.style.opacity = '0.5';
+                videoPlayer.style.cursor = 'not-allowed';
+            }
+
+            // 5. 处理下方缩略图
             const thumbContainer = document.getElementById('dyn-thumbnails');
             let thumbsHtml = '';
             if (student.thumbnails && student.thumbnails.length > 0) {
@@ -845,6 +860,7 @@
             }
             thumbContainer.innerHTML = thumbsHtml;
 
+            // 6. 核心动作：切换到详情页显示
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
             document.getElementById('page-stories').classList.add('active');
             document.getElementById('stories_gallery_view').style.display = 'none';
