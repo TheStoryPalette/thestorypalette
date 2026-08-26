@@ -140,6 +140,7 @@
         .carousel-track-horiz { display: flex; gap: 20px; overflow-x: auto; scroll-behavior: smooth; padding: 15px 10px 30px 10px; width: 100%; scrollbar-width: none; background: transparent; transition: all 0.3s ease; }
         .carousel-track-horiz::-webkit-scrollbar { display: none; }
 
+        /* 海报卡片样式 (去掉了跳转功能，但保留了悬停效果) */
         .story-poster-card { flex: 0 0 calc(25% - 15px); min-width: 220px; aspect-ratio: 1 / 1.414; background: #fff; border: 3px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 6px 6px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; position: relative; display: block; }
         .story-poster-card:hover { transform: translateY(-8px); box-shadow: 10px 10px 0 var(--charcoal); }
         .poster-img { width: 100%; height: 100%; object-fit: fill; background: #e0e0e0; transition: transform 0.4s ease; }
@@ -622,7 +623,7 @@
 
     <script>
         // ----------------------------------------------------
-        // 数据库 (共 66 位同学，已更新 Documentary 的 31 人名单)
+        // 数据库 (共 66 位同学)
         // ----------------------------------------------------
         const studentData = [
             // 1. Corporate Videos & Brand Films
@@ -672,7 +673,7 @@
             { id: "short_23", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/23_Sidelines_Shanelle Eve Edmund.png" },
             { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg" },
 
-            // 8. Documentary (更新为 31人)
+            // 7. Documentary (31人)
             { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png" },
             { id: "doc_02", category: "Documentary", title: "Home Beyond Home", studentName: "Wang Xige", posterImg: "poster/documentary/2_Home Beyound Home_Wang Xige.png" },
             { id: "doc_03", category: "Documentary", title: "Two bowls, One table", studentName: "Fu Yuru", posterImg: "poster/documentary/3_Two bowls,One table_Fu Yuru.png" },
@@ -720,9 +721,10 @@
             return 'var(--charcoal)';
         }
 
+        /* 移除了 onClick 跳转功能，只保留卡片悬停效果 */
         function createCardHTML(student) {
             return `
-            <div class="story-poster-card" data-category="${student.category}" onclick="goToDetailView('${student.id}')">
+            <div class="story-poster-card" data-category="${student.category}">
                 <img src="${student.posterImg}" class="poster-img" onerror="this.src='https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster'">
                 <div class="poster-info-overlay">
                     <div class="overlay-title">${student.title}</div>
@@ -782,6 +784,7 @@
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         });
 
+        /* 详情页数据填充功能暂时保留在代码中，以后要用可以直接开启 */
         function goToDetailView(id) {
             const student = studentData.find(s => s.id === id);
             if(!student) return;
