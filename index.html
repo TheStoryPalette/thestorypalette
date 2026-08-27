@@ -108,6 +108,7 @@
         .timer-circle { width: clamp(70px, 9vw, 95px); height: clamp(70px, 9vw, 95px); border-radius: 50%; border: 5px solid var(--ring-color); display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: clamp(1.8rem, 3vw, 2.5rem); color: var(--charcoal); }
         .timer-label { margin-top: 12px; font-family: var(--font-title); font-size: clamp(0.8rem, 1vw, 1rem); color: rgba(26,26,26,0.6); letter-spacing: 1px; }
         
+        /* 中间插入的海报容器 */
         .event-poster-wrapper { width: 100%; max-width: clamp(260px, 40vw, 380px); margin: 10px auto 30px auto; border: 4px solid var(--charcoal); border-radius: 12px; overflow: hidden; box-shadow: 8px 8px 0 rgba(26,26,26,0.15); transition: transform 0.3s ease; }
         .event-poster-wrapper:hover { transform: translateY(-5px); box-shadow: 12px 12px 0 var(--charcoal); }
         .event-poster-wrapper img { width: 100%; height: auto; display: block; object-fit: cover; }
@@ -517,7 +518,7 @@
                 </section>
             </div>
 
-            <!-- 个人详情页 (已经修复，放回 The Stories 页面内部) -->
+            <!-- 个人详情页 -->
             <div id="stories_detail_view" style="width: 100%; display: none; flex-direction: column; align-items: center;">
                 <section class="section student-profile-section">
                     <div class="back-btn-wrapper"><button onclick="backToStoriesGallery()" class="back-btn">&larr; Back to All Artworks</button></div>
@@ -548,7 +549,7 @@
                             </div>
                         </div>
                         <div class="portfolio-media-col">
-                            <!-- 播放器按钮，点击即可看视频或PDF -->
+                            <!-- 播放器按钮，点击跳转云盘视频或PDF -->
                             <div class="main-video-player" id="dyn-video" title="Click to view Project"><div class="youtube-btn-mock"></div></div>
                             <div class="thumbnail-row" id="dyn-thumbnails"></div>
                             <div class="description-box">
@@ -630,7 +631,7 @@
 
     <script>
         // ----------------------------------------------------
-        // 数据库 (全部链接已嵌入)
+        // 数据库 (新增第 8 分类: News & Media，并嵌入了所有已提供的视频链接)
         // ----------------------------------------------------
         const studentData = [
             // Corporate Videos & Brand Films
@@ -648,7 +649,7 @@
             // The Marketing Lab
             { id: "marcomm_01", category: "The Marketing Lab", title: "Britannia Language Centre", studentName: "Sadeim Al zeyani", posterImg: "poster/marcomm/1_Britannia Language Centre_Sadeim Al zeyani.png", videoUrl: "https://drive.google.com/file/d/1-V-WV2UWZKDeEjnhTGsPx9mLX3LTbUNZ/view?usp=drive_link" },
             { id: "marcomm_02", category: "The Marketing Lab", title: "Pawmised Land", studentName: "Low Vicky", posterImg: "poster/marcomm/2_Pawmised Land_Low Vicky.png", videoUrl: "https://drive.google.com/file/d/1EO6PoYCvRfN1HT9R-MviIV5JuWz6MhJg/view?usp=drive_link" },
-            { id: "marcomm_03", category: "The Marketing Lab", title: "Magnify Music & Art Centre", studentName: "Keh Yao Hui", posterImg: "poster/marcomm/3_Magnify Music & Art Centre_Keh Yao Hui.jpg" },
+            { id: "marcomm_03", category: "The Marketing Lab", title: "Magnify Music & Art Centre", studentName: "Keh Yao Hui", posterImg: "poster/marcomm/3_Magnify Music & Art Centre_Keh Yao Hui.jpg", videoUrl: "https://drive.google.com/file/d/1Ab7paPQ_TM_Y-iLG6txk235h3WbuMNIK/view?usp=drive_link" },
             { id: "marcomm_04", category: "The Marketing Lab", title: "Eyeconlens", studentName: "Ng Zi Hui", posterImg: "poster/marcomm/4_Eyeconlens_Ng Zi Hui.jpg", videoUrl: "https://drive.google.com/file/d/1kpMDjFKRBe7DFwKn_MQZlnpvoyyUiLm3/view?usp=drive_link" },
             { id: "marcomm_05", category: "The Marketing Lab", title: "Mega Hygiene", studentName: "Tee Ching Yee", posterImg: "poster/marcomm/5_Mega Hygiene_Tee Ching Yee.png", videoUrl: "https://drive.google.com/file/d/1eQxv6GC9kwQd1R4_DcDddfDKTVuLPcfo/view?usp=drive_link" },
             { id: "marcomm_06", category: "The Marketing Lab", title: "Korean Dessert & Coffee", studentName: "Aw Che Wei", posterImg: "poster/marcomm/6_Korean Dessert & Coffee_Aw Che Wei.png", videoUrl: "https://drive.google.com/file/d/1A8ut-0An0tq1imY0t5MBl6mhNoJmy2B8/view?usp=drive_link" },
@@ -671,14 +672,15 @@
             { id: "short_14", category: "Short Film", title: "Beyond the Classroom The Side Hustle Generation", studentName: "Zhang Yaxin", posterImg: "poster/short_film/14_Beyond the Classroom The Side Hustle Generation_Zhang Yaxin.png", videoUrl: "https://drive.google.com/file/d/1BsQDWkzbsb7nPt59H6FofUkc2QFH04Ua/view?usp=drive_link" },
             { id: "short_15", category: "Short Film", title: "Everything is Machable", studentName: "Shen Yan", posterImg: "poster/short_film/15_Everything is Machable_Shen Yan.png", videoUrl: "https://drive.google.com/file/d/1sGJQIXwGv4WxybnrB0wyK873Z3yqMfw2/view?usp=drive_link" },
             { id: "short_16", category: "Short Film", title: "The Quite Ones", studentName: "Guo Jijie", posterImg: "poster/short_film/16_The Quite Ones_Guo Jijie.png", videoUrl: "https://drive.google.com/file/d/1PvmucEKDwUwNbCnoz6naBmBHZm9TiY3K/view?usp=drive_link" },
-            { id: "short_17", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/17_The Distance Between_Liang Wai Onn.png" },
+            { id: "short_17", category: "Short Film", title: "The Distance Between", studentName: "Liang Wai Onn", posterImg: "poster/short_film/17_The Distance Between_Liang Wai Onn.png", videoUrl: "https://drive.google.com/file/d/1kfHNvfjoLSBiOorA9C7HNg5GQiMPTmV6/view?usp=drive_link" },
             { id: "short_18", category: "Short Film", title: "Inherited", studentName: "Jesslyn Chu Shi Ying", posterImg: "poster/short_film/18_Inherited_Jesslyn Chu Shi Ying.png" },
             { id: "short_19", category: "Short Film", title: "404 Career Not Found", studentName: "Ang Kai Xuan", posterImg: "poster/short_film/19_404 Career Not Found_Ang Kai Xuan.jpg", videoUrl: "https://drive.google.com/file/d/1QG5BDIyAgu326ZtcAHwA00WJgUt-J6bt/view?usp=drive_link" },
             { id: "short_20", category: "Short Film", title: "Stop The Ring", studentName: "Leong Joel", posterImg: "poster/short_film/20_Stop The Ring_Leong Joel.png", videoUrl: "https://drive.google.com/file/d/1UwDLi57V1jAAyk7viNQ4yQS87ylHpeg4/view?usp=drive_link" },
             { id: "short_21", category: "Short Film", title: "Stay! Apple", studentName: "Gu Yida", posterImg: "poster/short_film/21_Stay! Apple_Gu Yida.jpg" },
             { id: "short_22", category: "Short Film", title: "The Last Assignment", studentName: "Cao Xianya", posterImg: "poster/short_film/22_The Last Assignment_Cao Xianya.jpg", videoUrl: "https://drive.google.com/file/d/1LZWzwrQvJFk4KYYeRHOJ9GqRWAfUnJBV/view?usp=drive_link" },
             { id: "short_23", category: "Short Film", title: "Sidelines", studentName: "Shanelle Eve Edmund", posterImg: "poster/short_film/23_Sidelines_Shanelle Eve Edmund.png", videoUrl: "https://drive.google.com/file/d/1Zyfac9xC3oXUhmxq9gC95gWsNz0og3vT/view?usp=drive_link" },
-            { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg", videoUrl: "https://drive.google.com/file/d/1zuQhLCscdEbxKvtwOVueyttYtDCG2O_J/view?usp=drive_link" },
+            { id: "short_24", category: "Short Film", title: "The Choice of the New Era", studentName: "Zhang Yifan", posterImg: "poster/short_film/24_The Choice of the New Era-Zhang Yifan.jpg", videoUrl: "https://drive.google.com/file/d/1AocpARNk625AJZdrhys4VcmmkKOqQfs4/view?usp=drive_link" },
+            { id: "short_25", category: "Short Film", title: "The Unattended Wallet", studentName: "Ong Zhi Yong", posterImg: "https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster", videoUrl: "https://drive.google.com/file/d/1uVM8_XjJ7wrWu_cxG_TdB1P6zLAjrhFk/view?usp=drive_link" },
 
             // Documentary
             { id: "doc_01", category: "Documentary", title: "Beyond the Baseline", studentName: "Chen Ruohong", posterImg: "poster/documentary/1_Beyond the Baseline_Chen Ruohong.png", videoUrl: "https://drive.google.com/file/d/1rWHl3sgf3QM5PohSsU3rQg1VGOYjL58k/view?usp=drive_link" },
@@ -712,6 +714,8 @@
             { id: "doc_29", category: "Documentary", title: "The Algorithm Decides Who You Are", studentName: "Li Zhuochen", posterImg: "poster/documentary/29_The Algorithm Decides Who You Are_ Li Zhuochen.jpg", videoUrl: "https://drive.google.com/file/d/1nxlzhQEExAMppOARvqQBFvRA-x6Po6Zo/view?usp=drive_link" },
             { id: "doc_30", category: "Documentary", title: "What Can't Be Counted Digital Validation in University Life", studentName: "Rahadyan Yoga V", posterImg: "poster/documentary/30_What Can't Be Counted Digital Validation in University Life_Rahadyan Yoga V.jpg", videoUrl: "https://drive.google.com/file/d/1KKFCHQzwgHaoytCNI8uXMNYxUlLPMHMc/view?usp=drive_link" },
             { id: "doc_31", category: "Documentary", title: "I Once Had a Home", studentName: "SunWenye", posterImg: "poster/documentary/31_I Once Had a Home_SunWenye.png" },
+            { id: "doc_32", category: "Documentary", title: "Different Minds, Different Future", studentName: "Jazlynn Hannis", posterImg: "https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster", videoUrl: "https://drive.google.com/file/d/1NXFt_mpAr91BQ5V0-ir7cGcrguQI7_sR/view?usp=drive_link" },
+            { id: "doc_33", category: "Documentary", title: "Far From Home, Close to Roots", studentName: "Kaameel Chicktay", posterImg: "https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=Poster", videoUrl: "https://drive.google.com/file/d/1kLFJREPGWmcMaXmmF0ZVTq8CfzLdv22S/view?usp=drive_link" },
 
             // News & Media
             { id: "news_01", category: "News & Media", title: "News Project", studentName: "Li Xiaonan", posterImg: "poster/News&Media/Li Xiaonan_1002372302.pdf", videoUrl: "https://drive.google.com/file/d/1BnwyTNd8c-CR5NBdaJEVSrzDZu5OmXHo/view?usp=drive_link" },
@@ -733,7 +737,7 @@
             return 'var(--charcoal)';
         }
 
-        /* 生成海报卡片，点击事件 goToDetailView 触发进入个人专页 */
+        /* 恢复：点击海报进入详情页，智能显示 PDF 占位图 */
         function createCardHTML(student) {
             const isPdf = student.posterImg.toLowerCase().endsWith('.pdf');
             const imgSrc = isPdf ? 'https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=PDF+Document' : student.posterImg;
@@ -801,7 +805,7 @@
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         });
 
-        /* 点击海报进入详情页的逻辑 */
+        /* 详情页数据渲染与播放器绑定逻辑 */
         function goToDetailView(id) {
             const student = studentData.find(s => s.id === id);
             if(!student) return;
@@ -819,38 +823,38 @@
             document.getElementById('dyn-desc').innerText = student.desc || "More information coming soon...";
             document.getElementById('dyn-prod-team').innerHTML = student.prodTeam || "N/A";
 
-            // 2. 处理海报
+            // 2. 智能处理详情页里的展示图 (PDF自动换占位图)
             const isPdf = student.posterImg.toLowerCase().endsWith('.pdf');
             const imgSrc = isPdf ? 'https://via.placeholder.com/400x600/e0e0e0/1a1a1a?text=PDF+Document' : student.posterImg;
             document.getElementById('dynamic-profile-img').src = imgSrc;
             
-            // 3. 处理颜色
+            // 3. 颜色分类处理
             const categoryBadge = document.getElementById('dynamic-category-badge');
             categoryBadge.innerText = student.category;
             const color = getCategoryColor(student.category);
             document.getElementById('dynamic-blob').style.background = color;
             document.getElementById('dynamic-portrait-bg').style.background = color;
 
-            // 4. 为黑色的 YouTube 播放器按钮绑定点击跳转逻辑！
+            // 4. 将视频/PDF链接绑定到黑色的播放器按钮上！
             const videoPlayer = document.getElementById('dyn-video');
             if (student.videoUrl) {
-                // 如果有提供云盘链接，点击播放器新标签打开
+                // 如果有云盘链接，点击播放器新标签页打开
                 videoPlayer.onclick = function() { window.open(student.videoUrl, '_blank'); };
                 videoPlayer.style.opacity = '1';
                 videoPlayer.style.cursor = 'pointer';
             } else if (isPdf) {
-                // 如果是 PDF 且没有外链，点击播放器打开这个本地 PDF 文件
+                // 如果是PDF没给外加链接，点击播放器打开本地的PDF文件
                 videoPlayer.onclick = function() { window.open(student.posterImg, '_blank'); };
                 videoPlayer.style.opacity = '1';
                 videoPlayer.style.cursor = 'pointer';
             } else {
-                // 如果啥也没有，变灰不可点击
+                // 如果既没链接也不是PDF，播放器变灰不可点
                 videoPlayer.onclick = function() { alert('Project link coming soon!'); };
                 videoPlayer.style.opacity = '0.5';
                 videoPlayer.style.cursor = 'not-allowed';
             }
 
-            // 5. 处理下方缩略图
+            // 5. 缩略图处理
             const thumbContainer = document.getElementById('dyn-thumbnails');
             let thumbsHtml = '';
             if (student.thumbnails && student.thumbnails.length > 0) {
@@ -860,7 +864,7 @@
             }
             thumbContainer.innerHTML = thumbsHtml;
 
-            // 6. 核心动作：切换到详情页显示
+            // 6. 切换页面视图
             document.querySelectorAll('.spa-page').forEach(page => page.classList.remove('active'));
             document.getElementById('page-stories').classList.add('active');
             document.getElementById('stories_gallery_view').style.display = 'none';
